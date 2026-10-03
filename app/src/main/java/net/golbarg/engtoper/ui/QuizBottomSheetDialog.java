@@ -1,6 +1,7 @@
 package net.golbarg.engtoper.ui;
 
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.color.MaterialColors;
 
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.databinding.DialogQuizBinding;
@@ -119,10 +121,7 @@ public class QuizBottomSheetDialog extends BottomSheetDialogFragment {
         List<String> options = question.getOptions();
         for (int i = 0; i < optionButtons.length; i++) {
             MaterialButton btn = optionButtons[i];
-            btn.setEnabled(true);
-            btn.setBackgroundColor(ContextCompat.getColor(requireContext(), android.R.color.transparent));
-            btn.setStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.card_border_light));
-            btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary_light));
+            styleOption(btn, OptionState.NORMAL);
 
             if (i < options.size()) {
                 btn.setText(options.get(i));
@@ -140,35 +139,26 @@ public class QuizBottomSheetDialog extends BottomSheetDialogFragment {
         QuizQuestion question = questions.get(currentQuestionIndex);
         int correctIndex = question.getCorrectIndex();
 
-        // Disable all buttons to prevent multiple clicks
+        // Lock the options without disabling them, which would grey out the result colours
         for (MaterialButton btn : optionButtons) {
-            btn.setEnabled(false);
+            btn.setClickable(false);
         }
 
         if (selectedIndex == correctIndex) {
             score++;
             streak++;
-            optionButtons[selectedIndex].setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.success_container));
-            optionButtons[selectedIndex].setStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.success));
-            optionButtons[selectedIndex].setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
-
+            styleOption(optionButtons[selectedIndex], OptionState.CORRECT);
             binding.quizFeedbackText.setText(R.string.quiz_correct);
-            binding.quizFeedbackText.setTextColor(ContextCompat.getColor(requireContext(), R.color.success));
+            styleFeedback(true);
         } else {
             streak = 0;
-            optionButtons[selectedIndex].setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.error_container));
-            optionButtons[selectedIndex].setStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.error));
-            optionButtons[selectedIndex].setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
-
-            // Highlight correct one
+            styleOption(optionButtons[selectedIndex], OptionState.WRONG);
+            // Highlight the right answer
             if (correctIndex >= 0 && correctIndex < optionButtons.length) {
-                optionButtons[correctIndex].setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.success_container));
-                optionButtons[correctIndex].setStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.success));
-                optionButtons[correctIndex].setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
+                styleOption(optionButtons[correctIndex], OptionState.CORRECT);
             }
-
             binding.quizFeedbackText.setText(getString(R.string.quiz_wrong, question.getCorrectTranslation()));
-            binding.quizFeedbackText.setTextColor(ContextCompat.getColor(requireContext(), R.color.error));
+            styleFeedback(false);
         }
 
         binding.quizStreakText.setText(getString(R.string.quiz_streak, streak));
@@ -180,6 +170,44 @@ public class QuizBottomSheetDialog extends BottomSheetDialogFragment {
         } else {
             binding.quizBtnNext.setText(R.string.quiz_next_word);
         }
+    }
+
+    private enum OptionState { NORMAL, CORRECT, WRONG }
+
+    /** Colours come from the theme (with dark-mode variants), so options stay readable in both themes. */
+    private void styleOption(MaterialButton button, OptionState state) {
+        int background;
+        int stroke;
+        int text;
+        switch (state) {
+            case CORRECT:
+                background = ContextCompat.getColor(requireContext(), R.color.success_container);
+                stroke = ContextCompat.getColor(requireContext(), R.color.success);
+                text = ContextCompat.getColor(requireContext(), R.color.success_dark);
+                break;
+            case WRONG:
+                background = ContextCompat.getColor(requireContext(), R.color.error_container);
+                stroke = ContextCompat.getColor(requireContext(), R.color.error);
+                text = ContextCompat.getColor(requireContext(), R.color.error_dark);
+                break;
+            default:
+                background = Color.TRANSPARENT;
+                stroke = MaterialColors.getColor(button, R.attr.appCardBorderColor);
+                text = MaterialColors.getColor(button, R.attr.appTextPrimary);
+                break;
+        }
+        button.setClickable(state == OptionState.NORMAL);
+        button.setBackgroundTintList(ColorStateList.valueOf(background));
+        button.setStrokeColor(ColorStateList.valueOf(stroke));
+        button.setStrokeWidth(Math.round((state == OptionState.NORMAL ? 1 : 2) * getResources().getDisplayMetrics().density));
+        button.setTextColor(text);
+    }
+
+    private void styleFeedback(boolean correct) {
+        binding.quizFeedbackText.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(),
+                correct ? R.color.success_container : R.color.error_container));
+        binding.quizFeedbackText.setTextColor(ContextCompat.getColor(requireContext(),
+                correct ? R.color.success_dark : R.color.error_dark));
     }
 
     private void moveToNextQuestion() {

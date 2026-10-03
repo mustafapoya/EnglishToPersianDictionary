@@ -1,5 +1,6 @@
 package net.golbarg.engtoper.ui;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.color.MaterialColors;
 
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.databinding.BottomSheetWordDetailBinding;
@@ -142,7 +144,7 @@ public class WordDetailBottomSheet extends BottomSheetDialogFragment {
             binding.detailBtnBookmark.setIconTint(ContextCompat.getColorStateList(requireContext(), R.color.bookmark_gold));
         } else {
             binding.detailBtnBookmark.setIconResource(R.drawable.ic_star_outline);
-            binding.detailBtnBookmark.setIconTint(ContextCompat.getColorStateList(requireContext(), R.color.text_tertiary_light));
+            binding.detailBtnBookmark.setIconTint(ColorStateList.valueOf(MaterialColors.getColor(binding.detailBtnBookmark, R.attr.appTextSecondary)));
         }
     }
 

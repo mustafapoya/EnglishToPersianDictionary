@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shared spacing and shape: every screen uses these so edges and corners line up -->
+<resources>
+    <!-- Distance from the screen edge to cards and content -->
+    <dimen name="screen_gutter">16dp</dimen>
+    <!-- Section labels sit slightly inside the card edge -->
+    <dimen name="section_label_inset">20dp</dimen>
+
+    <dimen name="card_radius">20dp</dimen>
+    <dimen name="card_radius_large">24dp</dimen>
+
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="button_height_large">56dp</dimen>
+</resources>

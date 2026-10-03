@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="12dp"
+            android:paddingHorizontal="@dimen/screen_gutter"
             android:paddingBottom="28dp">
 
             <!-- Hero -->
@@ -59,19 +59,23 @@
                 android:paddingHorizontal="24dp"
                 android:paddingVertical="28dp">
 
-                <FrameLayout
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                    android:background="@drawable/splash_mark_bg">
+                <!-- App logo (the launcher icon artwork) on a white tile, as on the home screen -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="26dp"
+                    app:cardElevation="8dp"
+                    app:strokeColor="@color/hero_button"
+                    app:strokeWidth="2dp">
 
                     <ImageView
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:layout_gravity="center"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_translate"
-                        app:tint="@color/hero_on" />
-                </FrameLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher_foreground" />
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,19 +155,15 @@
                 style="@style/AppOverline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/about_section_features" />
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/appCardBackground"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                app:strokeColor="?attr/appCardBorderColor"
-                app:strokeWidth="1dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -194,19 +194,15 @@
                 style="@style/AppOverline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/about_section_developer" />
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/AppCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/appCardBackground"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                app:strokeColor="?attr/appCardBorderColor"
-                app:strokeWidth="1dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"

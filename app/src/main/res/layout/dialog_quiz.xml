@@ -11,291 +11,235 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="@dimen/screen_gutter"
+        android:paddingTop="12dp"
+        android:paddingBottom="20dp">
 
-        <!-- Drag Handle -->
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/drag_handle" />
 
-        <!-- Header: Title, Streak & Close -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Header: title, streak and question counter -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/quiz_title"
+                style="@style/AppScreenTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_weight="1"
+                android:text="@string/quiz_title"
+                android:textSize="22sp" />
 
-                <TextView
-                    android:id="@+id/quiz_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quiz_title"
-                    android:textColor="?attr/appTextPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/quiz_streak_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    tools:text="🔥 Streak: 0"
-                    android:textColor="?attr/colorPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/quiz_streak_text"
+                style="@style/AppTallyPill"
+                android:backgroundTint="?attr/colorTertiaryContainer"
+                android:textColor="?attr/colorOnTertiaryContainer"
+                tools:text="🔥 2" />
 
             <TextView
                 android:id="@+id/quiz_progress_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="1 / 5"
+                android:layout_marginStart="10dp"
                 android:textColor="?attr/appTextSecondary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                tools:text="1 / 5" />
+        </LinearLayout>
 
-        <!-- Progress Bar -->
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/quiz_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:max="5"
-            android:progress="1"
             app:indicatorColor="?attr/colorPrimary"
             app:trackColor="?attr/colorPrimaryContainer"
             app:trackCornerRadius="4dp"
             app:trackThickness="6dp" />
 
-        <!-- Quiz Container View -->
         <LinearLayout
             android:id="@+id/quiz_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
-            <!-- Word Question Card -->
+            <!-- Question: the same blue card as the flashcard front -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="18dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="@dimen/card_radius_large"
                 app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="?attr/appCardBorderColor"
-                app:cardBackgroundColor="?attr/appSurfaceVariant">
+                app:strokeWidth="0dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_hero"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="20dp">
 
-                    <TextView
-                        android:id="@+id/quiz_question_prompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/quiz_question_title"
-                        android:textColor="?attr/appTextSecondary"
-                        android:textSize="13sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/quiz_word_text"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        tools:text="Resilience"
-                        android:textColor="?attr/appTextPrimary"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/quiz_btn_speak"
-                        app:layout_constraintTop_toBottomOf="@id/quiz_question_prompt" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/quiz_question_prompt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quiz_question_title"
+                            android:textColor="@color/hero_accent"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/quiz_word_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/hero_on"
+                            android:textDirection="ltr"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            tools:text="resilience" />
+                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/quiz_btn_speak"
-                        style="@style/AppIconButtonTonal"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
+                        style="@style/AppIconButtonFilled"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:contentDescription="@string/action_listen"
+                        app:backgroundTint="@color/hero_button"
                         app:icon="@drawable/ic_volume_up"
-                        app:iconSize="20dp"
-                        app:iconTint="?attr/colorPrimary"
-                        app:backgroundTint="?attr/colorPrimaryContainer"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/quiz_word_text"
-                        app:layout_constraintBottom_toBottomOf="@id/quiz_word_text" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:iconTint="@color/hero_on" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 4 Multiple Choice Options -->
+            <!-- Four answer options -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/quiz_option_0"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:minHeight="54dp"
-                    tools:text="گزینه اول"
-                    android:textDirection="rtl"
-                    android:textSize="15sp"
-                    android:textColor="?attr/appTextPrimary"
-                    app:strokeColor="?attr/appCardBorderColor"
-                    app:cornerRadius="14dp" />
+                    style="@style/AppQuizOption"
+                    tools:text="گزینه اول" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/quiz_option_1"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:minHeight="54dp"
-                    tools:text="گزینه دوم"
-                    android:textDirection="rtl"
-                    android:textSize="15sp"
-                    android:textColor="?attr/appTextPrimary"
-                    app:strokeColor="?attr/appCardBorderColor"
-                    app:cornerRadius="14dp" />
+                    style="@style/AppQuizOption"
+                    tools:text="گزینه دوم" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/quiz_option_2"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:minHeight="54dp"
-                    tools:text="گزینه سوم"
-                    android:textDirection="rtl"
-                    android:textSize="15sp"
-                    android:textColor="?attr/appTextPrimary"
-                    app:strokeColor="?attr/appCardBorderColor"
-                    app:cornerRadius="14dp" />
+                    style="@style/AppQuizOption"
+                    tools:text="گزینه سوم" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/quiz_option_3"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="54dp"
-                    tools:text="گزینه چهارم"
-                    android:textDirection="rtl"
-                    android:textSize="15sp"
-                    android:textColor="?attr/appTextPrimary"
-                    app:strokeColor="?attr/appCardBorderColor"
-                    app:cornerRadius="14dp" />
+                    style="@style/AppQuizOption"
+                    tools:text="گزینه چهارم" />
             </LinearLayout>
 
-            <!-- Feedback Banner -->
+            <!-- Feedback (colours set in code) -->
             <TextView
                 android:id="@+id/quiz_feedback_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:padding="10dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_rounded"
                 android:gravity="center"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:textDirection="anyRtl"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                android:textDirection="rtl" />
+                tools:text="@string/quiz_correct"
+                tools:visibility="visible" />
 
-            <!-- Next Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/quiz_btn_next"
-                style="@style/Widget.Material3.Button"
+                style="@style/AppButton"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
                 android:layout_marginTop="12dp"
                 android:text="@string/quiz_next_word"
-                android:textSize="15sp"
                 android:visibility="gone"
-                app:cornerRadius="14dp" />
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconGravity="end" />
         </LinearLayout>
 
-        <!-- Results / Summary View (Shown when quiz finished) -->
+        <!-- Result -->
         <LinearLayout
             android:id="@+id/quiz_summary_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
-            android:paddingVertical="20dp"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/quiz_result_emoji"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="🏆"
-                android:textSize="48sp" />
+            <FrameLayout
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:background="@drawable/bg_icon_circle">
+
+                <TextView
+                    android:id="@+id/quiz_result_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="40sp"
+                    tools:text="🏆" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/quiz_result_title"
+                style="@style/AppEmptyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/quiz_completed_title"
-                android:textColor="?attr/appTextPrimary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/quiz_result_score"
+                style="@style/AppEmptyMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:text="You scored 4 out of 5 (80%)"
-                android:textColor="?attr/appTextSecondary"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="You scored 4 out of 5 (80%)" />
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/quiz_btn_play_again"
+                style="@style/AppButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                android:text="@string/quiz_play_again"
+                app:icon="@drawable/ic_refresh" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/quiz_btn_play_again"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:text="@string/quiz_play_again"
-                    app:icon="@drawable/ic_refresh"
-                    app:cornerRadius="14dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/quiz_btn_close"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:text="@string/quiz_done"
-                    app:strokeColor="?attr/appCardBorderColor"
-                    android:textColor="?attr/appTextPrimary"
-                    app:cornerRadius="14dp" />
-            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/quiz_btn_close"
+                style="@style/AppButton.Outlined"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:text="@string/quiz_done" />
         </LinearLayout>
 
     </LinearLayout>

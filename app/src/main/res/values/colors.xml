@@ -74,6 +74,5 @@
 
     <!-- Common -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <color name="divider">#E2E8F0</color>
 </resources>

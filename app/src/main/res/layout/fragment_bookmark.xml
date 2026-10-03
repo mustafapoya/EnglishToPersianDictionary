@@ -183,10 +183,10 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_explore"
-                style="@style/Widget.Material3.Button.Icon"
+                style="@style/AppButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:paddingHorizontal="24dp"
                 android:text="@string/bookmarks_explore"
                 app:icon="@drawable/ic_search" />
         </LinearLayout>

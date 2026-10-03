@@ -198,15 +198,15 @@
                     android:background="@drawable/bg_hero"
                     android:padding="20dp">
 
+                    <!-- Decorative sparkle, kept fully inside the card so the rounded edge doesn't clip it -->
                     <ImageView
-                        android:layout_width="180dp"
-                        android:layout_height="180dp"
-                        android:layout_gravity="bottom|start"
-                        android:layout_marginStart="-60dp"
-                        android:layout_marginBottom="-50dp"
-                        android:alpha="0.08"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginBottom="28dp"
+                        android:alpha="0.14"
                         android:importantForAccessibility="no"
-                        android:rotation="18"
+                        android:rotation="12"
                         android:src="@drawable/ic_sparkle"
                         app:tint="@color/hero_on" />
 
@@ -405,13 +405,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_show_answer"
-            style="@style/Widget.Material3.Button.Icon"
+            style="@style/AppButton"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:text="@string/flashcard_show_answer"
-            android:textSize="16sp"
-            app:cornerRadius="28dp"
             app:icon="@drawable/ic_flip" />
 
         <LinearLayout
@@ -424,13 +421,11 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_again"
-                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                style="@style/AppButton.Outlined"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:text="@string/flashcard_again"
                 android:textColor="@color/error"
-                app:cornerRadius="28dp"
                 app:icon="@drawable/ic_refresh"
                 app:iconTint="@color/error"
                 app:strokeColor="@color/error" />
@@ -441,13 +436,11 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_know"
-                style="@style/Widget.Material3.Button.Icon"
+                style="@style/AppButton"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:text="@string/flashcard_know"
                 app:backgroundTint="@color/success"
-                app:cornerRadius="28dp"
                 app:icon="@drawable/ic_check" />
         </LinearLayout>
 
@@ -512,7 +505,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_empty_action"
+            style="@style/AppButton"
             android:layout_width="wrap_content"
+            android:paddingHorizontal="24dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             tools:text="Study random words" />
