@@ -1,70 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/green_500"
+    android:id="@+id/splash_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/splash_background"
+    android:clipChildren="false"
+    tools:context=".SplashScreenActivity">
 
-    <ImageView
-        android:id="@+id/img_golbarg_logo"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="150dp"
+    <!-- Decorative background: soft glow + concentric rings around the mark -->
+    <View
+        android:id="@+id/splash_glow"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:alpha="0"
+        android:background="@drawable/splash_glow"
+        app:layout_constraintBottom_toBottomOf="@id/splash_mark"
+        app:layout_constraintEnd_toEndOf="@id/splash_mark"
+        app:layout_constraintStart_toStartOf="@id/splash_mark"
+        app:layout_constraintTop_toTopOf="@id/splash_mark" />
+
+    <View
+        android:id="@+id/splash_ring_outer"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:alpha="0"
+        android:background="@drawable/splash_ring"
+        app:layout_constraintBottom_toBottomOf="@id/splash_mark"
+        app:layout_constraintEnd_toEndOf="@id/splash_mark"
+        app:layout_constraintStart_toStartOf="@id/splash_mark"
+        app:layout_constraintTop_toTopOf="@id/splash_mark" />
+
+    <View
+        android:id="@+id/splash_ring_inner"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:alpha="0"
+        android:background="@drawable/splash_ring"
+        app:layout_constraintBottom_toBottomOf="@id/splash_mark"
+        app:layout_constraintEnd_toEndOf="@id/splash_mark"
+        app:layout_constraintStart_toStartOf="@id/splash_mark"
+        app:layout_constraintTop_toTopOf="@id/splash_mark" />
+
+    <!-- Brand mark (intentionally not the launcher icon) -->
+    <FrameLayout
+        android:id="@+id/splash_mark"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:alpha="0"
+        android:background="@drawable/splash_mark_bg"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        app:layout_constraintBottom_toTopOf="@id/txt_app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/golbarg_logo" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_translate"
+            app:tint="@color/white" />
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/txt_program_title"
+        android:id="@+id/txt_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="English To Persian Dictionary"
+        android:layout_marginTop="32dp"
+        android:alpha="0"
+        android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="26sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txt_tagline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_golbarg_logo" />
-
-    <ProgressBar
-        android:id="@+id/progress_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/white"
-        android:progressTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_program_title" />
+        app:layout_constraintTop_toBottomOf="@id/splash_mark" />
 
     <TextView
-        android:id="@+id/txt_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="...."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_loading" />
-    <TextView
-        android:id="@+id/txt_golbarg_net"
+        android:id="@+id/txt_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="GOLBARG.NET"
-        android:textColor="@color/white"
-        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:alpha="0"
+        android:letterSpacing="0.08"
+        android:text="@string/splash_tagline"
+        android:textAllCaps="true"
+        android:textColor="@color/splash_text_secondary"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_app_name" />
+
+    <!-- Bottom loading status -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="72dp"
+        android:paddingBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/white"
+            app:trackColor="#33FFFFFF"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="4dp" />
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/splash_loading"
+            android:textColor="@color/splash_text_secondary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/splash_credit"
+            android:textColor="@color/splash_text_tertiary"
+            android:textSize="11sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

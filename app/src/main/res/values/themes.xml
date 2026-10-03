@@ -1,28 +1,170 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.EnglishToPersian" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/green_500</item>
-        <item name="colorPrimaryVariant">@color/green_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_700</item>
-        <item name="colorSecondaryVariant">@color/green_500</item>
-        <item name="colorOnSecondary">@color/black</item>
+    <!-- Base application theme with Material 3 -->
+    <style name="Theme.EnglishToPersian" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Brand Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
+
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/on_tertiary_container</item>
+
+        <!-- Surfaces & Backgrounds -->
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_light</item>
+
+        <!-- Status bar & Navigation bar -->
+        <item name="android:statusBarColor">@color/background_light</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/surface_light</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
-        <!-- Customize your theme here. -->
-        <item name="textColor">@color/black</item>
-        <item name="fontFamily">@font/app_font_family</item>
+        <!-- Custom Semantic Theme Attributes -->
+        <item name="appBackgroundColor">@color/background_light</item>
+        <item name="appSurfaceColor">@color/surface_light</item>
+        <item name="appSurfaceVariant">@color/surface_variant_light</item>
+        <item name="appCardBackground">@color/surface_card_light</item>
+        <item name="appCardBorderColor">@color/card_border_light</item>
+        <item name="appTextPrimary">@color/text_primary_light</item>
+        <item name="appTextSecondary">@color/text_secondary_light</item>
+        <item name="appTextTertiary">@color/text_tertiary_light</item>
+        <item name="appDivider">@color/divider</item>
 
-        <item name="metaTextColor">@color/black_700</item>
-        <item name="backgroundColor">@color/white</item>
-        <item name="category_background">@color/blue_200</item>
-        <item name="content_background">@color/blue_600</item>
-        <item name="tab_color">@drawable/tab_color</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
 
+    <style name="AppBottomSheetDialogTheme" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalBottomSheet</item>
+    </style>
+
+    <style name="AppModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- Launcher theme: brand-colored window so there is no white flash before the splash layout -->
+    <style name="Theme.EnglishToPersian.Splash">
+        <item name="android:windowBackground">@color/splash_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Small all-caps section label -->
+    <style name="AppOverline">
+        <item name="android:textColor">?attr/appTextSecondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+
+    <!--
+        Icon-only buttons drawn as exact circles. The Material icon-button styles keep padding,
+        insets and a minimum size, which pushes the icon off-centre once a fixed size is set.
+    -->
+    <style name="AppIconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:padding">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+    </style>
+
+    <style name="AppIconButtonTonal" parent="Widget.Material3.Button.IconButton.Filled.Tonal">
+        <item name="android:padding">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+    </style>
+
+    <style name="AppIconButtonFilled" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="android:padding">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+    </style>
+
+    <!-- Rounded match-mode chips under the dictionary search bar -->
+    <style name="AppFilterChip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">18dp</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="chipStrokeColor">?attr/appCardBorderColor</item>
+    </style>
+
+    <!-- Shared typography: screen headers and empty states look the same on every tab -->
+    <style name="AppScreenTitle">
+        <item name="android:textColor">?attr/appTextPrimary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppScreenSubtitle">
+        <item name="android:textColor">?attr/appTextSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppEmptyTitle">
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/appTextPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppEmptyMessage">
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:textColor">?attr/appTextSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Flashcards: small count pill in the progress row -->
+    <style name="AppTallyPill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">26dp</item>
+        <item name="android:background">@drawable/bg_pill</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Flashcards: a card waiting behind the current one -->
+    <style name="AppGhostCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="cardBackgroundColor">?attr/appCardBackground</item>
+        <item name="cardCornerRadius">28dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">?attr/appCardBorderColor</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 </resources>

@@ -1,26 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--White Theme Color-->
-    <color name="green_50">#E2FFCD</color>
-    <color name="green_100">#AAE87E</color>
-    <color name="green_200">#80ee31</color>
-    <color name="green_500">#57cc02</color>
-    <color name="green_700">#55be08</color>
-    <color name="blue_200">#ddf3fe</color>
-    <color name="blue_500">#1cb0f6</color>
-    <color name="blue_600">#4071AA</color>
-    <color name="blue_700">#3e6189</color>
-    <color name="red_500">#CC0202</color>
+    <!-- Brand / Primary Palette -->
+    <color name="primary">#1D68FE</color>
+    <color name="primary_container">#E8EFFF</color>
+    <color name="on_primary_container">#0A2A7A</color>
+    <color name="on_primary">#FFFFFF</color>
 
-    <!-- Colors for Button Style -->
-    <color name="gradient_start_color">#4C84FF</color>
-    <color name="gradient_end_color">#18a3fe</color>
+    <!-- Secondary Palette -->
+    <color name="secondary">#0EA5E9</color>
+    <color name="secondary_container">#E0F2FE</color>
+    <color name="on_secondary_container">#0369A1</color>
+    <color name="on_secondary">#FFFFFF</color>
 
-    <!-- Night Theme Color-->
-    <color name="black_200">#151e27</color>
-    <color name="black_500">#212d3b</color>
-    <color name="black_700">#1a242e</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="gray">#C1C1C1</color>
+    <!-- Tertiary / Accent -->
+    <color name="tertiary">#8B5CF6</color>
+    <color name="tertiary_container">#F3E8FF</color>
+    <color name="on_tertiary_container">#581C87</color>
+
+    <!-- Neutral & Backgrounds (Light) -->
+    <color name="background_light">#F8FAFC</color>
+    <color name="surface_light">#FFFFFF</color>
+    <color name="surface_variant_light">#F1F5F9</color>
+    <color name="surface_card_light">#FFFFFF</color>
+    <color name="text_primary_light">#0F172A</color>
+    <color name="text_secondary_light">#475569</color>
+    <color name="text_tertiary_light">#94A3B8</color>
+    <color name="card_border_light">#E2E8F0</color>
+
+    <!-- Tonal containers for dark mode: muted so selected states don't glare -->
+    <color name="primary_container_dark">#1C2D57</color>
+    <color name="on_primary_container_dark">#D3E0FF</color>
+    <color name="secondary_container_dark">#14324A</color>
+    <color name="on_secondary_container_dark">#C9E8FB</color>
+    <color name="tertiary_container_dark">#33245E</color>
+    <color name="on_tertiary_container_dark">#E6DAFF</color>
+
+    <!-- Neutral & Backgrounds (Dark) -->
+    <color name="background_dark">#090D16</color>
+    <color name="surface_dark">#111726</color>
+    <color name="surface_variant_dark">#192238</color>
+    <color name="surface_card_dark">#131B2E</color>
+    <color name="text_primary_dark">#F8FAFC</color>
+    <color name="text_secondary_dark">#94A3B8</color>
+    <color name="text_tertiary_dark">#64748B</color>
+    <color name="card_border_dark">#23304B</color>
+
+    <!-- Semantic Colors -->
+    <color name="success">#10B981</color>
+    <color name="success_container">#D1FAE5</color>
+    <color name="error">#EF4444</color>
+    <color name="error_container">#FEE2E2</color>
+    <!-- Readable text on the success / error containers -->
+    <color name="success_dark">#047857</color>
+    <color name="error_dark">#B91C1C</color>
+    <color name="bookmark_gold">#F59E0B</color>
+
+    <!-- Splash -->
+    <color name="splash_background">#1D68FE</color>
+    <color name="splash_text_secondary">#CCFFFFFF</color>
+    <color name="splash_text_tertiary">#99FFFFFF</color>
+
+    <!-- Hero cards (word of the day, flashcard front) -->
+    <color name="hero_start">#2F7BFF</color>
+    <color name="hero_end">#1240B8</color>
+    <color name="hero_on">#FFFFFF</color>
+    <color name="hero_on_muted">#D9FFFFFF</color>
+    <color name="hero_accent">#BFD5FF</color>
+    <color name="hero_button">#29FFFFFF</color>
+
+    <!-- Word of the day card glow -->
+    <color name="wod_glow">#291D68FE</color>
+    <color name="wod_glow_end">#001D68FE</color>
+
+    <!-- Common -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="divider">#E2E8F0</color>
 </resources>

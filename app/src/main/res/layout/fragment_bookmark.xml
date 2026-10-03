@@ -1,59 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/appBackgroundColor"
+    android:orientation="vertical"
     tools:context=".ui.bookmark.BookmarkFragment">
 
-    <!-- TODO: on publish add real ad unit -->
-    <!-- real_id="ca-app-pub-8976959600358837/2189394386" -->
-    <!-- test_id="ca-app-pub-3940256099942544/6300978111" -->
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewScreenBanner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-8976959600358837/2189394386"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_bookmark"
+    <!-- Header: title + count, practise button -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabInlineLabel="true"
-        app:layout_constraintTop_toBottomOf="@+id/adViewScreenBanner">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_english"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppScreenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/saved_title" />
+
+            <TextView
+                android:id="@+id/txt_count"
+                style="@style/AppScreenSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="12 words saved" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_practice"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/saved_practice"
+            app:icon="@drawable/ic_flashcard_outline"
+            app:iconSize="18dp" />
+    </LinearLayout>
+
+    <!-- Search within saved words -->
+    <LinearLayout
+        android:id="@+id/search_field"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:addStatesFromChildren="true"
+        android:background="@drawable/bg_field"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="4dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_search"
+            app:tint="?attr/appTextTertiary" />
+
+        <EditText
+            android:id="@+id/edit_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
+            android:autofillHints=""
+            android:background="@null"
+            android:hint="@string/saved_search_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="?attr/appTextPrimary"
+            android:textColorHint="?attr/appTextTertiary"
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:id="@+id/btn_clear_filter"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_clear_search"
+            android:src="@drawable/ic_clear"
+            android:visibility="gone"
+            app:tint="?attr/appTextTertiary" />
+    </LinearLayout>
+
+    <!-- Language -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chips_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        app:chipSpacingHorizontal="6dp"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_english"
+            style="@style/AppFilterChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_english"
-            android:icon="@drawable/english"
-            />
+            android:checked="true"
+            tools:text="English · 8" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_persian"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_persian"
+            style="@style/AppFilterChip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/persian"
-            android:text="@string/title_persian" />
-    </com.google.android.material.tabs.TabLayout>
+            tools:text="فارسی · 4" />
+    </com.google.android.material.chip.ChipGroup>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_container"
-        android:layout_width="0dp"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout_bookmark" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_bookmark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="4dp"
+            android:paddingBottom="12dp"
+            android:scrollbars="vertical" />
+
+        <!-- Nothing saved / nothing matches -->
+        <LinearLayout
+            android:id="@+id/layout_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="32dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:background="@drawable/bg_icon_circle">
+
+                <ImageView
+                    android:id="@+id/img_empty"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_star_outline"
+                    app:tint="?attr/colorOnPrimaryContainer" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txt_empty_title"
+                style="@style/AppEmptyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/deck_saved_empty_title" />
+
+            <TextView
+                android:id="@+id/txt_empty_message"
+                style="@style/AppEmptyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/saved_empty_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_explore"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/bookmarks_explore"
+                app:icon="@drawable/ic_search" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Filled by AdUtil; stays hidden when ads are off or none loads -->
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>

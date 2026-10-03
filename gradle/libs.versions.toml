@@ -8,15 +8,9 @@ material = "1.13.0"
 constraintlayout = "2.2.1"
 lifecycleLivedataKtx = "2.9.3"
 lifecycleViewmodelKtx = "2.9.3"
-navigationFragment = "2.9.4"
-navigationUi = "2.9.4"
-androidAboutPage = "2.0.0"
-mpandroidchart = "v3.1.0"
-highlight = "1.0.2"
+navigationFragment = "2.8.8"
+navigationUi = "2.8.8"
 playServicesAds = "24.6.0"
-glide = "5.0.5"
-navigationFragmentVersion = "2.10.2"
-navigationUiVersion = "2.10.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,14 +23,7 @@ lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-lived
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
-android-about-page = { group = "io.github.medyo", name = "android-about-page", version.ref = "androidAboutPage" }
-mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
-highlight = { group = "com.github.nevidelia", name = "Highlight", version.ref = "highlight" }
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragmentVersion" }
-androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUiVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-

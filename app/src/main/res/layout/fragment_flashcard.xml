@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/appBackgroundColor"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    tools:context=".ui.flashcard.FlashcardFragment">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppScreenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_flashcards" />
+
+            <TextView
+                android:id="@+id/text_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/appTextSecondary"
+                android:textSize="13sp"
+                tools:text="12 learned · 5 due today" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_undo"
+            style="@style/AppIconButtonTonal"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:contentDescription="@string/flashcard_undo"
+            android:tooltipText="@string/flashcard_undo"
+            android:visibility="gone"
+            app:icon="@drawable/ic_undo"
+            tools:visibility="visible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reverse"
+            style="@style/AppIconButtonTonal"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/flashcard_reverse"
+            android:tooltipText="@string/flashcard_reverse"
+            app:icon="@drawable/ic_swap_horiz" />
+    </LinearLayout>
+
+    <!-- Deck picker -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips_deck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_deck_due"
+                style="@style/AppFilterChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deck_due" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_deck_saved"
+                style="@style/AppFilterChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deck_saved" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_deck_random"
+                style="@style/AppFilterChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deck_random" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Study panel -->
+    <LinearLayout
+        android:id="@+id/panel_study"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_session"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:indicatorColor="?attr/colorPrimary"
+                app:trackColor="?attr/colorPrimaryContainer"
+                app:trackCornerRadius="4dp"
+                app:trackThickness="6dp" />
+
+            <TextView
+                android:id="@+id/text_tally_known"
+                style="@style/AppTallyPill"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="@color/success_container"
+                android:textColor="@color/success_dark"
+                app:drawableStartCompat="@drawable/ic_check"
+                app:drawableTint="@color/success_dark"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/text_tally_again"
+                style="@style/AppTallyPill"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="@color/error_container"
+                android:textColor="@color/error_dark"
+                app:drawableStartCompat="@drawable/ic_refresh"
+                app:drawableTint="@color/error_dark"
+                tools:text="1" />
+
+            <TextView
+                android:id="@+id/text_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textColor="?attr/appTextSecondary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="3 / 20" />
+        </LinearLayout>
+
+        <net.golbarg.engtoper.ui.flashcard.SwipeCardLayout
+            android:id="@+id/card_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="22dp">
+
+            <!-- Cards waiting behind the current one (shown while more remain) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_ghost_far"
+                style="@style/AppGhostCard"
+                android:scaleX="0.86"
+                android:translationY="22dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_ghost_near"
+                style="@style/AppGhostCard"
+                android:scaleX="0.93"
+                android:translationY="11dp" />
+
+            <!-- Front -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_front"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="4dp"
+                app:strokeWidth="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_hero"
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="bottom|start"
+                        android:layout_marginStart="-60dp"
+                        android:layout_marginBottom="-50dp"
+                        android:alpha="0.08"
+                        android:importantForAccessibility="no"
+                        android:rotation="18"
+                        android:src="@drawable/ic_sparkle"
+                        app:tint="@color/hero_on" />
+
+                    <TextView
+                        android:id="@+id/text_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|start"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_pill"
+                        android:backgroundTint="@color/hero_button"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="6dp"
+                        android:textColor="@color/hero_on"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        tools:text="Level 2 of 5" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_listen"
+                        style="@style/AppIconButtonFilled"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="top|end"
+                        android:contentDescription="@string/action_listen"
+                        app:backgroundTint="@color/hero_button"
+                        app:icon="@drawable/ic_volume_up"
+                        app:iconTint="@color/hero_on" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_front_lang"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.08"
+                            android:textAllCaps="true"
+                            android:textColor="@color/hero_accent"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="English" />
+
+                        <TextView
+                            android:id="@+id/text_front_word"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:textColor="@color/hero_on"
+                            android:textSize="38sp"
+                            android:textStyle="bold"
+                            tools:text="serendipity" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="@string/flashcard_tap_to_flip"
+                        android:textColor="@color/hero_on_muted"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:id="@+id/tint_front"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="-20dp"
+                        android:alpha="0" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Back -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:cardBackgroundColor="?attr/appCardBackground"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="4dp"
+                app:strokeColor="?attr/appCardBorderColor"
+                app:strokeWidth="1dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <!-- Clickable so a tap on the back flips the card (the ScrollView takes the touches) -->
+                    <LinearLayout
+                        android:id="@+id/card_back_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/text_back_word"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="?attr/colorPrimary"
+                                android:textSize="26sp"
+                                android:textStyle="bold"
+                                tools:text="serendipity" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_listen_back"
+                                style="@style/AppIconButtonTonal"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:contentDescription="@string/action_listen"
+                                app:icon="@drawable/ic_volume_up" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/text_back_label"
+                            style="@style/AppOverline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            tools:text="Persian meaning" />
+
+                        <LinearLayout
+                            android:id="@+id/list_back_meanings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="vertical" />
+
+                        <TextView
+                            android:id="@+id/text_back_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="?attr/appTextTertiary"
+                            android:textSize="13sp"
+                            tools:text="+4 more meanings" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_open_word"
+                            style="@style/Widget.Material3.Button.TextButton.Icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/flashcard_open_word"
+                            app:icon="@drawable/ic_arrow_forward"
+                            app:iconGravity="end" />
+                    </LinearLayout>
+                </ScrollView>
+
+                    <View
+                        android:id="@+id/tint_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- "Know it" / "Again" label shown while swiping -->
+            <TextView
+                android:id="@+id/text_swipe_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="28dp"
+                android:alpha="0"
+                android:background="@drawable/bg_pill"
+                android:elevation="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="@string/flashcard_know" />
+        </net.golbarg.engtoper.ui.flashcard.SwipeCardLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_show_answer"
+            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/flashcard_show_answer"
+            android:textSize="16sp"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_flip" />
+
+        <LinearLayout
+            android:id="@+id/layout_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_again"
+                style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/flashcard_again"
+                android:textColor="@color/error"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/ic_refresh"
+                app:iconTint="@color/error"
+                app:strokeColor="@color/error" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_know"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/flashcard_know"
+                app:backgroundTint="@color/success"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/ic_check" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="?attr/appTextTertiary"
+            android:textSize="12sp"
+            tools:text="Know it → see again in 3 days" />
+    </LinearLayout>
+
+    <!-- Empty deck -->
+    <LinearLayout
+        android:id="@+id/panel_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:background="@drawable/bg_icon_circle">
+
+            <ImageView
+                android:id="@+id/img_empty"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                app:tint="?attr/colorOnPrimaryContainer"
+                tools:src="@drawable/ic_trophy" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_empty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="?attr/appTextPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="All caught up!" />
+
+        <TextView
+            android:id="@+id/text_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="?attr/appTextSecondary"
+            android:textSize="14sp"
+            tools:text="No cards are due today." />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_empty_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="Study random words" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/result"
+        layout="@layout/view_flashcard_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/panel_loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="?attr/colorPrimary" />
+    </FrameLayout>
+
+</LinearLayout>

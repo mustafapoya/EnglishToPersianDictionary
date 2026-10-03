@@ -1,20 +1,320 @@
 <resources>
-    <string name="app_name">English Dictionary</string>
-    <string name="app_desc">
-        This application will help you to translate from english to persian and vice-versa. you can bookmark word to review later
-    </string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_bookmark">Bookmark</string>
-    <string name="title_profile">Profile</string>
+    <string name="app_name">English-Persian Dictionary</string>
+    <string name="title_bookmark">Bookmarks</string>
     <string name="title_about">About</string>
-    <string name="connect_with_us">Connect with us</string>
-    <string name="version">version: 1.0</string>
-    <string name="no_internet_connection_try_again">No Internet Connection Try Again!</string>
-    <string name="try_again">Try Again</string>
-    <string name="word">Word</string>
-    <string name="translate">translate</string>
-    <string name="title_english">English</string>
-    <string name="title_persian">Persian</string>
+    <string name="title_english">English → Persian</string>
+    <string name="title_persian">Persian → English</string>
+
+    <!-- Search Placeholders & Filters -->
+    <string name="search_english_hint">Search English words…</string>
+    <string name="search_persian_hint">Search Persian words…</string>
+    <string name="filter_starts_with">Starts With</string>
+    <string name="filter_contains">Contains</string>
+    <string name="filter_exact">Exact Match</string>
+
+    <!-- Word of the Day -->
+    <string name="word_of_the_day">Word of the Day</string>
+
+    <!-- Search History -->
+    <string name="recent_searches">Recent Searches</string>
+    <string name="clear_all">Clear All</string>
+
+    <!-- Empty States & Results -->
+    <string name="no_results_found">No results for “%1$s”</string>
+    <plurals name="results_count">
+        <item quantity="one">%1$d word found</item>
+        <item quantity="other">%1$d words found</item>
+    </plurals>
+    <string name="action_clear_search">Clear search</string>
+    <string name="action_voice_search">Voice search</string>
+
+    <!-- Word Detail Modal -->
+    <string name="definition">Definition &amp; Translations</string>
+    <string name="action_listen">Pronounce</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_share">Share</string>
+    <string name="action_reverse_lookup">Reverse Search</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="bookmark_removed">Removed from bookmarks</string>
+
+    <!-- Vocabulary Quiz / Flashcards -->
+    <string name="quiz_title">Vocabulary Quiz</string>
+    <string name="quiz_question_title">What is the meaning of:</string>
+    <string name="quiz_streak">🔥 Streak: %1$d</string>
+    <string name="quiz_correct">Correct! Well done 🎉</string>
+    <string name="quiz_wrong">Incorrect. The right answer was: %1$s</string>
+    <string name="quiz_completed_title">Quiz Completed! 🏆</string>
+    <string name="quiz_completed_msg">You scored %1$d out of %2$d (%3$d%%)</string>
+    <string name="quiz_next_word">Next word</string>
+    <string name="quiz_play_again">Play Again</string>
+    <string name="quiz_done">Done</string>
+
+    <!-- TTS -->
+    <string name="tts_error">Text-to-speech engine is not available</string>
+
+    <!-- Bookmarks -->
+
+    <!-- Bottom Navigation (short labels) -->
+    <string name="nav_home">Home</string>
+    <string name="nav_dictionary">Dictionary</string>
+    <string name="nav_flashcards">Cards</string>
+    <string name="nav_bookmark">Saved</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">Fast • Offline • Two-way</string>
+    <string name="splash_loading">Preparing offline dictionary…</string>
+    <string name="splash_credit">by Golbarg</string>
+
+    <!-- Intro / Onboarding -->
+    <string name="intro_skip">Skip</string>
+    <string name="intro_next">Next</string>
+    <string name="intro_get_started">Get started</string>
+    <string name="intro_title_1">Translate both ways</string>
+    <string name="intro_desc_1">Look up English words in Persian and Persian words in English — instantly, and without an internet connection.</string>
+    <string name="intro_chip_1a">Hello</string>
+    <string name="intro_chip_1b">سلام</string>
+    <string name="intro_title_2">Listen &amp; save</string>
+    <string name="intro_desc_2">Hear how every word is pronounced, star the ones you want to keep, and pick up right where you left off with your search history.</string>
+    <string name="intro_chip_2a">Pronounce</string>
+    <string name="intro_chip_2b">Saved</string>
+    <string name="intro_title_3">Learn every day</string>
+    <string name="intro_desc_3">Discover a new word of the day and test yourself with quick vocabulary quizzes to make new words stick.</string>
+    <string name="intro_chip_3a">Word of the day</string>
+    <string name="intro_chip_3b">Quiz</string>
+    <string name="intro_page_indicator">Page %1$d of %2$d</string>
+
+    <!-- Dictionary (merged English / Persian search) -->
+    <string name="title_dictionary">Dictionary</string>
+    <string name="direction_en_fa">English → فارسی</string>
+    <!-- Leading LRM keeps the left-to-right order even though the label starts with Persian -->
+    <string name="direction_fa_en">&#x200E;فارسی → English</string>
+
+    <!-- Home dashboard -->
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="action_bookmark">Bookmark</string>
+    <string name="action_read_more">Read more</string>
+
+    <!-- Flashcards -->
+    <string name="title_flashcards">Flashcards</string>
+    <string name="flashcard_stats">%1$d learned · %2$d due today</string>
+    <string name="flashcard_undo">Undo</string>
+    <string name="flashcard_reverse">Show meaning first</string>
+    <string name="flashcard_mode_meaning_first">Showing the meaning first</string>
+    <string name="flashcard_mode_word_first">Showing the word first</string>
+    <string name="deck_due">Due</string>
+    <string name="deck_saved">Saved</string>
+    <string name="deck_random">Random</string>
+    <string name="deck_with_count">%1$s · %2$d</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_level">Level %1$d of %2$d</string>
+    <string name="flashcard_level_new">New word</string>
+    <string name="flashcard_level_learning">Learning</string>
+    <string name="flashcard_level_repeat">Try again</string>
+    <string name="flashcard_lang_english">English</string>
+    <string name="flashcard_lang_persian">فارسی</string>
+    <string name="flashcard_lang_english_meaning">English meaning</string>
+    <string name="flashcard_lang_persian_meaning">Persian meaning</string>
+    <string name="flashcard_tap_to_flip">Tap to flip · swipe to answer</string>
+    <string name="flashcard_show_answer">Show answer</string>
+    <string name="flashcard_open_word">Open word</string>
+    <string name="flashcard_again">Again</string>
+    <string name="flashcard_know">Know it</string>
+    <plurals name="flashcard_hint_next">
+        <item quantity="one">Know it → see it again tomorrow</item>
+        <item quantity="other">Know it → see it again in %1$d days</item>
+    </plurals>
+    <string name="flashcard_session_done">Session complete</string>
+    <string name="flashcard_score">%1$d / %2$d</string>
+    <string name="flashcard_known_first_try">known on the first try</string>
+    <string name="flashcard_stat_known">Known</string>
+    <string name="flashcard_stat_missed">Missed</string>
+    <string name="flashcard_stat_learned">Learned</string>
+    <string name="flashcard_review_missed">Review %1$d missed</string>
+    <string name="flashcard_new_session">New session</string>
+    <string name="deck_due_empty_title">All caught up!</string>
+    <string name="deck_due_empty">No cards are due today. Study some new words and they will come back for review on schedule.</string>
+    <string name="deck_study_random">Study random words</string>
+    <string name="deck_saved_empty_title">No saved words yet</string>
+    <string name="deck_saved_empty">Star words in the dictionary to build your own deck.</string>
+    <string name="bookmarks_explore">Explore the dictionary</string>
+
+    <!-- Structured meanings -->
+    <string name="meanings_more">+%1$d</string>
+    <plurals name="subjects_more">
+        <item quantity="one">+%1$d more subject meaning</item>
+        <item quantity="other">+%1$d more subject meanings</item>
+    </plurals>
+    <plurals name="meaning_count">
+        <item quantity="one">%1$d meaning</item>
+        <item quantity="other">%1$d meanings</item>
+    </plurals>
+    <plurals name="subject_count">
+        <item quantity="one">%1$d subject</item>
+        <item quantity="other">%1$d subjects</item>
+    </plurals>
+    <plurals name="related_phrases">
+        <item quantity="one">%1$d related phrase</item>
+        <item quantity="other">%1$d related phrases</item>
+    </plurals>
+    <string name="meanings_none">No direct translation</string>
+    <string name="summary_separator">" · "</string>
+
+    <!-- Home (v2) -->
+    <string name="home_prompt">What word are you curious about?</string>
+    <string name="home_daily_goal">Daily goal</string>
+    <string name="home_explore">Explore words</string>
+    <string name="home_shuffle">Shuffle</string>
+    <string name="home_direction_en">EN → FA</string>
+    <string name="home_direction_fa">FA → EN</string>
+    <string name="home_mini_stats">%1$d saved  ·  %2$d learned</string>
+    <string name="goal_progress">%1$d/%2$d</string>
+    <string name="goal_start">Review %1$d cards a day to build the habit</string>
+    <plurals name="goal_remaining">
+        <item quantity="one">%1$d more card to reach the goal for today</item>
+        <item quantity="other">%1$d more cards to reach the goal for today</item>
+    </plurals>
+    <string name="goal_done">Goal reached — great work!</string>
+    <plurals name="goal_review_due">
+        <item quantity="one">Review %1$d due card</item>
+        <item quantity="other">Review %1$d due cards</item>
+    </plurals>
+    <string name="goal_start_learning">Start learning</string>
+    <string name="goal_keep_going">Keep going</string>
+    <plurals name="streak_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <string name="tool_english">English</string>
+    <string name="tool_persian">فارسی</string>
+    <string name="tool_quiz">Quiz</string>
+    <string name="tool_random">Random</string>
+    <string name="lang_badge_en">EN</string>
+    <string name="lang_badge_fa">FA</string>
+
+    <!-- Settings -->
+    <string name="title_settings">Settings</string>
+    <string name="settings_subtitle">Make the dictionary work your way</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_dictionary">Dictionary</string>
+    <string name="settings_section_pronunciation">Pronunciation</string>
+    <string name="settings_section_learning">Learning</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_section_support">Support &amp; info</string>
+    <string name="setting_theme">Theme</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="setting_direction">Default search direction</string>
+    <string name="setting_filter">Search match</string>
+    <string name="setting_speech_rate">Speaking speed</string>
+    <string name="speech_slow">Slow</string>
+    <string name="speech_normal">Normal</string>
+    <string name="speech_fast">Fast</string>
+    <string name="setting_accent">Accent</string>
+    <string name="accent_us">American English</string>
+    <string name="accent_uk">British English</string>
+    <string name="pronunciation_sample">Hello, welcome to your dictionary</string>
+    <string name="setting_daily_goal">Daily goal</string>
+    <plurals name="daily_goal_value">
+        <item quantity="one">%1$d card a day</item>
+        <item quantity="other">%1$d cards a day</item>
+    </plurals>
+    <string name="setting_meaning_first">Flashcards: meaning first</string>
+    <string name="meaning_first_on">See the meaning, recall the word</string>
+    <string name="meaning_first_off">See the word, recall the meaning</string>
+    <string name="setting_clear_history">Clear search history</string>
+    <string name="setting_clear_history_sub">Remove recent searches in both directions</string>
+    <string name="confirm_clear_history">Remove all your recent searches?</string>
+    <string name="history_cleared">Search history cleared</string>
+    <string name="setting_reset_progress">Reset flashcard progress</string>
+    <string name="setting_reset_progress_sub">Start every card over and reset your streak</string>
+    <string name="confirm_reset_progress">All flashcard levels, your streak and study history will be lost. This cannot be undone.</string>
+    <string name="progress_reset">Flashcard progress reset</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_back">Back</string>
+    <string name="setting_intro">Show introduction</string>
+    <string name="setting_intro_sub">Replay the welcome tour</string>
+    <string name="setting_rate">Rate the app</string>
+    <string name="setting_rate_sub">Enjoying it? Leave a review on Google Play</string>
+    <string name="setting_share">Share the app</string>
+    <string name="setting_share_sub">Tell a friend who is learning</string>
+    <string name="setting_feedback">Send feedback</string>
+    <string name="setting_about">About</string>
+    <string name="setting_about_sub">Version, features and contact</string>
+    <string name="settings_footer">%1$s · Version %2$s</string>
+    <string name="share_app_text">Learn English and Persian words offline with %1$s: %2$s</string>
+    <string name="feedback_subject">%1$s feedback (version %2$s)</string>
+    <string name="no_app_found">No app found to open this</string>
+
+    <!-- About -->
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_tagline">A fast, offline, two-way dictionary with pronunciation, flashcards and daily practice.</string>
+    <string name="about_stat_english">English entries</string>
+    <string name="about_stat_persian">Persian entries</string>
+    <string name="about_stat_offline">Works offline</string>
+    <string name="about_stat_offline_value" formatted="false">100%</string>
+    <string name="about_section_features">What you can do</string>
+    <string name="about_section_developer">Developer</string>
+    <string name="about_developer_name">Golbarg</string>
+    <string name="about_developer_text">Made with care for language learners</string>
+    <string name="feature_dictionary">Two-way dictionary</string>
+    <string name="feature_dictionary_sub">English ⇄ Persian, entirely offline</string>
+    <string name="feature_pronunciation">Pronunciation</string>
+    <string name="feature_pronunciation_sub">American or British accent, at your speed</string>
+    <string name="feature_flashcards">Flashcards</string>
+    <string name="feature_flashcards_sub">Spaced repetition brings words back on time</string>
+    <string name="feature_quiz">Quiz &amp; word of the day</string>
+    <string name="feature_quiz_sub">Short daily practice to make words stick</string>
+    <string name="link_website">Website</string>
+    <string name="link_email">Email</string>
+    <string name="link_play">Google Play</string>
+    <string name="link_play_sub">Updates and reviews</string>
+    <string name="about_copyright">© %1$d Golbarg · Made with care</string>
+    <string name="contact_email" translatable="false">contact@golbarg.net</string>
+    <string name="website_url" translatable="false">https://golbarg.net</string>
+    <string name="website_label" translatable="false">golbarg.net</string>
+
+    <!-- Dictionary (v2) -->
+    <string name="action_remove">Remove</string>
+    <string name="action_swap_direction">Swap direction</string>
+    <string name="action_switch">Switch</string>
+    <string name="script_hint_persian">This looks like Persian. Search Persian → English instead?</string>
+    <string name="script_hint_english">This looks like English. Search English → Persian instead?</string>
+    <string name="empty_prompt_title_en">Look up an English word</string>
+    <string name="empty_prompt_title_fa">Look up a Persian word</string>
+    <string name="empty_prompt_text">Results appear as you type. Tap a word to see every meaning.</string>
+    <string name="no_results_hint">Try another spelling, search words that contain it, or switch direction.</string>
+    <string name="action_switch_direction">Switch direction</string>
+
+    <!-- Language setting: each language is shown in its own name -->
+    <string name="home_date_pattern">EEEE, MMM d</string>
+    <string name="about_count_thousands">%1$sK+</string>
+    <string name="setting_language">App language</string>
+    <string name="language_system">System default</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_persian" translatable="false">فارسی</string>
+
+    <!-- Word of the day card -->
+    <string name="wod_summary">%1$s · %2$s</string>
+    <plurals name="wod_more_meanings">
+        <item quantity="one">+%1$s more meaning</item>
+        <item quantity="other">+%1$s more meanings</item>
+    </plurals>
+
+    <!-- Saved words -->
+    <string name="saved_title">Saved words</string>
+    <plurals name="saved_count">
+        <item quantity="one">%1$s word saved</item>
+        <item quantity="other">%1$s words saved</item>
+    </plurals>
+    <string name="saved_search_hint">Search your saved words</string>
+    <string name="saved_practice">Practise</string>
+    <string name="saved_empty_text">Tap the star on any word to keep it here for quick review.</string>
+    <string name="saved_no_match">Nothing matches “%1$s”</string>
+    <string name="saved_no_match_hint">Try a shorter word, or check the other language.</string>
+    <string name="action_undo">Undo</string>
 </resources>

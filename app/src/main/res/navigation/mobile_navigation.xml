@@ -8,14 +8,20 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="net.golbarg.engtoper.ui.home.HomeFragment"
-        android:label="@string/title_english"
+        android:label="@string/nav_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_persian"
-        android:name="net.golbarg.engtoper.ui.persian.PersianFragment"
-        android:label="@string/title_persian"
-        tools:layout="@layout/fragment_persian" />
+        android:id="@+id/navigation_dictionary"
+        android:name="net.golbarg.engtoper.ui.dictionary.DictionaryFragment"
+        android:label="@string/title_dictionary"
+        tools:layout="@layout/fragment_dictionary" />
+
+    <fragment
+        android:id="@+id/navigation_flashcards"
+        android:name="net.golbarg.engtoper.ui.flashcard.FlashcardFragment"
+        android:label="@string/title_flashcards"
+        tools:layout="@layout/fragment_flashcard" />
 
     <fragment
         android:id="@+id/navigation_bookmark"
@@ -23,6 +29,22 @@
         android:label="@string/title_bookmark"
         tools:layout="@layout/fragment_bookmark" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="net.golbarg.engtoper.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/navigation_about"
+            app:enterAnim="@anim/slide_in_end"
+            app:exitAnim="@anim/fade_out_short"
+            app:popEnterAnim="@anim/fade_in_short"
+            app:popExitAnim="@anim/slide_out_end" />
+    </fragment>
+
+    <!-- Opened from Settings; not a bottom-navigation tab -->
     <fragment
         android:id="@+id/navigation_about"
         android:name="net.golbarg.engtoper.ui.about.AboutFragment"

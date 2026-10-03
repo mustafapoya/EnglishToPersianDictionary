@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Persian (فارسی) user interface. Persian keeps nouns singular after numbers, so plural forms match. -->
+<resources>
+    <string name="app_name">دیکشنری انگلیسی-فارسی</string>
+    <string name="title_bookmark">نشان‌شده‌ها</string>
+    <string name="title_about">درباره</string>
+    <string name="title_english">انگلیسی به فارسی</string>
+    <string name="title_persian">فارسی به انگلیسی</string>
+
+    <!-- Search Placeholders & Filters -->
+    <string name="search_english_hint">جستجوی واژه انگلیسی…</string>
+    <string name="search_persian_hint">جستجوی واژه فارسی…</string>
+    <string name="filter_starts_with">شروع با</string>
+    <string name="filter_contains">شامل</string>
+    <string name="filter_exact">دقیق</string>
+
+    <!-- Word of the Day -->
+    <string name="word_of_the_day">واژه روز</string>
+
+    <!-- Search History -->
+    <string name="recent_searches">جستجوهای اخیر</string>
+    <string name="clear_all">پاک کردن همه</string>
+
+    <!-- Empty States & Results -->
+    <string name="no_results_found">هیچ نتیجه‌ای برای «%1$s» یافت نشد</string>
+    <plurals name="results_count">
+        <item quantity="one">%1$d واژه پیدا شد</item>
+        <item quantity="other">%1$d واژه پیدا شد</item>
+    </plurals>
+    <string name="action_clear_search">پاک کردن جستجو</string>
+    <string name="action_voice_search">جستجوی صوتی</string>
+
+    <!-- Word Detail Modal -->
+    <string name="definition">معنی و ترجمه‌ها</string>
+    <string name="action_listen">تلفظ</string>
+    <string name="action_copy">کپی</string>
+    <string name="action_share">اشتراک‌گذاری</string>
+    <string name="action_reverse_lookup">جستجوی معکوس</string>
+    <string name="copied_to_clipboard">در کلیپ‌بورد کپی شد!</string>
+    <string name="bookmark_removed">از نشان‌شده‌ها حذف شد</string>
+
+    <!-- Vocabulary Quiz / Flashcards -->
+    <string name="quiz_title">آزمون واژگان</string>
+    <string name="quiz_question_title">معنی این واژه چیست:</string>
+    <string name="quiz_streak">🔥 پیاپی: %1$d</string>
+    <string name="quiz_correct">درست است! آفرین 🎉</string>
+    <string name="quiz_wrong">نادرست. پاسخ درست: %1$s</string>
+    <string name="quiz_completed_title">آزمون تمام شد! 🏆</string>
+    <string name="quiz_completed_msg">%1$d از %2$d را درست پاسخ دادید (%3$d٪)</string>
+    <string name="quiz_next_word">واژه بعدی</string>
+    <string name="quiz_play_again">دوباره بازی کن</string>
+    <string name="quiz_done">پایان</string>
+
+    <!-- TTS -->
+    <string name="tts_error">موتور تبدیل متن به گفتار در دسترس نیست</string>
+
+    <!-- Bookmarks -->
+
+    <!-- Bottom Navigation (short labels) -->
+    <string name="nav_home">خانه</string>
+    <string name="nav_dictionary">دیکشنری</string>
+    <string name="nav_flashcards">کارت‌ها</string>
+    <string name="nav_bookmark">نشان‌شده</string>
+    <string name="nav_settings">تنظیمات</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">سریع • آفلاین • دوطرفه</string>
+    <string name="splash_loading">در حال آماده‌سازی دیکشنری آفلاین…</string>
+    <string name="splash_credit">از گلبرگ</string>
+
+    <!-- Intro / Onboarding -->
+    <string name="intro_skip">رد شدن</string>
+    <string name="intro_next">بعدی</string>
+    <string name="intro_get_started">شروع کنیم</string>
+    <string name="intro_title_1">ترجمه در هر دو جهت</string>
+    <string name="intro_desc_1">معنی فارسی واژه‌های انگلیسی و معنی انگلیسی واژه‌های فارسی را فوری و بدون اینترنت پیدا کنید.</string>
+    <string name="intro_chip_1a">Hello</string>
+    <string name="intro_chip_1b">سلام</string>
+    <string name="intro_title_2">بشنوید و ذخیره کنید</string>
+    <string name="intro_desc_2">تلفظ هر واژه را بشنوید، واژه‌های دلخواه را نشان کنید و با تاریخچه جستجو از همان‌جا که بودید ادامه دهید.</string>
+    <string name="intro_chip_2a">تلفظ</string>
+    <string name="intro_chip_2b">نشان‌شده</string>
+    <string name="intro_title_3">هر روز یاد بگیرید</string>
+    <string name="intro_desc_3">هر روز یک واژه تازه کشف کنید و با آزمون‌های کوتاه، واژه‌های جدید را در ذهن نگه دارید.</string>
+    <string name="intro_chip_3a">واژه روز</string>
+    <string name="intro_chip_3b">آزمون</string>
+    <string name="intro_page_indicator">صفحه %1$d از %2$d</string>
+
+    <!-- Dictionary (merged English / Persian search) -->
+    <string name="title_dictionary">دیکشنری</string>
+    <string name="direction_en_fa">انگلیسی به فارسی</string>
+    <string name="direction_fa_en">فارسی به انگلیسی</string>
+
+    <!-- Home dashboard -->
+    <string name="greeting_morning">صبح بخیر</string>
+    <string name="greeting_afternoon">عصر بخیر</string>
+    <string name="greeting_evening">شب بخیر</string>
+    <string name="action_bookmark">نشان کردن</string>
+    <string name="action_read_more">بیشتر بخوانید</string>
+
+    <!-- Flashcards -->
+    <string name="title_flashcards">فلش‌کارت</string>
+    <string name="flashcard_stats">%1$d یادگرفته · %2$d برای مرور امروز</string>
+    <string name="flashcard_undo">واگرد</string>
+    <string name="flashcard_reverse">اول نمایش معنی</string>
+    <string name="flashcard_mode_meaning_first">اول معنی نمایش داده می‌شود</string>
+    <string name="flashcard_mode_word_first">اول واژه نمایش داده می‌شود</string>
+    <string name="deck_due">برای مرور</string>
+    <string name="deck_saved">نشان‌شده</string>
+    <string name="deck_random">تصادفی</string>
+    <string name="deck_with_count">%1$s · %2$d</string>
+    <string name="flashcard_progress">%1$d / %2$d</string>
+    <string name="flashcard_level">سطح %1$d از %2$d</string>
+    <string name="flashcard_level_new">واژه تازه</string>
+    <string name="flashcard_level_learning">در حال یادگیری</string>
+    <string name="flashcard_level_repeat">دوباره امتحان کنید</string>
+    <string name="flashcard_lang_english">انگلیسی</string>
+    <string name="flashcard_lang_persian">فارسی</string>
+    <string name="flashcard_lang_english_meaning">معنی انگلیسی</string>
+    <string name="flashcard_lang_persian_meaning">معنی فارسی</string>
+    <string name="flashcard_tap_to_flip">برای برگرداندن بزنید · برای پاسخ بکشید</string>
+    <string name="flashcard_show_answer">نمایش پاسخ</string>
+    <string name="flashcard_open_word">باز کردن واژه</string>
+    <string name="flashcard_again">دوباره</string>
+    <string name="flashcard_know">بلدم</string>
+    <plurals name="flashcard_hint_next">
+        <item quantity="one">«بلدم» ← %1$d روز دیگر دوباره می‌بینید</item>
+        <item quantity="other">«بلدم» ← %1$d روز دیگر دوباره می‌بینید</item>
+    </plurals>
+    <string name="flashcard_session_done">جلسه تمام شد</string>
+    <string name="flashcard_score">%1$d / %2$d</string>
+    <string name="flashcard_known_first_try">در همان بار اول درست</string>
+    <string name="flashcard_stat_known">بلد بودم</string>
+    <string name="flashcard_stat_missed">نادرست</string>
+    <string name="flashcard_stat_learned">یادگرفته</string>
+    <string name="flashcard_review_missed">مرور %1$d کارت نادرست</string>
+    <string name="flashcard_new_session">جلسه تازه</string>
+    <string name="deck_due_empty_title">همه را مرور کرده‌اید!</string>
+    <string name="deck_due_empty">امروز کارتی برای مرور نیست. چند واژه تازه یاد بگیرید تا سر موعد برای مرور برگردند.</string>
+    <string name="deck_study_random">مطالعه واژه‌های تصادفی</string>
+    <string name="deck_saved_empty_title">هنوز واژه‌ای نشان نشده</string>
+    <string name="deck_saved_empty">با ستاره زدن واژه‌ها در دیکشنری، دسته کارت خودتان را بسازید.</string>
+    <string name="bookmarks_explore">گشتی در دیکشنری</string>
+
+    <!-- Structured meanings -->
+    <string name="meanings_more">+%1$d</string>
+    <plurals name="subjects_more">
+        <item quantity="one">+%1$d معنی تخصصی دیگر</item>
+        <item quantity="other">+%1$d معنی تخصصی دیگر</item>
+    </plurals>
+    <plurals name="meaning_count">
+        <item quantity="one">%1$d معنی</item>
+        <item quantity="other">%1$d معنی</item>
+    </plurals>
+    <plurals name="subject_count">
+        <item quantity="one">%1$d حوزه تخصصی</item>
+        <item quantity="other">%1$d حوزه تخصصی</item>
+    </plurals>
+    <plurals name="related_phrases">
+        <item quantity="one">%1$d عبارت مرتبط</item>
+        <item quantity="other">%1$d عبارت مرتبط</item>
+    </plurals>
+    <string name="meanings_none">ترجمه مستقیمی ندارد</string>
+    <string name="summary_separator">" · "</string>
+
+    <!-- Home (v2) -->
+    <string name="home_prompt">دنبال معنی کدام واژه هستید؟</string>
+    <string name="home_daily_goal">هدف روزانه</string>
+    <string name="home_explore">کشف واژه‌ها</string>
+    <string name="home_shuffle">جابه‌جا کن</string>
+    <string name="home_direction_en">EN → FA</string>
+    <string name="home_direction_fa">FA → EN</string>
+    <string name="home_mini_stats">%1$d نشان‌شده  ·  %2$d یادگرفته</string>
+    <string name="goal_progress">%1$d/%2$d</string>
+    <string name="goal_start">برای ساختن عادت، روزی %1$d کارت مرور کنید</string>
+    <plurals name="goal_remaining">
+        <item quantity="one">%1$d کارت دیگر تا هدف امروز</item>
+        <item quantity="other">%1$d کارت دیگر تا هدف امروز</item>
+    </plurals>
+    <string name="goal_done">به هدف رسیدید — عالی بود!</string>
+    <plurals name="goal_review_due">
+        <item quantity="one">مرور %1$d کارت</item>
+        <item quantity="other">مرور %1$d کارت</item>
+    </plurals>
+    <string name="goal_start_learning">شروع یادگیری</string>
+    <string name="goal_keep_going">ادامه بده</string>
+    <plurals name="streak_days">
+        <item quantity="one">%1$d روز</item>
+        <item quantity="other">%1$d روز</item>
+    </plurals>
+    <string name="tool_english">انگلیسی</string>
+    <string name="tool_persian">فارسی</string>
+    <string name="tool_quiz">آزمون</string>
+    <string name="tool_random">تصادفی</string>
+    <string name="lang_badge_en">EN</string>
+    <string name="lang_badge_fa">FA</string>
+
+    <!-- Settings -->
+    <string name="title_settings">تنظیمات</string>
+    <string name="settings_subtitle">دیکشنری را مطابق سلیقه خود تنظیم کنید</string>
+    <string name="settings_section_appearance">ظاهر</string>
+    <string name="settings_section_dictionary">دیکشنری</string>
+    <string name="settings_section_pronunciation">تلفظ</string>
+    <string name="settings_section_learning">یادگیری</string>
+    <string name="settings_section_data">داده‌ها</string>
+    <string name="settings_section_support">پشتیبانی و اطلاعات</string>
+    <string name="setting_theme">پوسته</string>
+    <string name="theme_system">پیش‌فرض سیستم</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تیره</string>
+    <string name="setting_direction">جهت پیش‌فرض جستجو</string>
+    <string name="setting_filter">نوع تطابق جستجو</string>
+    <string name="setting_speech_rate">سرعت تلفظ</string>
+    <string name="speech_slow">آهسته</string>
+    <string name="speech_normal">معمولی</string>
+    <string name="speech_fast">سریع</string>
+    <string name="setting_accent">لهجه</string>
+    <string name="accent_us">انگلیسی آمریکایی</string>
+    <string name="accent_uk">انگلیسی بریتانیایی</string>
+    <string name="pronunciation_sample">Hello, welcome to your dictionary</string>
+    <string name="setting_daily_goal">هدف روزانه</string>
+    <plurals name="daily_goal_value">
+        <item quantity="one">روزی %1$d کارت</item>
+        <item quantity="other">روزی %1$d کارت</item>
+    </plurals>
+    <string name="setting_meaning_first">فلش‌کارت: اول معنی</string>
+    <string name="meaning_first_on">معنی را ببینید، واژه را به یاد آورید</string>
+    <string name="meaning_first_off">واژه را ببینید، معنی را به یاد آورید</string>
+    <string name="setting_clear_history">پاک کردن تاریخچه جستجو</string>
+    <string name="setting_clear_history_sub">حذف جستجوهای اخیر در هر دو جهت</string>
+    <string name="confirm_clear_history">همه جستجوهای اخیر حذف شوند؟</string>
+    <string name="history_cleared">تاریخچه جستجو پاک شد</string>
+    <string name="setting_reset_progress">بازنشانی پیشرفت فلش‌کارت</string>
+    <string name="setting_reset_progress_sub">همه کارت‌ها از نو شروع می‌شوند و روزهای پیاپی صفر می‌شود</string>
+    <string name="confirm_reset_progress">همه سطح‌های فلش‌کارت، روزهای پیاپی و سابقه مطالعه از بین می‌رود. این کار برگشت‌پذیر نیست.</string>
+    <string name="progress_reset">پیشرفت فلش‌کارت بازنشانی شد</string>
+    <string name="action_clear">پاک کن</string>
+    <string name="action_reset">بازنشانی</string>
+    <string name="action_back">بازگشت</string>
+    <string name="setting_intro">نمایش معرفی</string>
+    <string name="setting_intro_sub">دوباره دیدن راهنمای شروع</string>
+    <string name="setting_rate">امتیاز به برنامه</string>
+    <string name="setting_rate_sub">راضی هستید؟ در گوگل پلی نظر بدهید</string>
+    <string name="setting_share">معرفی برنامه</string>
+    <string name="setting_share_sub">به دوستی که زبان یاد می‌گیرد بگویید</string>
+    <string name="setting_feedback">ارسال بازخورد</string>
+    <string name="setting_about">درباره</string>
+    <string name="setting_about_sub">نسخه، امکانات و راه ارتباط</string>
+    <string name="settings_footer">%1$s · نسخه %2$s</string>
+    <string name="share_app_text">با %1$s واژه‌های انگلیسی و فارسی را آفلاین یاد بگیرید: %2$s</string>
+    <string name="feedback_subject">بازخورد %1$s (نسخه %2$s)</string>
+    <string name="no_app_found">برنامه‌ای برای باز کردن این مورد پیدا نشد</string>
+
+    <!-- About -->
+    <string name="about_version">نسخه %1$s (%2$d)</string>
+    <string name="about_tagline">دیکشنری سریع، آفلاین و دوطرفه، با تلفظ، فلش‌کارت و تمرین روزانه.</string>
+    <string name="about_stat_english">مدخل انگلیسی</string>
+    <string name="about_stat_persian">مدخل فارسی</string>
+    <string name="about_stat_offline">کاملاً آفلاین</string>
+    <string name="about_stat_offline_value" formatted="false">۱۰۰٪</string>
+    <string name="about_section_features">چه کارهایی می‌توانید بکنید</string>
+    <string name="about_section_developer">سازنده</string>
+    <string name="about_developer_name">گلبرگ</string>
+    <string name="about_developer_text">با دقت و علاقه، برای زبان‌آموزان</string>
+    <string name="feature_dictionary">دیکشنری دوطرفه</string>
+    <string name="feature_dictionary_sub">انگلیسی ⇄ فارسی، کاملاً آفلاین</string>
+    <string name="feature_pronunciation">تلفظ</string>
+    <string name="feature_pronunciation_sub">لهجه آمریکایی یا بریتانیایی، با سرعت دلخواه</string>
+    <string name="feature_flashcards">فلش‌کارت</string>
+    <string name="feature_flashcards_sub">تکرار فاصله‌دار، واژه‌ها را سر وقت برمی‌گرداند</string>
+    <string name="feature_quiz">آزمون و واژه روز</string>
+    <string name="feature_quiz_sub">تمرین کوتاه روزانه برای ماندگاری واژه‌ها</string>
+    <string name="link_website">وب‌سایت</string>
+    <string name="link_email">ایمیل</string>
+    <string name="link_play">گوگل پلی</string>
+    <string name="link_play_sub">به‌روزرسانی‌ها و نظرها</string>
+    <string name="about_copyright">© %1$d گلبرگ · ساخته‌شده با علاقه</string>
+
+    <!-- Dictionary (v2) -->
+    <string name="action_remove">حذف</string>
+    <string name="action_swap_direction">تغییر جهت</string>
+    <string name="action_switch">تغییر</string>
+    <string name="script_hint_persian">این متن فارسی به نظر می‌رسد. در فارسی به انگلیسی جستجو شود؟</string>
+    <string name="script_hint_english">این متن انگلیسی به نظر می‌رسد. در انگلیسی به فارسی جستجو شود؟</string>
+    <string name="empty_prompt_title_en">جستجوی واژه انگلیسی</string>
+    <string name="empty_prompt_title_fa">جستجوی واژه فارسی</string>
+    <string name="empty_prompt_text">نتیجه‌ها هنگام نوشتن ظاهر می‌شوند. برای دیدن همه معنی‌ها روی واژه بزنید.</string>
+    <string name="no_results_hint">املای دیگری امتحان کنید، واژه‌های شامل آن را جستجو کنید یا جهت را تغییر دهید.</string>
+    <string name="action_switch_direction">تغییر جهت</string>
+
+    <!-- Language setting -->
+    <string name="home_date_pattern">EEEE d MMMM</string>
+    <string name="about_count_thousands">%1$s هزار+</string>
+    <string name="setting_language">زبان برنامه</string>
+    <string name="language_system">پیش‌فرض سیستم</string>
+
+    <!-- Word of the day card -->
+    <string name="wod_summary">%1$s · %2$s</string>
+    <plurals name="wod_more_meanings">
+        <item quantity="one">+%1$s معنی دیگر</item>
+        <item quantity="other">+%1$s معنی دیگر</item>
+    </plurals>
+
+    <!-- Saved words -->
+    <string name="saved_title">واژه‌های نشان‌شده</string>
+    <plurals name="saved_count">
+        <item quantity="one">%1$s واژه نشان‌شده</item>
+        <item quantity="other">%1$s واژه نشان‌شده</item>
+    </plurals>
+    <string name="saved_search_hint">جستجو در واژه‌های نشان‌شده</string>
+    <string name="saved_practice">تمرین</string>
+    <string name="saved_empty_text">روی ستاره هر واژه بزنید تا برای مرور سریع اینجا بماند.</string>
+    <string name="saved_no_match">چیزی با «%1$s» پیدا نشد</string>
+    <string name="saved_no_match_hint">واژه کوتاه‌تری امتحان کنید یا زبان دیگر را ببینید.</string>
+    <string name="action_undo">واگرد</string>
+</resources>

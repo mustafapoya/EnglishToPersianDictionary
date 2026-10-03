@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp">
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_history"
+        app:tint="?attr/appTextTertiary" />
+
+    <TextView
+        android:id="@+id/text_query"
+        android:layout_width="0dp"
+        android:textAlignment="viewStart"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/appTextPrimary"
+        android:textSize="15sp"
+        tools:text="serendipity" />
+
+    <TextView
+        android:id="@+id/text_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pill"
+        android:backgroundTint="?attr/appSurfaceVariant"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:textColor="?attr/appTextSecondary"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="EN" />
+
+    <ImageView
+        android:id="@+id/img_open"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_arrow_forward"
+        app:tint="?attr/appTextTertiary" />
+
+    <!-- Shown instead of the arrow where entries can be removed (dictionary screen) -->
+    <ImageButton
+        android:id="@+id/btn_remove"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="-8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_remove"
+        android:src="@drawable/ic_clear"
+        android:visibility="gone"
+        app:tint="?attr/appTextTertiary" />
+</LinearLayout>

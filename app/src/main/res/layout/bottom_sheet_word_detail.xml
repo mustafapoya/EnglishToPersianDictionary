@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_rounded_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Drag Handle -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/drag_handle" />
+
+        <!-- Header Row: Word + TTS Audio + Bookmark -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/detail_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Perseverance"
+                android:textColor="?attr/appTextPrimary"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/detail_actions"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_summary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="?attr/appTextTertiary"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/detail_actions"
+                app:layout_constraintTop_toBottomOf="@id/detail_word" />
+
+            <LinearLayout
+                android:id="@+id/detail_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/detail_btn_speaker"
+                    style="@style/AppIconButtonTonal"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:contentDescription="@string/action_listen"
+                    app:icon="@drawable/ic_volume_up"
+                    app:iconSize="22dp"
+                    app:iconTint="?attr/colorPrimary"
+                    app:backgroundTint="?attr/colorPrimaryContainer" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/detail_btn_bookmark"
+                    style="@style/AppIconButtonTonal"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/title_bookmark"
+                    app:icon="@drawable/ic_star_outline"
+                    app:iconSize="22dp"
+                    app:iconTint="?attr/appTextSecondary"
+                    app:backgroundTint="?attr/appSurfaceVariant" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Definition Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/appCardBorderColor"
+            app:cardBackgroundColor="?attr/appCardBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/definition"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.05" />
+
+                <net.golbarg.engtoper.ui.common.MeaningsView
+                    android:id="@+id/detail_meanings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:id="@+id/detail_no_meaning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/meanings_none"
+                    android:textColor="?attr/appTextTertiary"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Quick Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Copy Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detail_btn_copy"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="@string/action_copy"
+                app:icon="@drawable/ic_copy"
+                app:iconSize="18dp"
+                app:strokeColor="?attr/appCardBorderColor"
+                android:textColor="?attr/appTextPrimary"
+                app:iconTint="?attr/colorPrimary" />
+
+            <!-- Share Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detail_btn_share"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="@string/action_share"
+                app:icon="@drawable/ic_share"
+                app:iconSize="18dp"
+                app:strokeColor="?attr/appCardBorderColor"
+                android:textColor="?attr/appTextPrimary"
+                app:iconTint="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <!-- Reverse Lookup Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detail_btn_reverse"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/action_reverse_lookup"
+            app:icon="@drawable/ic_swap_horiz"
+            app:iconSize="18dp"
+            app:backgroundTint="?attr/colorPrimaryContainer"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            app:iconTint="?attr/colorPrimary" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

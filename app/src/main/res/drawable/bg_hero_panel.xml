@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="28dp" />
+            <gradient
+                android:angle="300"
+                android:endColor="@color/hero_end"
+                android:startColor="@color/hero_start"
+                android:type="linear" />
+        </shape>
+    </item>
+    <!-- Soft decorative circles in the corner -->
+    <item android:gravity="top|end" android:width="180dp" android:height="180dp" android:top="-60dp" android:right="-50dp">
+        <shape android:shape="oval">
+            <solid android:color="#14FFFFFF" />
+        </shape>
+    </item>
+    <item android:gravity="top|end" android:width="110dp" android:height="110dp" android:top="40dp" android:right="-30dp">
+        <shape android:shape="oval">
+            <solid android:color="#10FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

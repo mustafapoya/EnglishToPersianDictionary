@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="background" format="reference"/>
-    <attr name="category_background" format="reference"/>
-    <attr name="content_background" format="reference"/>
-    <attr name="bgColor" format="color"/>
-    <attr name="textColor" format="color"/>
-    <attr name="metaTextColor" format="color"/>
-    <attr name="tab_color" format="reference"/>
+    <attr name="appBackgroundColor" format="color"/>
+    <attr name="appSurfaceColor" format="color"/>
+    <attr name="appSurfaceVariant" format="color"/>
+    <attr name="appCardBackground" format="color"/>
+    <attr name="appCardBorderColor" format="color"/>
+    <attr name="appTextPrimary" format="color"/>
+    <attr name="appTextSecondary" format="color"/>
+    <attr name="appTextTertiary" format="color"/>
+    <attr name="appDivider" format="color"/>
+
+    <declare-styleable name="MeaningsView">
+        <attr name="meaningsStyle" format="enum">
+            <enum name="surface" value="0" />
+            <enum name="hero" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

@@ -74,14 +74,12 @@ public class OfflineDatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    // The database is copied ready-made from assets, so there is nothing to create or migrate
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TableConfig.createTableQuery());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(TableConfig.dropTableQuery());
-        onCreate(db);
     }
 }

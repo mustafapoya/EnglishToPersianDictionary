@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Soft radial glow in the top-end corner of the word of the day card -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="280dp"
+        android:height="280dp"
+        android:end="-90dp"
+        android:gravity="top|end"
+        android:top="-110dp">
+        <shape android:shape="oval">
+            <gradient
+                android:endColor="@color/wod_glow_end"
+                android:gradientRadius="140dp"
+                android:startColor="@color/wod_glow"
+                android:type="radial" />
+        </shape>
+    </item>
+</layer-list>

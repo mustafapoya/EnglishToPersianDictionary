@@ -1,29 +1,52 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.EnglishToPersian" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_600</item>
-        <item name="colorPrimaryVariant">@color/blue_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+    <!-- Base application theme with Material 3 for Night Mode -->
+    <style name="Theme.EnglishToPersian" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Brand Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item>
 
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_700</item>
-        <item name="colorSecondaryVariant">@color/green_500</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container_dark</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container_dark</item>
 
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/tertiary_container_dark</item>
+        <item name="colorOnTertiaryContainer">@color/on_tertiary_container_dark</item>
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Surfaces & Backgrounds -->
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_dark</item>
 
-        <!-- Customize your theme here. -->
-        <item name="textColor">@color/white</item>
-        <item name="fontFamily">@font/app_font_family</item>
+        <!-- Status bar & Navigation bar -->
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/surface_dark</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
-        <item name="metaTextColor">@color/gray</item>
-        <item name="backgroundColor">@color/blue_600</item>
-        <item name="content_background">@color/blue_200</item>
-        <item name="category_background">@color/black_500</item>
-        <item name="tab_color">@drawable/tab_color</item>
-        <!-- Customize your theme here. -->
+        <!-- Custom Semantic Theme Attributes -->
+        <item name="appBackgroundColor">@color/background_dark</item>
+        <item name="appSurfaceColor">@color/surface_dark</item>
+        <item name="appSurfaceVariant">@color/surface_variant_dark</item>
+        <item name="appCardBackground">@color/surface_card_dark</item>
+        <item name="appCardBorderColor">@color/card_border_dark</item>
+        <item name="appTextPrimary">@color/text_primary_dark</item>
+        <item name="appTextSecondary">@color/text_secondary_dark</item>
+        <item name="appTextTertiary">@color/text_tertiary_dark</item>
+        <item name="appDivider">#1E293B</item>
+
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalBottomSheet</item>
+    </style>
+
+    <style name="AppModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

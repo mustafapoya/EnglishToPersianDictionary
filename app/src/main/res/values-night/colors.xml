@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Stronger glow on dark surfaces so the word of the day card still stands out -->
+    <color name="wod_glow">#3D3B82FF</color>
+    <color name="wod_glow_end">#003B82FF</color>
+
+    <!-- Feedback pills (flashcard tally, swipe label) on dark surfaces -->
+    <color name="success_container">#163D30</color>
+    <color name="success_dark">#7EE2B8</color>
+    <color name="error_container">#4A1F24</color>
+    <color name="error_dark">#FDA4AF</color>
+</resources>

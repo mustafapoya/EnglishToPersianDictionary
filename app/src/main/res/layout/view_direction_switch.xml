@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compact "English ⇄ فارسی" switch: the source language is highlighted; tapping swaps direction -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:background="@drawable/bg_outline_pill"
+    android:clickable="true"
+    android:contentDescription="@string/action_swap_direction"
+    android:focusable="true"
+    android:foreground="@drawable/nav_cell_ripple"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="4dp">
+
+    <TextView
+        android:id="@+id/label_from"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_pill"
+        android:backgroundTint="?attr/colorPrimaryContainer"
+        android:gravity="center"
+        android:minWidth="64dp"
+        android:paddingHorizontal="12dp"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="English" />
+
+    <ImageView
+        android:id="@+id/icon_swap"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginHorizontal="6dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_swap_horiz"
+        app:tint="?attr/colorPrimary" />
+
+    <TextView
+        android:id="@+id/label_to"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:minWidth="56dp"
+        android:paddingHorizontal="10dp"
+        android:textColor="?attr/appTextSecondary"
+        android:textSize="13sp"
+        tools:text="فارسی" />
+</LinearLayout>
