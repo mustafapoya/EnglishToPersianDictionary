@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Long-press the app icon: jump straight to a search or to flashcard review -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_search_english"
+        android:shortcutId="search_english"
+        android:shortcutLongLabel="@string/shortcut_search_english_long"
+        android:shortcutShortLabel="@string/shortcut_search_english">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="net.golbarg.engtoper.SplashScreenActivity"
+            android:targetPackage="net.golbarg.engtoper">
+            <extra android:name="net.golbarg.engtoper.extra.DESTINATION" android:value="dictionary" />
+            <extra android:name="net.golbarg.engtoper.extra.LANG" android:value="en" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_search_persian"
+        android:shortcutId="search_persian"
+        android:shortcutLongLabel="@string/shortcut_search_persian_long"
+        android:shortcutShortLabel="@string/shortcut_search_persian">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="net.golbarg.engtoper.SplashScreenActivity"
+            android:targetPackage="net.golbarg.engtoper">
+            <extra android:name="net.golbarg.engtoper.extra.DESTINATION" android:value="dictionary" />
+            <extra android:name="net.golbarg.engtoper.extra.LANG" android:value="fa" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_flashcards"
+        android:shortcutId="flashcards"
+        android:shortcutLongLabel="@string/shortcut_flashcards_long"
+        android:shortcutShortLabel="@string/shortcut_flashcards">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="net.golbarg.engtoper.SplashScreenActivity"
+            android:targetPackage="net.golbarg.engtoper">
+            <extra android:name="net.golbarg.engtoper.extra.DESTINATION" android:value="flashcards" />
+        </intent>
+    </shortcut>
+</shortcuts>

@@ -554,5 +554,10 @@
                     android:paddingVertical="4dp" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+
+        <!-- ── Sponsored (hidden when ads are off) ──────────────────────────── -->
+        <include
+            android:id="@+id/home_ad"
+            layout="@layout/view_home_native_ad" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -387,6 +387,31 @@
                     android:text="@string/action_switch_direction"
                     app:icon="@drawable/ic_swap_horiz" />
             </LinearLayout>
+
+            <!-- "Did you mean…?" spellings (filled in code) -->
+            <LinearLayout
+                android:id="@+id/layout_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/AppOverline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/did_you_mean" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chips_suggestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:chipSpacingHorizontal="8dp" />
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

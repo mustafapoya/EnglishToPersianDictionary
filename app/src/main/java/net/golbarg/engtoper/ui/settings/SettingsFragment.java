@@ -1,12 +1,18 @@
 package net.golbarg.engtoper.ui.settings;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.text.format.DateFormat;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AttrRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -14,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,18 +28,27 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 
 import net.golbarg.engtoper.R;
+import net.golbarg.engtoper.ads.AdConsent;
+import net.golbarg.engtoper.ads.AdFreeOffer;
+import net.golbarg.engtoper.ads.AdFreePass;
+import net.golbarg.engtoper.ads.AdUtil;
 import net.golbarg.engtoper.databinding.FragmentSettingsBinding;
 import net.golbarg.engtoper.databinding.ViewSettingRowBinding;
 import net.golbarg.engtoper.db.DictionaryRepository;
 import net.golbarg.engtoper.db.StudyRepository;
 import net.golbarg.engtoper.models.SearchFilter;
+import net.golbarg.engtoper.reminder.ReminderScheduler;
 import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.intro.IntroActivity;
 import net.golbarg.engtoper.util.AppLinks;
 import net.golbarg.engtoper.util.AppPreferences;
 import net.golbarg.engtoper.util.TTSManager;
+
+import java.util.Calendar;
 
 import static net.golbarg.engtoper.ui.DictionaryViewModel.LANG_EN;
 import static net.golbarg.engtoper.ui.DictionaryViewModel.LANG_FA;
@@ -60,6 +76,8 @@ public class SettingsFragment extends Fragment {
     /** Index 0 is "follow the system". */
     private static final String[] LANGUAGE_TAGS = {"", "en", "fa"};
 
+    private static final String TAG_REMINDER_TIME = "REMINDER_TIME";
+
     private FragmentSettingsBinding binding;
     private DictionaryViewModel dictionaryViewModel;
 
@@ -78,6 +96,12 @@ public class SettingsFragment extends Fragment {
         setupRows();
         binding.textFooter.setText(getString(R.string.settings_footer,
                 getString(R.string.app_name), AppLinks.versionName(requireContext())));
+
+        // Earning an ad-free day or changing consent updates the Ads rows
+        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> renderAds());
+
+        Fragment restoredPicker = getChildFragmentManager().findFragmentByTag(TAG_REMINDER_TIME);
+        if (restoredPicker instanceof MaterialTimePicker) listenToTimePicker((MaterialTimePicker) restoredPicker);
     }
 
     @Override
@@ -118,6 +142,17 @@ public class SettingsFragment extends Fragment {
         binding.rowMeaningFirst.toggle.setVisibility(View.VISIBLE);
         binding.rowMeaningFirst.chevron.setVisibility(View.GONE);
 
+        bindRow(binding.rowReminder, R.drawable.ic_notification, primaryBg, primaryFg, R.string.setting_reminder, v -> toggleReminder());
+        binding.rowReminder.toggle.setVisibility(View.VISIBLE);
+        binding.rowReminder.chevron.setVisibility(View.GONE);
+        bindRow(binding.rowReminderTime, R.drawable.ic_history, primaryBg, primaryFg, R.string.setting_reminder_time, v -> chooseReminderTime());
+
+        bindRow(binding.rowAdFree, R.drawable.ic_play_circle, tertiaryBg, tertiaryFg, R.string.setting_ad_free,
+                v -> AdFreeOffer.show(requireActivity()));
+        bindRow(binding.rowAdPrivacy, R.drawable.ic_shield, tertiaryBg, tertiaryFg, R.string.setting_ad_privacy,
+                v -> AdConsent.showPrivacyOptions(requireActivity(), this::renderAds));
+        binding.rowAdPrivacy.value.setText(R.string.setting_ad_privacy_sub);
+
         bindRow(binding.rowClearHistory, R.drawable.ic_history, dangerBg, dangerFg, R.string.setting_clear_history, v -> confirmClearHistory());
         binding.rowClearHistory.value.setText(R.string.setting_clear_history_sub);
         bindRow(binding.rowResetProgress, R.drawable.ic_delete, dangerBg, dangerFg, R.string.setting_reset_progress, v -> confirmResetProgress());
@@ -150,6 +185,7 @@ public class SettingsFragment extends Fragment {
     private void renderValues() {
         if (binding == null) return;
         android.content.Context context = requireContext();
+        renderAds();
 
         binding.rowTheme.value.setText(THEME_LABELS[indexOf(THEME_MODES, AppPreferences.getThemeMode(context))]);
         binding.rowLanguage.value.setText(languageLabels()[currentLanguageIndex()]);
@@ -161,6 +197,14 @@ public class SettingsFragment extends Fragment {
 
         int goal = AppPreferences.getDailyGoal(context);
         binding.rowDailyGoal.value.setText(getResources().getQuantityString(R.plurals.daily_goal_value, goal, goal));
+
+        boolean reminder = AppPreferences.isReminderEnabled(context);
+        String time = formatTime(AppPreferences.getReminderMinutes(context));
+        binding.rowReminder.toggle.setChecked(reminder);
+        binding.rowReminder.value.setText(reminder ? getString(R.string.reminder_on, time) : getString(R.string.reminder_off));
+        binding.rowReminderTime.value.setText(time);
+        binding.rowReminderTime.getRoot().setEnabled(reminder);
+        binding.rowReminderTime.getRoot().setAlpha(reminder ? 1f : 0.45f);
 
         boolean meaningFirst = AppPreferences.isFlashcardReverse(context);
         binding.rowMeaningFirst.toggle.setChecked(meaningFirst);
@@ -247,6 +291,81 @@ public class SettingsFragment extends Fragment {
             AppPreferences.setDailyGoal(requireContext(), DAILY_GOALS[which]);
             renderValues();
         });
+    }
+
+    // ── Ads ───────────────────────────────────────────────────────────────────
+
+    /** Shows only the Ads rows that apply: the ad-free offer, and privacy choices where required. */
+    private void renderAds() {
+        if (binding == null) return;
+        boolean adFree = AdFreePass.isActive(requireContext());
+        boolean offer = adFree || AdFreeOffer.isAvailable(requireActivity());
+        boolean privacy = AdConsent.isPrivacyOptionsRequired(requireContext());
+
+        binding.rowAdFree.getRoot().setVisibility(offer ? View.VISIBLE : View.GONE);
+        binding.rowAdFree.value.setText(adFree
+                ? getString(R.string.setting_ad_free_active, AdFreePass.formatEnd(requireContext()))
+                : getString(R.string.setting_ad_free_sub));
+        binding.rowAdPrivacy.getRoot().setVisibility(privacy ? View.VISIBLE : View.GONE);
+        binding.dividerAdPrivacy.setVisibility(offer && privacy ? View.VISIBLE : View.GONE);
+        binding.sectionAds.setVisibility(offer || privacy ? View.VISIBLE : View.GONE);
+    }
+
+    // ── Daily reminder ────────────────────────────────────────────────────────
+
+    private final ActivityResultLauncher<String> notificationPermission =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
+                if (granted) {
+                    setReminder(true);
+                } else {
+                    showMessage(R.string.reminder_permission_denied);
+                }
+            });
+
+    private void toggleReminder() {
+        boolean enable = !AppPreferences.isReminderEnabled(requireContext());
+        if (enable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS);
+            return;
+        }
+        setReminder(enable);
+    }
+
+    private void setReminder(boolean enabled) {
+        AppPreferences.setReminderEnabled(requireContext(), enabled);
+        ReminderScheduler.sync(requireContext());
+        renderValues();
+    }
+
+    private void chooseReminderTime() {
+        int minutes = AppPreferences.getReminderMinutes(requireContext());
+        MaterialTimePicker picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(DateFormat.is24HourFormat(requireContext()) ? TimeFormat.CLOCK_24H : TimeFormat.CLOCK_12H)
+                .setHour(minutes / 60)
+                .setMinute(minutes % 60)
+                .setTitleText(R.string.setting_reminder_time)
+                .build();
+        listenToTimePicker(picker);
+        picker.show(getChildFragmentManager(), TAG_REMINDER_TIME);
+    }
+
+    /** Also called after rotation: the restored picker has lost its listener. */
+    private void listenToTimePicker(MaterialTimePicker picker) {
+        picker.addOnPositiveButtonClickListener(v -> {
+            AppPreferences.setReminderMinutes(requireContext(), picker.getHour() * 60 + picker.getMinute());
+            ReminderScheduler.sync(requireContext());
+            renderValues();
+        });
+    }
+
+    /** "7:00 PM" / "19:00", in the app language's digits. */
+    private String formatTime(int minutes) {
+        Calendar time = Calendar.getInstance();
+        time.set(Calendar.HOUR_OF_DAY, minutes / 60);
+        time.set(Calendar.MINUTE, minutes % 60);
+        return DateFormat.getTimeFormat(requireContext()).format(time.getTime());
     }
 
     /** Lets the user hear the new speed / accent right away. */

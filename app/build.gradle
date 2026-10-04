@@ -6,9 +6,18 @@ plugins {
 // Switch ads with ads.enabled / ads.mode in gradle.properties (or -Pads.mode=test on the command line).
 def adsEnabled = (project.findProperty('ads.enabled') ?: 'true').toString().toBoolean()
 def adsMode = (project.findProperty('ads.mode') ?: 'auto').toString()
+// Real unit IDs come from the AdMob console. An empty ID turns that placement off in release builds.
 def admob = [
-        test: [appId: 'ca-app-pub-3940256099942544~3347511713', banner: 'ca-app-pub-3940256099942544/9214589741'],
-        real: [appId: 'ca-app-pub-8976959600358837~3318589324', banner: 'ca-app-pub-8976959600358837/1610809888'],
+        test: [appId       : 'ca-app-pub-3940256099942544~3347511713',
+               banner      : 'ca-app-pub-3940256099942544/9214589741',
+               nativeAd    : 'ca-app-pub-3940256099942544/2247696110',
+               interstitial: 'ca-app-pub-3940256099942544/1033173712',
+               rewarded    : 'ca-app-pub-3940256099942544/5224354917'],
+        real: [appId       : 'ca-app-pub-8976959600358837~3318589324',
+               banner      : 'ca-app-pub-8976959600358837/1610809888',
+               nativeAd    : '',   // "Native advanced" unit
+               interstitial: '',   // "Interstitial" unit
+               rewarded    : ''],  // "Rewarded" unit
 ]
 def useTestAds = { boolean debugBuild -> adsMode == 'test' || (adsMode == 'auto' && debugBuild) }
 def configureAds = { buildType, boolean debugBuild ->
@@ -16,6 +25,9 @@ def configureAds = { buildType, boolean debugBuild ->
     buildType.buildConfigField 'boolean', 'ADS_ENABLED', adsEnabled.toString()
     buildType.buildConfigField 'boolean', 'ADS_TEST_MODE', useTestAds(debugBuild).toString()
     buildType.buildConfigField 'String', 'AD_BANNER_ID', "\"${ids.banner}\""
+    buildType.buildConfigField 'String', 'AD_NATIVE_ID', "\"${ids.nativeAd}\""
+    buildType.buildConfigField 'String', 'AD_INTERSTITIAL_ID', "\"${ids.interstitial}\""
+    buildType.buildConfigField 'String', 'AD_REWARDED_ID', "\"${ids.rewarded}\""
     buildType.manifestPlaceholders['admobAppId'] = ids.appId
 }
 
@@ -63,6 +75,7 @@ dependencies {
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
     implementation libs.play.services.ads
+    implementation libs.user.messaging.platform
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

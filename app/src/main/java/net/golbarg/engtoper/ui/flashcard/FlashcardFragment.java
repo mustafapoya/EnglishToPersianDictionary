@@ -24,11 +24,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 
 import net.golbarg.engtoper.MainActivity;
 import net.golbarg.engtoper.R;
+import net.golbarg.engtoper.ads.AdFreeOffer;
+import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.NativeAdBinder;
+import net.golbarg.engtoper.ads.SessionInterstitial;
 import net.golbarg.engtoper.databinding.FragmentFlashcardBinding;
 import net.golbarg.engtoper.databinding.ViewStatBinding;
 import net.golbarg.engtoper.db.StudyRepository;
@@ -88,6 +93,8 @@ public class FlashcardFragment extends Fragment {
         setupControls();
         setupResult();
         setupGestures();
+        NativeAd restoredAd = viewModel.getAdSlot().showing();
+        if (restoredAd != null) bindAd(restoredAd);
         observeViewModel();
     }
 
@@ -121,7 +128,13 @@ public class FlashcardFragment extends Fragment {
         binding.btnListenBack.setOnClickListener(v -> speakCurrent());
         binding.btnOpenWord.setOnClickListener(v -> openCurrentWord());
         binding.btnUndo.setOnClickListener(v -> {
-            if (!isAnimating) viewModel.undo();
+            if (isAnimating) return;
+            if (isShowingAd()) closeAd();
+            viewModel.undo();
+        });
+        binding.btnRemoveAds.setOnClickListener(v -> AdFreeOffer.show(requireActivity()));
+        binding.btnAdContinue.setOnClickListener(v -> {
+            if (!isAnimating) swipeAdAway(binding.cardContainer.getWidth() * EXIT_FACTOR * endDirection());
         });
         binding.btnReverse.setOnClickListener(v -> toggleReverse());
     }
@@ -154,6 +167,13 @@ public class FlashcardFragment extends Fragment {
             if (state != null) render(state);
         });
         viewModel.getState().observe(getViewLifecycleOwner(), this::render);
+        // Ads turned off (e.g. the user earned an ad-free day): take the ad card away at once
+        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> {
+            if (Boolean.TRUE.equals(allowed)) return;
+            boolean wasShowing = isShowingAd();
+            viewModel.getAdSlot().dropAds();
+            if (wasShowing) closeAd();
+        });
     }
 
     private void toggleReverse() {
@@ -219,7 +239,10 @@ public class FlashcardFragment extends Fragment {
         binding.panelEmpty.setVisibility(type == FlashcardViewModel.Type.EMPTY ? View.VISIBLE : View.GONE);
         binding.result.getRoot().setVisibility(type == FlashcardViewModel.Type.FINISHED ? View.VISIBLE : View.GONE);
         binding.btnUndo.setVisibility(state.canUndo ? View.VISIBLE : View.GONE);
-        if (type != FlashcardViewModel.Type.SHOWING) boundPosition = -1;
+        if (type != FlashcardViewModel.Type.SHOWING) {
+            boundPosition = -1;
+            viewModel.getAdSlot().dismiss();
+        }
 
         switch (type) {
             case SHOWING:
@@ -234,6 +257,7 @@ public class FlashcardFragment extends Fragment {
             default:
                 break;
         }
+        renderAd();
     }
 
     private void renderCard(FlashcardViewModel.State state) {
@@ -248,6 +272,8 @@ public class FlashcardFragment extends Fragment {
 
         // Cards still waiting after this one peek out from behind it
         int remaining = state.total - state.position - 1;
+        // A long enough session may end with a full-screen ad: get it ready near the end
+        if (remaining < 3 && state.total >= SessionInterstitial.MIN_ANSWERS) SessionInterstitial.preload(requireContext());
         binding.cardGhostNear.setVisibility(remaining >= 1 ? View.VISIBLE : View.INVISIBLE);
         binding.cardGhostFar.setVisibility(remaining >= 2 ? View.VISIBLE : View.INVISIBLE);
 
@@ -340,14 +366,87 @@ public class FlashcardFragment extends Fragment {
         binding.textHint.setVisibility(back ? View.VISIBLE : View.INVISIBLE);
     }
 
+    /** The card being dragged: the ad while one is showing, otherwise the visible face. */
     private View currentFace() {
+        if (isShowingAd()) return binding.adCard.getRoot();
         return showingBack ? binding.cardBack : binding.cardFront;
+    }
+
+    // ── Native ad between cards ───────────────────────────────────────────────
+
+    private boolean isShowingAd() {
+        return viewModel.getAdSlot().showing() != null;
+    }
+
+    /**
+     * After an answer: shows an ad card if one is due and the session goes on, or, when the
+     * session has just ended, possibly a full-screen ad before its results (a natural break).
+     */
+    private void maybeShowAd() {
+        FlashcardAdSlot slot = viewModel.getAdSlot();
+        slot.onCardAnswered();
+        FlashcardViewModel.State state = viewModel.getState().getValue();
+        if (state != null && state.type == FlashcardViewModel.Type.FINISHED) {
+            SessionInterstitial.showAtSessionEnd(requireActivity(), state.total);
+            return;
+        }
+        if (state == null || state.type != FlashcardViewModel.Type.SHOWING) return;
+        NativeAd ad = slot.takeDueAd();
+        if (ad == null) return;
+        bindAd(ad);
+        renderAd();
+        animateIn(binding.adCard.getRoot());
+    }
+
+    private void bindAd(NativeAd ad) {
+        NativeAdBinder.bind(binding.adCard.nativeAdView, ad);
+    }
+
+    /** While an ad shows it covers the card, and "Remove ads" / "Continue" replace the answer buttons. */
+    private void renderAd() {
+        boolean ad = isShowingAd();
+        View adCard = binding.adCard.getRoot();
+        adCard.setVisibility(ad ? View.VISIBLE : View.GONE);
+        binding.layoutAdActions.setVisibility(ad ? View.VISIBLE : View.GONE);
+        if (!ad) return;
+        adCard.setTranslationX(0f);
+        adCard.setRotation(0f);
+        adCard.setAlpha(1f);
+        binding.cardFront.setVisibility(View.INVISIBLE);
+        binding.cardBack.setVisibility(View.INVISIBLE);
+        binding.btnShowAnswer.setVisibility(View.GONE);
+        binding.layoutRate.setVisibility(View.GONE);
+        binding.textHint.setVisibility(View.INVISIBLE);
+    }
+
+    private void swipeAdAway(float exitX) {
+        isAnimating = true;
+        binding.adCard.getRoot().animate()
+                .translationX(exitX)
+                .rotation(exitX * ROTATION_PER_PX)
+                .alpha(0f)
+                .setDuration(SWIPE_MS)
+                .setInterpolator(new AccelerateInterpolator())
+                .withEndAction(() -> {
+                    isAnimating = false;
+                    if (binding == null) return;
+                    closeAd();
+                    if (!showingBack) animateIn(binding.cardFront);
+                })
+                .start();
+    }
+
+    /** Removes the ad and brings back the card that was waiting under it. */
+    private void closeAd() {
+        viewModel.getAdSlot().dismiss();
+        renderAd();
+        showFace(showingBack);
     }
 
     // ── Animations ────────────────────────────────────────────────────────────
 
     private void flipCard() {
-        if (isAnimating) return;
+        if (isAnimating || isShowingAd()) return;
         View outView = currentFace();
         View inView = showingBack ? binding.cardFront : binding.cardBack;
         float direction = showingBack ? -1f : 1f;
@@ -372,7 +471,7 @@ public class FlashcardFragment extends Fragment {
     }
 
     private void answer(boolean known) {
-        if (isAnimating) return;
+        if (isAnimating || isShowingAd()) return;
         isAnimating = true;
         binding.getRoot().performHapticFeedback(answerHaptic(known));
         // "Know it" sits at the end side (right in English, left in Persian): known cards leave that way
@@ -389,6 +488,7 @@ public class FlashcardFragment extends Fragment {
                     if (binding == null) return;
                     hideSwipeLabel();
                     viewModel.answer(known);
+                    maybeShowAd();
                 })
                 .start();
     }
@@ -401,7 +501,10 @@ public class FlashcardFragment extends Fragment {
     }
 
     private void animateCardIn() {
-        View card = binding.cardFront;
+        animateIn(binding.cardFront);
+    }
+
+    private void animateIn(View card) {
         card.setAlpha(0f);
         card.setScaleX(ENTER_SCALE);
         card.setScaleY(ENTER_SCALE);
@@ -425,7 +528,7 @@ public class FlashcardFragment extends Fragment {
         card.setTranslationX(dx);
         card.setRotation(dx * ROTATION_PER_PX);
         card.setAlpha(Math.max(MIN_DRAG_ALPHA, 1f - Math.abs(dx) / binding.cardContainer.getWidth()));
-        showSwipeLabel(dx);
+        if (!isShowingAd()) showSwipeLabel(dx);
     }
 
     private void showSwipeLabel(float dx) {
@@ -471,6 +574,15 @@ public class FlashcardFragment extends Fragment {
 
             @Override
             public void onRelease(float dx) {
+                if (isShowingAd()) {
+                    // Either direction dismisses the ad; it never counts as an answer
+                    if (Math.abs(dx) > swipeThreshold()) {
+                        swipeAdAway(binding.cardContainer.getWidth() * EXIT_FACTOR * Math.signum(dx));
+                    } else {
+                        snapBack();
+                    }
+                    return;
+                }
                 float towardEnd = dx * endDirection();
                 if (towardEnd > swipeThreshold()) {
                     answer(true);
@@ -491,6 +603,8 @@ public class FlashcardFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // The ad itself stays in the ViewModel for rotation; only this view lets go of it
+        binding.adCard.nativeAdView.destroy();
         binding = null;
     }
 }

@@ -1,5 +1,7 @@
 package net.golbarg.engtoper;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.NavOptions;
@@ -18,12 +21,21 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.golbarg.engtoper.ads.AdConsent;
 import net.golbarg.engtoper.databinding.ActivityMainBinding;
+import net.golbarg.engtoper.db.StudyRepository;
+import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.common.PillNavBar;
-import net.golbarg.engtoper.util.AdUtil;
 import net.golbarg.engtoper.util.AppPreferences;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Deep links (app shortcuts, the daily reminder, "Translate" from other apps)
+    public static final String EXTRA_DESTINATION = "net.golbarg.engtoper.extra.DESTINATION";
+    public static final String EXTRA_LANG = "net.golbarg.engtoper.extra.LANG";
+    public static final String EXTRA_QUERY = "net.golbarg.engtoper.extra.QUERY";
+    public static final String DESTINATION_DICTIONARY = "dictionary";
+    public static final String DESTINATION_FLASHCARDS = "flashcards";
 
     private static final Set<Integer> TAB_IDS = new HashSet<>(Arrays.asList(
             R.id.navigation_home, R.id.navigation_dictionary, R.id.navigation_flashcards,
@@ -44,7 +56,45 @@ public class MainActivity extends AppCompatActivity {
 
         setupWindowInsets();
         setupBottomNavigation();
-        AdUtil.initialize(this);
+        AppPreferences.markFirstOpen(this);
+        // Asks for ad consent where the law requires it, then lets ads start
+        AdConsent.gather(this);
+        if (savedInstanceState == null) handleDeepLink(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleDeepLink(intent);
+    }
+
+    /** Opens the screen a shortcut, notification or lookup asked for. */
+    private void handleDeepLink(@Nullable Intent intent) {
+        if (intent == null) return;
+        String destination = intent.getStringExtra(EXTRA_DESTINATION);
+        if (destination == null) return;
+        DictionaryViewModel viewModel = new ViewModelProvider(this).get(DictionaryViewModel.class);
+
+        if (DESTINATION_DICTIONARY.equals(destination)) {
+            String lang = intent.getStringExtra(EXTRA_LANG);
+            String query = intent.getStringExtra(EXTRA_QUERY);
+            viewModel.requestDictionary(lang != null ? lang : viewModel.currentLang(), query, query == null);
+            openTab(R.id.navigation_dictionary);
+        } else if (DESTINATION_FLASHCARDS.equals(destination)) {
+            viewModel.requestFlashcardDeck(StudyRepository.Deck.DUE);
+            openTab(R.id.navigation_flashcards);
+        }
+        // Handle each link once (e.g. not again after a configuration change)
+        intent.removeExtra(EXTRA_DESTINATION);
+    }
+
+    /** An intent that opens the dictionary in {@code lang}, searching {@code query} if given. */
+    public static Intent dictionaryIntent(Context context, String lang, @Nullable String query) {
+        return new Intent(context, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .putExtra(EXTRA_DESTINATION, DESTINATION_DICTIONARY)
+                .putExtra(EXTRA_LANG, lang)
+                .putExtra(EXTRA_QUERY, query);
     }
 
     /**

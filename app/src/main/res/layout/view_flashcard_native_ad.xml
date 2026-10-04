@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Native ad shown between flashcards: same size and shape as a card, clearly labelled "Ad".
+     Swipe it either way (or tap Continue below) to keep studying. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    app:cardBackgroundColor="?attr/appCardBackground"
+    app:cardCornerRadius="28dp"
+    app:cardElevation="4dp"
+    app:strokeColor="?attr/appCardBorderColor"
+    app:strokeWidth="1dp"
+    tools:visibility="visible">
+
+    <com.google.android.gms.ads.nativead.NativeAdView
+        android:id="@+id/native_ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Attribution: AdMob requires a visible "Ad" label; AdChoices is drawn top-right by the SDK -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/AppAdBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/flashcard_ad_hint"
+                    android:textColor="?attr/appTextTertiary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ad_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="12dp"
+                    android:adjustViewBounds="true"
+                    android:importantForAccessibility="no" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ad_headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="?attr/appTextPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="Learn faster with Example" />
+
+                    <TextView
+                        android:id="@+id/ad_advertiser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="?attr/appTextSecondary"
+                        android:textSize="13sp"
+                        tools:text="Example Inc." />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.gms.ads.nativead.MediaView
+                android:id="@+id/ad_media"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:minHeight="120dp" />
+
+            <TextView
+                android:id="@+id/ad_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="?attr/appTextSecondary"
+                android:textSize="14sp"
+                tools:text="A short description of what is being advertised." />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ad_call_to_action"
+                style="@style/AppButton"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="12dp"
+                android:paddingHorizontal="24dp"
+                tools:text="Install" />
+        </LinearLayout>
+    </com.google.android.gms.ads.nativead.NativeAdView>
+</com.google.android.material.card.MaterialCardView>

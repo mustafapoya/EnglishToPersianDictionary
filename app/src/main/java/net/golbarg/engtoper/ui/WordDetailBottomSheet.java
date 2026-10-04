@@ -1,5 +1,6 @@
 package net.golbarg.engtoper.ui;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +14,10 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.color.MaterialColors;
 
+import net.golbarg.engtoper.MainActivity;
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.databinding.BottomSheetWordDetailBinding;
+import net.golbarg.engtoper.db.DictionaryRepository;
 import net.golbarg.engtoper.models.PhraseEnglish;
 import net.golbarg.engtoper.models.PhrasePersian;
 import net.golbarg.engtoper.ui.common.PhraseItemBinder;
@@ -115,6 +118,8 @@ public class WordDetailBottomSheet extends BottomSheetDialogFragment {
             updateBookmarkButton();
             if (bookmarkToggleListener != null) {
                 bookmarkToggleListener.onBookmarkToggled(wordId, isEnglish, favorite);
+            } else {
+                saveBookmarkDirectly();
             }
         });
 
@@ -128,14 +133,41 @@ public class WordDetailBottomSheet extends BottomSheetDialogFragment {
         });
 
         binding.detailBtnReverse.setOnClickListener(v -> {
-            dismiss();
+            // Look up the first meaning in the other direction
+            String firstMeaning = !parsed.meanings.isEmpty() ? parsed.meanings.get(0)
+                    : !parsed.subjects.isEmpty() ? parsed.subjects.get(0).meaning : "";
             if (reverseLookupListener != null) {
-                // Look up the first meaning in the other direction
-                String firstMeaning = !parsed.meanings.isEmpty() ? parsed.meanings.get(0)
-                        : !parsed.subjects.isEmpty() ? parsed.subjects.get(0).meaning : "";
                 reverseLookupListener.onReverseLookup(firstMeaning, isEnglish);
+            } else {
+                // Opened outside the main screen (e.g. from another app): continue in the dictionary
+                startActivity(MainActivity.dictionaryIntent(requireContext(),
+                        isEnglish ? DictionaryViewModel.LANG_FA : DictionaryViewModel.LANG_EN, firstMeaning));
             }
+            dismiss();
         });
+    }
+
+    /** No host listener (e.g. after rotation, or in the look-up popup): save the bookmark directly. */
+    private void saveBookmarkDirectly() {
+        DictionaryRepository repository = DictionaryRepository.getInstance(requireContext());
+        if (isEnglish) {
+            repository.setFavoriteEnglish(new PhraseEnglish(wordId, word, translation, favorite, "", 0), favorite, null);
+        } else {
+            repository.setFavoritePersian(new PhrasePersian(wordId, word, translation, favorite, "", 0), favorite, null);
+        }
+    }
+
+    /** Implemented by an activity that should hear when the sheet closes (the look-up popup finishes then). */
+    public interface Host {
+        void onWordSheetDismissed();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (getActivity() instanceof Host && !getActivity().isChangingConfigurations()) {
+            ((Host) getActivity()).onWordSheetDismissed();
+        }
     }
 
     private void updateBookmarkButton() {

@@ -180,7 +180,9 @@ public class IntroActivity extends AppCompatActivity {
             finish();
             return;
         }
-        startActivity(new Intent(this, MainActivity.class));
+        Intent main = new Intent(this, MainActivity.class);
+        if (getIntent().getExtras() != null) main.putExtras(getIntent().getExtras());
+        startActivity(main);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }

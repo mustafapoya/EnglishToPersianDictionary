@@ -386,6 +386,11 @@
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Native ad shown between cards every few answers (see FlashcardAdSlot) -->
+            <include
+                android:id="@+id/ad_card"
+                layout="@layout/view_flashcard_native_ad" />
+
             <!-- "Know it" / "Again" label shown while swiping -->
             <TextView
                 android:id="@+id/text_swipe_label"
@@ -410,6 +415,36 @@
             android:layout_marginTop="8dp"
             android:text="@string/flashcard_show_answer"
             app:icon="@drawable/ic_flip" />
+
+        <!-- Replaces the answer buttons while an ad card is showing; outside the ad itself -->
+        <LinearLayout
+            android:id="@+id/layout_ad_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_remove_ads"
+                style="@style/AppButton.Outlined"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:text="@string/ad_remove" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_ad_continue"
+                style="@style/AppButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/flashcard_ad_continue"
+                app:icon="@drawable/ic_arrow_forward"
+                app:iconGravity="textEnd" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_rate"

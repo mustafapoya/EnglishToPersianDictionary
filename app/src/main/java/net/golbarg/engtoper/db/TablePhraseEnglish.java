@@ -142,6 +142,26 @@ public class TablePhraseEnglish {
         return list;
     }
 
+    /** Single words close in length that start like {@code query}: candidates for "did you mean". */
+    public ArrayList<String> suggestionCandidates(String query, int maxLengthGap) {
+        ArrayList<String> words = new ArrayList<>();
+        query = query.trim();
+        if (query.isEmpty()) return words;
+        // Bound arguments are strings, so the length bounds are cast or LENGTH() never compares equal
+        String sql = "SELECT " + KEY_LANGUAGE_FROM + " FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " LIKE ?"
+                + (query.contains(" ") ? "" : " AND " + KEY_LANGUAGE_FROM + " NOT LIKE '% %'")
+                + " AND LENGTH(" + KEY_LANGUAGE_FROM + ") BETWEEN CAST(? AS INTEGER) AND CAST(? AS INTEGER) LIMIT 20000";
+        try (Cursor cursor = offlineDatabaseHandler.getReadableDatabase().rawQuery(sql, new String[]{
+                query.substring(0, 1) + "%",
+                String.valueOf(Math.max(1, query.length() - maxLengthGap)),
+                String.valueOf(query.length() + maxLengthGap)})) {
+            while (cursor.moveToNext()) words.add(cursor.getString(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return words;
+    }
+
     public int countEntries() {
         SQLiteDatabase db = offlineDatabaseHandler.getReadableDatabase();
         try (Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null)) {

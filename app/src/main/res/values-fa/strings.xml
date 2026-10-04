@@ -313,4 +313,56 @@
     <string name="saved_no_match">چیزی با «%1$s» پیدا نشد</string>
     <string name="saved_no_match_hint">واژه کوتاه‌تری امتحان کنید یا زبان دیگر را ببینید.</string>
     <string name="action_undo">واگرد</string>
+
+    <!-- App shortcuts (long-press the app icon) -->
+    <string name="shortcut_search_english">جستجوی انگلیسی</string>
+    <string name="shortcut_search_english_long">جستجوی واژه انگلیسی</string>
+    <string name="shortcut_search_persian">جستجوی فارسی</string>
+    <string name="shortcut_search_persian_long">جستجوی واژه فارسی</string>
+    <string name="shortcut_flashcards">مرور کارت‌ها</string>
+    <string name="shortcut_flashcards_long">مرور فلش‌کارت‌ها</string>
+
+    <!-- Spelling suggestions -->
+    <string name="did_you_mean">منظورتان این بود؟</string>
+
+    <!-- Look up selected / shared text from other apps -->
+    <string name="lookup_label">دیکشنری</string>
+    <string name="lookup_not_found">معادل دقیقی برای «%1$s» پیدا نشد — دیکشنری باز می‌شود</string>
+
+    <!-- Daily reminder -->
+    <string name="setting_reminder">یادآور روزانه</string>
+    <string name="setting_reminder_time">ساعت یادآور</string>
+    <string name="reminder_off">خاموش</string>
+    <string name="reminder_on">هر روز ساعت %1$s</string>
+    <string name="reminder_permission_denied">برای دریافت یادآور روزانه، اجازه اعلان را بدهید</string>
+    <string name="reminder_channel_name">واژه روزانه</string>
+    <string name="reminder_channel_description">یادآوری روزانه همراه با واژه روز</string>
+    <string name="reminder_title">واژه روز: %1$s</string>
+    <string name="reminder_text_fallback">امروز دو دقیقه وقت بگذارید و یک واژه تازه یاد بگیرید.</string>
+    <string name="reminder_action_review">مرور کارت‌ها</string>
+
+    <!-- Native ad between flashcards -->
+    <string name="ad_badge">تبلیغ</string>
+    <string name="flashcard_ad_hint">برای ادامه، کارت را بکشید</string>
+    <string name="flashcard_ad_continue">ادامه</string>
+    <string name="ad_sponsored">حمایت‌شده</string>
+    <string name="ad_remove">حذف تبلیغات</string>
+
+    <!-- Ads settings and the 24-hour ad-free reward -->
+    <string name="settings_section_ads">تبلیغات</string>
+    <string name="setting_ad_free">۲۴ ساعت بدون تبلیغ</string>
+    <string name="setting_ad_free_sub">با تماشای یک ویدیوی کوتاه</string>
+    <string name="setting_ad_free_active">بدون تبلیغ تا %1$s</string>
+    <string name="setting_ad_privacy">حریم خصوصی تبلیغات</string>
+    <string name="setting_ad_privacy_sub">نحوهٔ استفادهٔ تبلیغات از داده‌های خود را تعیین کنید</string>
+    <string name="ad_free_offer_title">کمی استراحت از تبلیغات</string>
+    <string name="ad_free_offer_message">یک ویدیوی کوتاه ببینید تا همهٔ تبلیغات برنامه تا ۲۴ ساعت آینده حذف شوند.</string>
+    <string name="ad_free_offer_watch">تماشای ویدیو</string>
+    <string name="ad_free_offer_later">فعلاً نه</string>
+    <string name="ad_free_loading">در حال بارگذاری ویدیو…</string>
+    <string name="ad_free_unavailable">اکنون ویدیویی در دسترس نیست. لطفاً بعداً دوباره تلاش کنید.</string>
+    <string name="ad_free_not_earned">برای حذف تبلیغات، ویدیو را تا پایان تماشا کنید.</string>
+    <string name="ad_free_granted">سپاسگزاریم! تا %1$s تبلیغی نمایش داده نمی‌شود.</string>
+    <string name="ad_free_active_title">تبلیغات خاموش است</string>
+    <string name="ad_free_active">تبلیغات تا %1$s خاموش است.</string>
 </resources>

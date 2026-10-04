@@ -190,6 +190,11 @@ public class DictionaryViewModel extends AndroidViewModel {
         repository.addSearchHistory(query.trim(), lang);
     }
 
+    /** Close spellings for a query that found nothing ("did you mean…?"). */
+    public void suggestSpellings(String query, String lang, DictionaryRepository.Callback<List<String>> callback) {
+        repository.suggestSpellings(query, LANG_EN.equals(lang), callback);
+    }
+
     public void loadRecentSearches(String lang) {
         repository.getRecentSearches(lang, 15, recentSearches::setValue);
     }

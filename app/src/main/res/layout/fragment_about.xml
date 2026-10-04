@@ -64,17 +64,17 @@
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="26dp"
                     app:cardElevation="8dp"
                     app:strokeColor="@color/hero_button"
                     app:strokeWidth="2dp">
 
+                    <!-- app_logo is cropped to the artwork (no launcher safe-zone margin), so it fills the tile -->
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher_foreground" />
+                        android:src="@drawable/app_logo" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView

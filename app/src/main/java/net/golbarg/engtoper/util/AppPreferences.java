@@ -28,6 +28,13 @@ public class AppPreferences {
     private static final String KEY_SPEECH_RATE = "speech_rate";
     private static final String KEY_BRITISH_ACCENT = "british_accent";
     private static final String KEY_DAILY_GOAL = "daily_goal";
+    private static final String KEY_REMINDER_ENABLED = "reminder_enabled";
+    private static final String KEY_REMINDER_MINUTES = "reminder_minutes";
+    private static final String KEY_FIRST_OPEN_AT = "first_open_at";
+    private static final String KEY_AD_FREE_UNTIL = "ad_free_until";
+    private static final String KEY_LAST_INTERSTITIAL_AT = "last_interstitial_at";
+    /** 7 pm by default: after school or work. */
+    public static final int DEFAULT_REMINDER_MINUTES = 19 * 60;
 
     public static final float SPEECH_RATE_SLOW = 0.7f;
     public static final float SPEECH_RATE_NORMAL = 0.9f;
@@ -113,6 +120,52 @@ public class AppPreferences {
 
     public static void setDailyGoal(Context context, int goal) {
         prefs(context).edit().putInt(KEY_DAILY_GOAL, goal).apply();
+    }
+
+    public static boolean isReminderEnabled(Context context) {
+        return prefs(context).getBoolean(KEY_REMINDER_ENABLED, false);
+    }
+
+    public static void setReminderEnabled(Context context, boolean enabled) {
+        prefs(context).edit().putBoolean(KEY_REMINDER_ENABLED, enabled).apply();
+    }
+
+    /** Reminder time as minutes after midnight. */
+    public static int getReminderMinutes(Context context) {
+        return prefs(context).getInt(KEY_REMINDER_MINUTES, DEFAULT_REMINDER_MINUTES);
+    }
+
+    public static void setReminderMinutes(Context context, int minutes) {
+        prefs(context).edit().putInt(KEY_REMINDER_MINUTES, minutes).apply();
+    }
+
+    // ── Ads ───────────────────────────────────────────────────────────────────
+
+    /** Remembers when the app was first opened (kept from then on). */
+    public static void markFirstOpen(Context context) {
+        SharedPreferences prefs = prefs(context);
+        if (!prefs.contains(KEY_FIRST_OPEN_AT)) prefs.edit().putLong(KEY_FIRST_OPEN_AT, System.currentTimeMillis()).apply();
+    }
+
+    public static long getFirstOpenAt(Context context) {
+        return prefs(context).getLong(KEY_FIRST_OPEN_AT, System.currentTimeMillis());
+    }
+
+    /** End of the ad-free time earned with a rewarded video (epoch millis; 0 = none). */
+    public static long getAdFreeUntil(Context context) {
+        return prefs(context).getLong(KEY_AD_FREE_UNTIL, 0L);
+    }
+
+    public static void setAdFreeUntil(Context context, long epochMillis) {
+        prefs(context).edit().putLong(KEY_AD_FREE_UNTIL, epochMillis).apply();
+    }
+
+    public static long getLastInterstitialAt(Context context) {
+        return prefs(context).getLong(KEY_LAST_INTERSTITIAL_AT, 0L);
+    }
+
+    public static void setLastInterstitialAt(Context context, long epochMillis) {
+        prefs(context).edit().putLong(KEY_LAST_INTERSTITIAL_AT, epochMillis).apply();
     }
 
     /** Forgets the streak and study days (used when flashcard progress is reset). */

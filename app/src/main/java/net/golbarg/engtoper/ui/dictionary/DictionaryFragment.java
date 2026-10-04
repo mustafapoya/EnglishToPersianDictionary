@@ -23,6 +23,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import com.google.android.material.chip.Chip;
+
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.databinding.FragmentDictionaryBinding;
 import net.golbarg.engtoper.databinding.ItemRecentSearchBinding;
@@ -32,7 +34,8 @@ import net.golbarg.engtoper.models.SearchFilter;
 import net.golbarg.engtoper.models.SearchHistoryItem;
 import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
-import net.golbarg.engtoper.util.AdUtil;
+import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.util.PersianText;
 import net.golbarg.engtoper.util.TTSManager;
 
 import java.util.ArrayList;
@@ -255,7 +258,7 @@ public class DictionaryFragment extends Fragment {
 
     /** Offers to switch direction when the text is clearly in the other language's script. */
     private void updateScriptHint(String query) {
-        boolean persian = containsPersian(query);
+        boolean persian = PersianText.containsPersian(query);
         boolean latin = query.matches(".*[A-Za-z].*");
         boolean mismatch = isEnglish() ? persian && !latin : latin && !persian;
         binding.cardSwitchHint.setVisibility(mismatch ? View.VISIBLE : View.GONE);
@@ -264,16 +267,6 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-    private static boolean containsPersian(String text) {
-        for (int i = 0; i < text.length(); i++) {
-            int c = text.charAt(i);
-            // Arabic, Arabic Presentation Forms-A and -B: the blocks Persian text uses
-            if ((c >= 0x0600 && c <= 0x06FF) || (c >= 0xFB50 && c <= 0xFDFF) || (c >= 0xFE70 && c <= 0xFEFF)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void startVoiceSearch() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -338,9 +331,28 @@ public class DictionaryFragment extends Fragment {
         if (empty) {
             binding.txtEmptyMessage.setText(getString(R.string.no_results_found, query));
             binding.btnTryContains.setVisibility(binding.chipContains.isChecked() ? View.GONE : View.VISIBLE);
+            loadSuggestions(query);
         } else if (searching) {
             binding.txtResultsCount.setText(getResources().getQuantityString(R.plurals.results_count, count, count));
         }
+    }
+
+    /** Shows "did you mean…?" chips; ignores the answer if the user has typed on since. */
+    private void loadSuggestions(String query) {
+        binding.layoutSuggestions.setVisibility(View.GONE);
+        String requestLang = lang;
+        viewModel.suggestSpellings(query, requestLang, suggestions -> {
+            if (binding == null || !query.equals(currentQuery()) || !requestLang.equals(lang)) return;
+            binding.chipsSuggestions.removeAllViews();
+            for (String suggestion : suggestions) {
+                Chip chip = new Chip(requireContext());
+                chip.setText(suggestion);
+                chip.setTextDirection(isEnglish() ? View.TEXT_DIRECTION_LTR : View.TEXT_DIRECTION_RTL);
+                chip.setOnClickListener(v -> setQuery(suggestion));
+                binding.chipsSuggestions.addView(chip);
+            }
+            binding.layoutSuggestions.setVisibility(suggestions.isEmpty() ? View.GONE : View.VISIBLE);
+        });
     }
 
     private void renderRecentSearches(List<SearchHistoryItem> items) {

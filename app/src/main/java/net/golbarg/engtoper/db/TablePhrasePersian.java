@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.golbarg.engtoper.models.PhrasePersian;
 import net.golbarg.engtoper.models.SearchFilter;
+import net.golbarg.engtoper.util.PersianText;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -46,20 +47,22 @@ public class TablePhrasePersian {
         if (query == null || query.trim().isEmpty()) {
             return result;
         }
-        query = query.trim();
+        query = PersianText.normalize(query.trim());
 
         SQLiteDatabase db = offlineDatabaseHandler.getReadableDatabase();
         Cursor cursor = null;
+        // Headwords mix Arabic and Persian forms of yeh/kaf; compare both sides normalised
+        String word = PersianText.sqlNormalized(KEY_LANGUAGE_FROM);
 
         try {
             if (filter == SearchFilter.STARTS_WITH) {
-                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + KEY_LANGUAGE_FROM + " LIKE ? ORDER BY LENGTH(" + KEY_LANGUAGE_FROM + ") ASC, " + KEY_LANGUAGE_FROM + " ASC LIMIT ?";
+                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + word + " LIKE ? ORDER BY LENGTH(" + KEY_LANGUAGE_FROM + ") ASC, " + KEY_LANGUAGE_FROM + " ASC LIMIT ?";
                 cursor = db.rawQuery(sql, new String[]{query + "%", String.valueOf(limit)});
             } else if (filter == SearchFilter.EXACT) {
-                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + KEY_LANGUAGE_FROM + " = ? LIMIT ?";
+                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + word + " = ? LIMIT ?";
                 cursor = db.rawQuery(sql, new String[]{query, String.valueOf(limit)});
             } else { // CONTAINS
-                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + KEY_LANGUAGE_FROM + " LIKE ? ORDER BY CASE WHEN " + KEY_LANGUAGE_FROM + " LIKE ? THEN 0 ELSE 1 END, LENGTH(" + KEY_LANGUAGE_FROM + ") ASC LIMIT ?";
+                String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%' AND " + word + " LIKE ? ORDER BY CASE WHEN " + word + " LIKE ? THEN 0 ELSE 1 END, LENGTH(" + KEY_LANGUAGE_FROM + ") ASC LIMIT ?";
                 cursor = db.rawQuery(sql, new String[]{"%" + query + "%", query + "%", String.valueOf(limit)});
             }
 
@@ -106,6 +109,25 @@ public class TablePhrasePersian {
             cursor.close();
         }
         return result;
+    }
+
+    /** Headwords close in length that start like {@code query}: candidates for "did you mean". */
+    public ArrayList<String> suggestionCandidates(String query, int maxLengthGap) {
+        ArrayList<String> words = new ArrayList<>();
+        query = PersianText.normalize(query.trim());
+        if (query.isEmpty()) return words;
+        String word = PersianText.sqlNormalized(KEY_LANGUAGE_FROM);
+        String sql = "SELECT " + KEY_LANGUAGE_FROM + " FROM " + TABLE_NAME + " WHERE " + KEY_LANGUAGE_FROM + " NOT LIKE '%@%'"
+                + " AND " + word + " LIKE ? AND LENGTH(" + KEY_LANGUAGE_FROM + ") BETWEEN CAST(? AS INTEGER) AND CAST(? AS INTEGER) LIMIT 20000";
+        try (Cursor cursor = offlineDatabaseHandler.getReadableDatabase().rawQuery(sql, new String[]{
+                query.substring(0, 1) + "%",
+                String.valueOf(Math.max(1, query.length() - maxLengthGap)),
+                String.valueOf(query.length() + maxLengthGap)})) {
+            while (cursor.moveToNext()) words.add(cursor.getString(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return words;
     }
 
     public int countEntries() {

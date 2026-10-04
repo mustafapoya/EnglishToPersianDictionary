@@ -240,4 +240,27 @@
         <item name="strokeColor">?attr/appCardBorderColor</item>
         <item name="strokeWidth">1dp</item>
     </style>
+
+    <!-- The "Ad" label every ad must carry -->
+    <style name="AppAdBadge">
+        <item name="android:background">@drawable/bg_pill</item>
+        <item name="android:backgroundTint">?attr/colorTertiaryContainer</item>
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:text">@string/ad_badge</item>
+        <item name="android:textColor">?attr/colorOnTertiaryContainer</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Look-up popup over other apps: only its bottom sheet is visible -->
+    <style name="Theme.EnglishToPersian.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
 </resources>

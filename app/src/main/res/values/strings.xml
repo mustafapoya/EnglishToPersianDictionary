@@ -317,4 +317,56 @@
     <string name="saved_no_match">Nothing matches “%1$s”</string>
     <string name="saved_no_match_hint">Try a shorter word, or check the other language.</string>
     <string name="action_undo">Undo</string>
+
+    <!-- App shortcuts (long-press the app icon) -->
+    <string name="shortcut_search_english">Search English</string>
+    <string name="shortcut_search_english_long">Search English words</string>
+    <string name="shortcut_search_persian">Search Persian</string>
+    <string name="shortcut_search_persian_long">Search Persian words</string>
+    <string name="shortcut_flashcards">Review cards</string>
+    <string name="shortcut_flashcards_long">Review your flashcards</string>
+
+    <!-- Spelling suggestions -->
+    <string name="did_you_mean">Did you mean</string>
+
+    <!-- Look up selected / shared text from other apps -->
+    <string name="lookup_label">Dictionary</string>
+    <string name="lookup_not_found">No exact match for “%1$s” — opening the dictionary</string>
+
+    <!-- Daily reminder -->
+    <string name="setting_reminder">Daily reminder</string>
+    <string name="setting_reminder_time">Reminder time</string>
+    <string name="reminder_off">Off</string>
+    <string name="reminder_on">Every day at %1$s</string>
+    <string name="reminder_permission_denied">Allow notifications to get the daily reminder</string>
+    <string name="reminder_channel_name">Daily word</string>
+    <string name="reminder_channel_description">A daily reminder with the word of the day</string>
+    <string name="reminder_title">Word of the day: %1$s</string>
+    <string name="reminder_text_fallback">Take two minutes to learn a new word today.</string>
+    <string name="reminder_action_review">Review cards</string>
+
+    <!-- Native ad between flashcards -->
+    <string name="ad_badge">Ad</string>
+    <string name="flashcard_ad_hint">Swipe to keep studying</string>
+    <string name="flashcard_ad_continue">Continue</string>
+    <string name="ad_sponsored">Sponsored</string>
+    <string name="ad_remove">Remove ads</string>
+
+    <!-- Ads settings and the 24-hour ad-free reward -->
+    <string name="settings_section_ads">Ads</string>
+    <string name="setting_ad_free">No ads for 24 hours</string>
+    <string name="setting_ad_free_sub">Watch one short video</string>
+    <string name="setting_ad_free_active">Ad-free until %1$s</string>
+    <string name="setting_ad_privacy">Ad privacy choices</string>
+    <string name="setting_ad_privacy_sub">Change how ads may use your data</string>
+    <string name="ad_free_offer_title">Take a break from ads</string>
+    <string name="ad_free_offer_message">Watch one short video and every ad in the app disappears for the next 24 hours.</string>
+    <string name="ad_free_offer_watch">Watch video</string>
+    <string name="ad_free_offer_later">Not now</string>
+    <string name="ad_free_loading">Loading the video…</string>
+    <string name="ad_free_unavailable">No video is available right now. Please try again later.</string>
+    <string name="ad_free_not_earned">Watch the whole video to turn ads off.</string>
+    <string name="ad_free_granted">Thank you! No ads until %1$s.</string>
+    <string name="ad_free_active_title">You\'re ad-free</string>
+    <string name="ad_free_active">Ads are off until %1$s.</string>
 </resources>

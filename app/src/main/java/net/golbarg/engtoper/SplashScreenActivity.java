@@ -142,7 +142,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         isNavigated = true;
 
         Class<?> target = AppPreferences.isIntroCompleted(this) ? MainActivity.class : IntroActivity.class;
-        startActivity(new Intent(this, target));
+        Intent next = new Intent(this, target);
+        if (getIntent().getExtras() != null) next.putExtras(getIntent().getExtras());
+        startActivity(next);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
     }

@@ -26,7 +26,7 @@ import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
 import net.golbarg.engtoper.ui.dictionary.PhraseEnglishAdapter;
 import net.golbarg.engtoper.ui.dictionary.PhrasePersianAdapter;
-import net.golbarg.engtoper.util.AdUtil;
+import net.golbarg.engtoper.ads.AdUtil;
 import net.golbarg.engtoper.util.LocaleUtil;
 import net.golbarg.engtoper.util.TTSManager;
 import net.golbarg.engtoper.util.UtilController;

@@ -89,6 +89,7 @@ public class FlashcardViewModel extends AndroidViewModel {
     private final MutableLiveData<State> state = new MutableLiveData<>(State.simple(Type.LOADING, Deck.DUE));
     private final MutableLiveData<Boolean> reverse;
     private final MutableLiveData<StudyRepository.Stats> stats = new MutableLiveData<>();
+    private final FlashcardAdSlot adSlot;
 
     private FlashcardSession<Flashcard> session = new FlashcardSession<>(Collections.emptyList());
     private final Deque<UndoEntry> undoStack = new ArrayDeque<>();
@@ -102,6 +103,17 @@ public class FlashcardViewModel extends AndroidViewModel {
         super(application);
         repository = StudyRepository.getInstance(application);
         reverse = new MutableLiveData<>(AppPreferences.isFlashcardReverse(application));
+        adSlot = new FlashcardAdSlot(application);
+    }
+
+    /** Native ads shown between cards. */
+    FlashcardAdSlot getAdSlot() {
+        return adSlot;
+    }
+
+    @Override
+    protected void onCleared() {
+        adSlot.clear();
     }
 
     public LiveData<Deck> getDeck() {

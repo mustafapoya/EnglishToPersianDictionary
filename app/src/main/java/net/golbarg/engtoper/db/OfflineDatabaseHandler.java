@@ -36,8 +36,9 @@ public class OfflineDatabaseHandler extends SQLiteOpenHelper {
             f.mkdir();
         }
 
-        // Open the empty db as the output stream
-        OutputStream outputStream = new FileOutputStream(outFileName);
+        // Copy to a temporary file first so an interrupted copy never looks like a finished database
+        File tempFile = new File(outFileName + ".tmp");
+        OutputStream outputStream = new FileOutputStream(tempFile);
 
         //transfer bytes from the input file to the output file
         byte[] buffer = new byte[1024];
@@ -52,6 +53,10 @@ public class OfflineDatabaseHandler extends SQLiteOpenHelper {
         outputStream.close();
         inputStream.close();
 
+        if (!tempFile.renameTo(new File(outFileName))) {
+            tempFile.delete();
+            throw new IOException("Could not move the copied database into place");
+        }
     }
 
     public String getDatabasePath() {
@@ -59,19 +64,42 @@ public class OfflineDatabaseHandler extends SQLiteOpenHelper {
     }
 
     public SQLiteDatabase openDatabase() throws SQLException {
-        File dbFile = context.getDatabasePath(DATABASE_NAME);
+        File dbFile = ensureCopied();
+        return SQLiteDatabase.openDatabase(dbFile.getPath(), null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.CREATE_IF_NECESSARY);
+    }
 
-        if(!dbFile.exists()) {
-            try {
-                copyDatabaseFromAsset();
-                Log.d(TAG, "openDatabase: copying success from assets folder");
-            } catch (IOException e) {
-                throw new RuntimeException("Error Creating source database", e);
+    /**
+     * The app can be entered without the splash screen (look-up from another app, the daily
+     * reminder), so every open copies the asset first; otherwise SQLiteOpenHelper would create an
+     * empty database file and the real one would never be copied.
+     */
+    @Override
+    public SQLiteDatabase getReadableDatabase() {
+        ensureCopied();
+        return super.getReadableDatabase();
+    }
+
+    @Override
+    public SQLiteDatabase getWritableDatabase() {
+        ensureCopied();
+        return super.getWritableDatabase();
+    }
+
+    private static final Object COPY_LOCK = new Object();
+
+    private File ensureCopied() {
+        File dbFile = context.getDatabasePath(DATABASE_NAME);
+        synchronized (COPY_LOCK) {
+            if (!dbFile.exists()) {
+                try {
+                    copyDatabaseFromAsset();
+                    Log.d(TAG, "openDatabase: copying success from assets folder");
+                } catch (IOException e) {
+                    throw new RuntimeException("Error Creating source database", e);
+                }
             }
         }
-
-        return SQLiteDatabase.openDatabase(dbFile.getPath(), null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.CREATE_IF_NECESSARY);
-
+        return dbFile;
     }
 
     // The database is copied ready-made from assets, so there is nothing to create or migrate

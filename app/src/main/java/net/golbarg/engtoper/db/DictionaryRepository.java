@@ -10,6 +10,8 @@ import net.golbarg.engtoper.models.QuizQuestion;
 import net.golbarg.engtoper.models.SearchFilter;
 import net.golbarg.engtoper.models.SearchHistoryItem;
 import net.golbarg.engtoper.util.AppPreferences;
+import net.golbarg.engtoper.util.EnglishForms;
+import net.golbarg.engtoper.util.SpellSuggester;
 import net.golbarg.engtoper.util.TranslationParser;
 
 import java.util.ArrayList;
@@ -134,6 +136,47 @@ public class DictionaryRepository {
                 if (word != null) AppPreferences.setWordOfDayId(appContext, word.getId());
             }
             PhraseEnglish result = word;
+            mainHandler.post(() -> callback.onResult(result));
+        });
+    }
+
+    /** Exact entry for text selected in another app; tries base forms ("running" → "run"). Null if none. */
+    public void lookupEnglish(String text, Callback<PhraseEnglish> callback) {
+        executorService.execute(() -> {
+            PhraseEnglish found = null;
+            for (String form : EnglishForms.candidates(text)) {
+                List<PhraseEnglish> matches = tablePhraseEnglish.search(form, SearchFilter.EXACT, 1);
+                if (!matches.isEmpty()) {
+                    found = matches.get(0);
+                    break;
+                }
+            }
+            PhraseEnglish result = found;
+            mainHandler.post(() -> callback.onResult(result));
+        });
+    }
+
+    public void lookupPersian(String text, Callback<PhrasePersian> callback) {
+        executorService.execute(() -> {
+            List<PhrasePersian> matches = tablePhrasePersian.search(text, SearchFilter.EXACT, 1);
+            PhrasePersian result = matches.isEmpty() ? null : matches.get(0);
+            mainHandler.post(() -> callback.onResult(result));
+        });
+    }
+
+    /** "Did you mean…?" spellings close to a query that found nothing. */
+    public void suggestSpellings(String query, boolean english, Callback<List<String>> callback) {
+        executorService.execute(() -> {
+            String q = query == null ? "" : query.trim();
+            List<String> suggestions = new ArrayList<>();
+            if (q.length() >= 2) {
+                int gap = SpellSuggester.maxDistance(q.length());
+                List<String> candidates = english
+                        ? tablePhraseEnglish.suggestionCandidates(q, gap)
+                        : tablePhrasePersian.suggestionCandidates(q, gap);
+                suggestions = SpellSuggester.rank(q, candidates, 5);
+            }
+            List<String> result = suggestions;
             mainHandler.post(() -> callback.onResult(result));
         });
     }

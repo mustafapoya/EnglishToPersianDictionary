@@ -22,10 +22,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.material.color.MaterialColors;
 
 import net.golbarg.engtoper.MainActivity;
 import net.golbarg.engtoper.R;
+import net.golbarg.engtoper.ads.AdFreeOffer;
+import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.CachedNativeAd;
+import net.golbarg.engtoper.ads.NativeAdBinder;
 import net.golbarg.engtoper.databinding.FragmentHomeBinding;
 import net.golbarg.engtoper.databinding.ItemRecentSearchBinding;
 import net.golbarg.engtoper.databinding.ViewToolBinding;
@@ -80,6 +85,31 @@ public class HomeFragment extends Fragment {
         setupExplore();
         binding.btnClearRecent.setOnClickListener(v -> homeViewModel.clearRecentSearches());
         observeViewModels();
+        setupSponsored();
+    }
+
+    // ── Sponsored ─────────────────────────────────────────────────────────────
+
+    /** A native ad at the end of the page, shown only while ads are allowed. */
+    private void setupSponsored() {
+        binding.homeAd.btnRemoveAds.setOnClickListener(v -> AdFreeOffer.show(requireActivity()));
+        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> {
+            CachedNativeAd sponsored = homeViewModel.getSponsored();
+            if (Boolean.TRUE.equals(allowed)) {
+                renderSponsored();
+                sponsored.load(requireContext(), this::renderSponsored);
+            } else {
+                sponsored.clear();
+                renderSponsored();
+            }
+        });
+    }
+
+    private void renderSponsored() {
+        if (binding == null) return;
+        NativeAd ad = homeViewModel.getSponsored().get();
+        binding.homeAd.getRoot().setVisibility(ad != null ? View.VISIBLE : View.GONE);
+        if (ad != null) NativeAdBinder.bind(binding.homeAd.nativeAdView, ad);
     }
 
     @Override
@@ -348,6 +378,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        // The ad itself stays in the ViewModel; only this view lets go of it
+        binding.homeAd.nativeAdView.destroy();
         binding = null;
     }
 }

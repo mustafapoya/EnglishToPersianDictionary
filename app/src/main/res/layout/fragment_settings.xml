@@ -167,8 +167,73 @@
                 <include
                     android:id="@+id/row_meaning_first"
                     layout="@layout/view_setting_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="70dp"
+                    android:background="?attr/appDivider" />
+
+                <include
+                    android:id="@+id/row_reminder"
+                    layout="@layout/view_setting_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="70dp"
+                    android:background="?attr/appDivider" />
+
+                <include
+                    android:id="@+id/row_reminder_time"
+                    layout="@layout/view_setting_row" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Ads: hidden in builds without ads -->
+        <LinearLayout
+            android:id="@+id/section_ads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppOverline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/settings_section_ads" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="4dp">
+
+                    <include
+                        android:id="@+id/row_ad_free"
+                        layout="@layout/view_setting_row" />
+
+                    <View
+                        android:id="@+id/divider_ad_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="70dp"
+                        android:background="?attr/appDivider" />
+
+                    <include
+                        android:id="@+id/row_ad_privacy"
+                        layout="@layout/view_setting_row" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <TextView
             style="@style/AppOverline"
