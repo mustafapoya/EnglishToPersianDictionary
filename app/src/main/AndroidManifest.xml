@@ -24,10 +24,11 @@
         android:theme="@style/Theme.EnglishToPersian"
         tools:targetApi="31">
 
-        <!-- Set per build type from gradle.properties (ads.mode); see app/build.gradle -->
+        <!-- Real AdMob app ID; test ads are switched with AdUtil.USE_TEST_ADS (test units work under it).
+             Test AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="${admobAppId}" />
+            android:value="ca-app-pub-8976959600358837~3318589324" />
 
         <activity
             android:name="net.golbarg.engtoper.SplashScreenActivity"

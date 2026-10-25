@@ -30,8 +30,6 @@ import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
 
-import net.golbarg.engtoper.BuildConfig;
-
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -40,17 +38,34 @@ import java.util.concurrent.Executors;
  * The single place that decides whether and where ads show.
  *
  * <ul>
- *     <li>Turn every ad on or off: {@code ads.enabled} in gradle.properties.</li>
- *     <li>Test or real ads: {@code ads.mode} in gradle.properties ({@code auto} = test ads in debug builds,
- *     real ads in release builds; {@code test} or {@code real} forces one).</li>
- *     <li>Turn one placement off: remove it from {@link #ENABLED_PLACEMENTS}, or leave its unit ID empty
- *     in app/build.gradle.</li>
+ *     <li>Turn every ad on or off: {@link #ADS_ENABLED}.</li>
+ *     <li>Test or real ads: {@link #USE_TEST_ADS}.</li>
+ *     <li>Turn one placement off: remove it from {@link #ENABLED_PLACEMENTS}, or leave its real unit ID empty.</li>
  * </ul>
  * At run time ads also stop while the user hasn't given consent where it's needed ({@link AdConsent})
  * and while an ad-free pass is active ({@link AdFreePass}). {@link #allowedState()} tells screens
  * when that changes, so banners and native ads disappear the moment ads are turned off.
  */
 public final class AdUtil {
+
+    // false = no ad is loaded or shown anywhere (no AdMob requests at all)
+    public static final boolean ADS_ENABLED = true;
+    // true = Google's test ad units (use while developing), false = the real units of the AdMob account
+    public static final boolean USE_TEST_ADS = true;
+
+    // real ad units (AdMob console); an empty one turns that placement off while USE_TEST_ADS is false
+    private static final String REAL_BANNER_DICTIONARY = "ca-app-pub-8976959600358837/1610809888";
+    private static final String REAL_BANNER_SAVED = "ca-app-pub-8976959600358837/1610809888";
+    private static final String REAL_NATIVE_HOME = "";            // "Native advanced" unit
+    private static final String REAL_NATIVE_FLASHCARDS = "";      // "Native advanced" unit
+    private static final String REAL_INTERSTITIAL_SESSION = "";   // "Interstitial" unit
+    private static final String REAL_REWARDED_AD_FREE = "";       // "Rewarded" unit
+
+    // Google's test ad units: https://developers.google.com/admob/android/test-ads
+    private static final String TEST_BANNER = "ca-app-pub-3940256099942544/9214589741"; // adaptive banner
+    private static final String TEST_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
+    private static final String TEST_NATIVE = "ca-app-pub-3940256099942544/2247696110";
+    private static final String TEST_REWARDED = "ca-app-pub-3940256099942544/5224354917";
 
     private static final String TAG = "AdUtil";
 
@@ -77,11 +92,7 @@ public final class AdUtil {
     }
 
     public static boolean isEnabled() {
-        return BuildConfig.ADS_ENABLED;
-    }
-
-    public static boolean isTestMode() {
-        return BuildConfig.ADS_TEST_MODE;
+        return ADS_ENABLED;
     }
 
     /** Ads may be requested right now: on in this build, consent allows it, and no ad-free pass. */
@@ -117,15 +128,20 @@ public final class AdUtil {
 
     static String unitId(Placement placement) {
         switch (placement) {
+            case DICTIONARY_BANNER:
+                return USE_TEST_ADS ? TEST_BANNER : REAL_BANNER_DICTIONARY;
+            case SAVED_BANNER:
+                return USE_TEST_ADS ? TEST_BANNER : REAL_BANNER_SAVED;
             case HOME_NATIVE:
+                return USE_TEST_ADS ? TEST_NATIVE : REAL_NATIVE_HOME;
             case FLASHCARD_NATIVE:
-                return BuildConfig.AD_NATIVE_ID;
+                return USE_TEST_ADS ? TEST_NATIVE : REAL_NATIVE_FLASHCARDS;
             case SESSION_INTERSTITIAL:
-                return BuildConfig.AD_INTERSTITIAL_ID;
+                return USE_TEST_ADS ? TEST_INTERSTITIAL : REAL_INTERSTITIAL_SESSION;
             case AD_FREE_REWARDED:
-                return BuildConfig.AD_REWARDED_ID;
+                return USE_TEST_ADS ? TEST_REWARDED : REAL_REWARDED_AD_FREE;
             default:
-                return BuildConfig.AD_BANNER_ID;
+                throw new IllegalArgumentException("No ad unit for " + placement);
         }
     }
 
@@ -145,7 +161,7 @@ public final class AdUtil {
                 Log.w(TAG, "Mobile Ads failed to start", e);
             }
         });
-        if (isTestMode()) Log.i(TAG, "Showing Google test ads");
+        if (USE_TEST_ADS) Log.i(TAG, "Showing Google test ads");
     }
 
     // ── Banners ───────────────────────────────────────────────────────────────
