@@ -244,6 +244,8 @@
     <string name="setting_share">معرفی برنامه</string>
     <string name="setting_share_sub">به دوستی که زبان یاد می‌گیرد بگویید</string>
     <string name="setting_feedback">ارسال بازخورد</string>
+    <string name="setting_privacy_policy">سیاست حریم خصوصی</string>
+    <string name="setting_privacy_policy_sub">آنچه روی گوشی می‌ماند و آنچه تبلیغ‌ها به کار می‌برند</string>
     <string name="setting_about">درباره</string>
     <string name="setting_about_sub">نسخه، امکانات و راه ارتباط</string>
     <string name="settings_footer">%1$s · نسخه %2$s</string>

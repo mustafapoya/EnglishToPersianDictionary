@@ -243,6 +243,8 @@
     <string name="setting_share">Share the app</string>
     <string name="setting_share_sub">Tell a friend who is learning</string>
     <string name="setting_feedback">Send feedback</string>
+    <string name="setting_privacy_policy">Privacy policy</string>
+    <string name="setting_privacy_policy_sub">What stays on your phone and what ads use</string>
     <string name="setting_about">About</string>
     <string name="setting_about_sub">Version, features and contact</string>
     <string name="settings_footer">%1$s · Version %2$s</string>

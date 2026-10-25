@@ -1,17 +1,16 @@
 # English-Persian Dictionary — Privacy Policy
 
-> **Before publishing**, confirm the two items marked ⚠️ (the publisher name and the address of this page), then delete this note. Publish the policy at the same URL you enter in Play Console, and link to it from the app.
+> Source of the policy published at `https://golbarg.net/eng_to_per_dictionary/privacy_policy/`, which the app's Settings → Privacy policy row opens. Change this file first, set **Last updated**, then republish the page.
 
-**App:** English-Persian Dictionary (دیکشنری انگلیسی-فارسی) — `net.golbarg.engtoper`, version 2.0
-**Publisher:** ⚠️ Golbarg (`golbarg.net`)
-**Contact:** contact@golbarg.net
-**Effective date:** 25 October 2026
+**App:** English-Persian Dictionary (`net.golbarg.engtoper`)
+**Publisher:** Golbarg (`golbarg.net`)
+**Last updated:** 25 October 2026
 
-The Persian version follows the English one. [نسخهٔ فارسی](#سیاست-حریم-خصوصی)
+The Persian version follows the English one. [نسخهٔ فارسی](#فارسی-persian)
 
 ---
 
-## Privacy Policy
+## English
 
 ### Summary
 English-Persian Dictionary does not ask who you are. There is no account and no sign-in. The whole dictionary is inside the app, so every search, your saved words and your flashcard progress stay on your phone. The app has no server of its own. It is free and shows ads through Google AdMob; AdMob collects some device data to show and measure those ads, as section 3 explains.
@@ -30,7 +29,7 @@ This information is never sent to us or to anyone else. In the app you can clear
 
 If Android backup is turned on for your phone, Android may include the app's data in your backup to your Google account, as it does for other apps. That backup is handled by Google under its own privacy policy, and you can turn it off in your phone's settings.
 
-### 2. No server of ours
+### 2. What leaves your phone
 Searching, pronunciation, flashcards, the quiz and the word of the day all work on your phone, without an internet connection. The app does not send your searches, saved words or progress anywhere, and we run no server that receives data from it. The app uses the internet only for ads (section 3) and for Google Play features (section 6).
 
 ### 3. Advertising
@@ -50,20 +49,15 @@ You can also reset your advertising ID or opt out of personalised ads in your ph
 
 The app contains no analytics or crash-reporting service of its own.
 
-### 4. Features that use other apps on your phone
+### 4. Features that use other apps or services
 - **Voice search:** when you tap the microphone, the app opens your phone's speech recognition service (usually Google's). That service hears your voice and gives the app only the text it recognised. The app itself does not record audio and has no microphone permission. The speech service handles your voice under its own privacy policy.
 - **Pronunciation:** words are spoken by your phone's text-to-speech engine.
 - **Look up from other apps:** when you select text in another app and choose **Dictionary**, or share text to this app, Android passes that text to the app, which looks it up on your phone. The text is not sent anywhere. If the app opens the full dictionary to search for it, that search is treated like one you typed there and can appear in your recent searches.
 - **Sharing a word:** when you share a word and its meaning, Android shows its share sheet and you choose an app. What you share goes to that app, and its own privacy policy then applies.
 - **Email:** Send feedback opens your email app. If you send us an email, we receive your email address and your message, and use them only to reply to you.
+- **Daily reminder:** off until you turn it on in Settings. It is scheduled on your phone, not sent from a server. On Android 13 and newer, the app asks for permission to show notifications when you turn the reminder on.
 
-### 5. Notifications
-The daily reminder is off until you turn it on in Settings. It is scheduled on your phone, not sent from a server. On Android 13 and newer, the app asks for permission to show notifications when you turn the reminder on.
-
-### 6. Google Play and ratings
-The app is distributed through Google Play. Google may collect information about the installation and app performance under its own privacy policy, independently of the app. Now and then, after a good flashcard session, the app may show Google Play's rating window. Your rating and review go to Google Play, not to the app; we only see reviews as they appear publicly on Google Play.
-
-### 7. Permissions
+### 5. Permissions
 - **Internet access and network status:** used to load ads.
 - **Notifications:** only for the daily reminder, if you turn it on.
 - **Run at startup:** so the daily reminder keeps working after the phone restarts.
@@ -71,28 +65,30 @@ The app is distributed through Google Play. Google may collect information about
 
 The app does not access your contacts, location, camera, microphone, photos or files.
 
-### 8. Children
+### 6. Google Play
+The app is distributed through Google Play. Google may collect information about the installation and app performance under its own privacy policy, independently of the app. Now and then, after a good flashcard session, the app may show Google Play's rating window. Your rating and review go to Google Play, not to the app; we only see reviews as they appear publicly on Google Play.
+
+### 7. Children
 The app is not directed at children under 13. We do not knowingly allow children under 13 to use the app.
 
-### 9. Your choices and rights
+### 8. Your choices and rights
 The app has no account or profile to access or delete. Everything the app stores is on your phone and under your control (section 1). For ads, you can change your consent in the app, and reset your advertising ID or turn off personalised ads at any time (section 3); data Google holds is managed through your Google account and Google's own tools. If you have a question, or want to exercise a right under the data-protection law that applies to you, write to contact@golbarg.net.
 
-### 10. Changes to this policy
-If we change this policy, we will publish the new version at this address and update the effective date above. Material changes will also be announced in the app's release notes.
+### 9. Changes to this policy
+If we change this policy, we will publish the new version at this address and update the **Last updated** date above. Material changes will also be announced in the app's release notes.
 
-### 11. Contact
+### 10. Contact
 Questions about this policy: **contact@golbarg.net**
 
 ---
 
 <div dir="rtl">
 
-## سیاست حریم خصوصی
+## فارسی (Persian)
 
-**برنامه:** دیکشنری انگلیسی-فارسی (English-Persian Dictionary) — `net.golbarg.engtoper`، نسخهٔ ۲.۰
-**ناشر:** ⚠️ گلبرگ (`golbarg.net`)
-**تماس:** contact@golbarg.net
-**تاریخ اجرا:** ۲۵ اکتبر ۲۰۲۶
+**برنامه:** دیکشنری انگلیسی-فارسی (`net.golbarg.engtoper`)
+**ناشر:** گلبرگ (`golbarg.net`)
+**آخرین به‌روزرسانی:** ۲۵ اکتبر ۲۰۲۶
 
 ### خلاصه
 دیکشنری انگلیسی-فارسی از شما نمی‌پرسد که هستید. حساب کاربری و ورود ندارد. همهٔ دیکشنری درون خود برنامه است، پس هر جستجو، واژه‌های نشان‌شده و پیشرفت فلش‌کارت‌هایتان روی گوشی خودتان می‌ماند. برنامه هیچ سروری از خود ندارد. برنامه رایگان است و از طریق Google AdMob تبلیغ نشان می‌دهد؛ AdMob برای نمایش و سنجش این تبلیغ‌ها برخی اطلاعات دستگاه را جمع می‌کند، که در بخش ۳ توضیح داده شده است.
@@ -111,7 +107,7 @@ Questions about this policy: **contact@golbarg.net**
 
 اگر پشتیبان‌گیری اندروید روی گوشی شما روشن باشد، اندروید ممکن است مانند برنامه‌های دیگر، داده‌های این برنامه را هم در پشتیبانِ حساب گوگل شما بگذارد. این پشتیبان را گوگل طبق سیاست حریم خصوصی خودش نگه می‌دارد و می‌توانید آن را در تنظیمات گوشی خاموش کنید.
 
-### ۲. سروری از ما در کار نیست
+### ۲. آنچه از گوشی شما بیرون می‌رود
 جستجو، تلفظ، فلش‌کارت‌ها، آزمون و واژهٔ روز همه روی گوشی شما و بدون اینترنت کار می‌کنند. برنامه جستجوها، واژه‌های نشان‌شده و پیشرفت شما را به جایی نمی‌فرستد و ما سروری نداریم که از برنامه داده‌ای بگیرد. برنامه تنها برای تبلیغ‌ها (بخش ۳) و امکانات گوگل‌پلی (بخش ۶) از اینترنت استفاده می‌کند.
 
 ### ۳. تبلیغات
@@ -131,20 +127,15 @@ Questions about this policy: **contact@golbarg.net**
 
 برنامه هیچ ابزار آماری یا گزارش خطای جداگانه‌ای ندارد.
 
-### ۴. امکاناتی که از برنامه‌های دیگر گوشی کمک می‌گیرند
+### ۴. امکاناتی که از برنامه‌ها یا سرویس‌های دیگر کمک می‌گیرند
 - **جستجوی صوتی:** وقتی روی میکروفون می‌زنید، برنامه سرویس تشخیص گفتار گوشی شما (معمولاً سرویس گوگل) را باز می‌کند. آن سرویس صدای شما را می‌شنود و فقط متنِ تشخیص‌داده‌شده را به برنامه می‌دهد. خود برنامه صدا ضبط نمی‌کند و اجازهٔ میکروفون ندارد. سرویس گفتار، صدای شما را طبق سیاست حریم خصوصی خودش پردازش می‌کند.
 - **تلفظ:** واژه‌ها را موتور تبدیل متن به گفتار گوشی شما می‌خواند.
 - **جستجو از برنامه‌های دیگر:** وقتی در برنامهٔ دیگری متنی را انتخاب و **دیکشنری** را می‌زنید، یا متنی را به این برنامه می‌فرستید، اندروید آن متن را به برنامه می‌دهد و برنامه آن را روی گوشی شما جستجو می‌کند. این متن به جایی فرستاده نمی‌شود. اگر برنامه برای جستجوی آن دیکشنری کامل را باز کند، آن جستجو مانند جستجویی است که خودتان نوشته‌اید و ممکن است در جستجوهای اخیرتان بیاید.
 - **اشتراک‌گذاری یک واژه:** وقتی واژه‌ای را با معنی‌اش به اشتراک می‌گذارید، اندروید فهرست برنامه‌ها را نشان می‌دهد و شما یکی را انتخاب می‌کنید. آنچه می‌فرستید به همان برنامه می‌رود و از آن پس سیاست حریم خصوصی همان برنامه حاکم است.
 - **ایمیل:** «ارسال بازخورد» برنامهٔ ایمیل شما را باز می‌کند. اگر برای ما ایمیل بفرستید، نشانی ایمیل و پیام شما به دست ما می‌رسد و فقط برای پاسخ دادن به شما از آن‌ها استفاده می‌کنیم.
+- **یادآور روزانه:** تا وقتی خودتان آن را در تنظیمات روشن نکنید خاموش است. این یادآور روی گوشی شما زمان‌بندی می‌شود، نه از یک سرور. در اندروید ۱۳ و تازه‌تر، هنگام روشن کردن یادآور، برنامه اجازهٔ نمایش اعلان را می‌خواهد.
 
-### ۵. اعلان‌ها
-یادآور روزانه تا وقتی خودتان آن را در تنظیمات روشن نکنید خاموش است. این یادآور روی گوشی شما زمان‌بندی می‌شود، نه از یک سرور. در اندروید ۱۳ و تازه‌تر، هنگام روشن کردن یادآور، برنامه اجازهٔ نمایش اعلان را می‌خواهد.
-
-### ۶. گوگل‌پلی و امتیاز دادن
-برنامه از طریق گوگل‌پلی منتشر می‌شود. گوگل ممکن است طبق سیاست حریم خصوصی خودش، جدا از برنامه، اطلاعاتی دربارهٔ نصب و عملکرد برنامه جمع کند. گاهی، پس از یک جلسهٔ خوب فلش‌کارت، برنامه ممکن است پنجرهٔ امتیازدهی گوگل‌پلی را نشان دهد. امتیاز و نظر شما به گوگل‌پلی می‌رود، نه به برنامه؛ ما نظرها را تنها همان‌گونه که در گوگل‌پلی عمومی می‌شوند می‌بینیم.
-
-### ۷. دسترسی‌ها
+### ۵. دسترسی‌ها
 - **دسترسی به اینترنت و وضعیت شبکه:** برای بارگذاری تبلیغ‌ها.
 - **اعلان‌ها:** فقط برای یادآور روزانه، اگر روشنش کنید.
 - **اجرا هنگام روشن شدن گوشی:** تا یادآور روزانه پس از راه‌اندازی دوبارهٔ گوشی هم کار کند.
@@ -152,16 +143,19 @@ Questions about this policy: **contact@golbarg.net**
 
 برنامه به مخاطبان، موقعیت مکانی، دوربین، میکروفون، عکس‌ها یا فایل‌های شما دسترسی ندارد.
 
-### ۸. کودکان
+### ۶. گوگل‌پلی
+برنامه از طریق گوگل‌پلی منتشر می‌شود. گوگل ممکن است طبق سیاست حریم خصوصی خودش، جدا از برنامه، اطلاعاتی دربارهٔ نصب و عملکرد برنامه جمع کند. گاهی، پس از یک جلسهٔ خوب فلش‌کارت، برنامه ممکن است پنجرهٔ امتیازدهی گوگل‌پلی را نشان دهد. امتیاز و نظر شما به گوگل‌پلی می‌رود، نه به برنامه؛ ما نظرها را تنها همان‌گونه که در گوگل‌پلی عمومی می‌شوند می‌بینیم.
+
+### ۷. کودکان
 این برنامه برای کودکان زیر ۱۳ سال ساخته نشده است. ما آگاهانه اجازه نمی‌دهیم کودکان زیر ۱۳ سال از برنامه استفاده کنند.
 
-### ۹. انتخاب‌ها و حقوق شما
+### ۸. انتخاب‌ها و حقوق شما
 برنامه حساب یا نمایه‌ای برای دیدن یا پاک کردن ندارد. همهٔ آنچه برنامه نگه می‌دارد روی گوشی شما و در اختیار خودتان است (بخش ۱). برای تبلیغات، می‌توانید رضایت خود را در برنامه تغییر دهید و هر زمان شناسهٔ تبلیغاتی را بازنشانی یا تبلیغات شخصی‌سازی‌شده را خاموش کنید (بخش ۳)؛ داده‌هایی که نزد گوگل است از راه حساب گوگل و ابزارهای خود گوگل مدیریت می‌شود. اگر پرسشی دارید یا می‌خواهید حقی را که قانون حفاظت از داده‌ها به شما می‌دهد به کار ببرید، به contact@golbarg.net بنویسید.
 
-### ۱۰. تغییر این سیاست
-اگر این سیاست را تغییر دهیم، نسخهٔ تازه را در همین نشانی منتشر و تاریخ اجرا را به‌روز می‌کنیم. تغییرهای مهم در یادداشت‌های انتشار برنامه هم اعلام می‌شوند.
+### ۹. تغییر این سیاست
+اگر این سیاست را تغییر دهیم، نسخهٔ تازه را در همین نشانی منتشر و تاریخ «آخرین به‌روزرسانی» را به‌روز می‌کنیم. تغییرهای مهم در یادداشت‌های انتشار برنامه هم اعلام می‌شوند.
 
-### ۱۱. تماس
+### ۱۰. تماس
 پرسش‌ها دربارهٔ این سیاست: **contact@golbarg.net**
 
 </div>

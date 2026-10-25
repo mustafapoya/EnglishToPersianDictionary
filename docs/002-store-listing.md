@@ -1,43 +1,33 @@
-# English-Persian Dictionary — Google Play Store Listing Translations (Store Presence)
+# English-Persian Dictionary — Store Listing
 
-Ready-to-paste copy for the **Main store listing** in Google Play Console:
-`Google Play Console` → `Grow users` → `Store presence` → `Main store listing` → `Manage translations` / `Add language`.
+All text shown on Google Play, in every store language. Paste it into Play Console → **Grow users → Store presence → Main store listing** (default language) and **Manage translations** (the others). The settings and declarations are in [001-google-play-store.md](001-google-play-store.md).
 
-* **Application ID:** `net.golbarg.engtoper`
-* **Current version:** `2.0` (build `7`)
-* **Default language:** English (United States) — `en-US`
-* **Store listing languages:** English (default) and Persian.
-* **App UI languages:** English and Persian (right to left), following the phone or chosen in Settings. The dictionary works both ways, English → Persian and Persian → English, whatever the UI language.
+| Field | Limit |
+| --- | --- |
+| App name | 30 |
+| Short description | 80 |
+| Full description | 4,000 |
+| Release notes | 500 |
 
----
-
-## Quick Reference: Character Limits
-
-| Field | Max limit | Note |
-|---|:---:|---|
-| **App title** | **30 chars** | Strictly enforced by Play Console. |
-| **Short description** | **80 chars** | Front-loaded with the words people search for. |
-| **Full description** | **4,000 chars** | Plain text; line breaks and simple bullets are kept. |
-| **Release notes (What's new)** | **500 chars** | Shown on the listing and in the update prompt. |
+**Languages:** English `en-US` (default), Persian `fa-IR`. The app UI is in both languages, and the dictionary works both ways whatever the UI language.
 
 ---
 
-## 1. English (en-US) — Default
+## 1. English — `en-US` (default)
 
-* **Play Store locale:** `English (United States) – en-US`
-* The source copy; the Persian listing below says the same things in Persian.
+The source copy; the Persian listing below says the same things in Persian.
 
-### App Title (26 / 30 chars)
+### App name (26 / 30)
 ```text
 English-Persian Dictionary
 ```
 
-### Short Description (76 / 80 chars)
+### Short description (76 / 80)
 ```text
 Offline English ⇄ Persian dictionary with pronunciation and smart flashcards
 ```
 
-### Full Description (2,494 / 4,000 chars)
+### Full description (2,494 / 4,000)
 ```text
 English-Persian Dictionary is a fast, two-way dictionary that works completely offline. Look up English words in Persian and Persian words in English, hear how they are pronounced, and make new words stick with flashcards and short daily practice. Made for Dari and Farsi speakers, students, and anyone learning English.
 
@@ -91,7 +81,7 @@ The app is free and shows a few ads, kept out of your way. Watch one short video
 Download English-Persian Dictionary and keep every word you need in your pocket, online or off.
 ```
 
-### Release Notes / What's New (417 / 500 chars)
+### Release notes — 2.0 (417 / 500)
 ```text
 📖 Version 2.0, a whole new dictionary
 • A fresh design, in light and dark, in English or Persian
@@ -104,24 +94,38 @@ Download English-Persian Dictionary and keep every word you need in your pocket,
 • Many fixes and improvements
 ```
 
+### Screenshot captions
+1. Learn a new word every day
+2. English ⇄ Persian, fully offline
+3. Every meaning, with pronunciation
+4. Search in Persian too
+5. Flashcards that remember for you
+6. Look up words in any app
+7. Keep the words you want to learn
+8. Comfortable in light and dark
+
+### Feature graphic text
+```text
+English ⇄ Persian, fully offline
+```
+
 ---
 
-## 2. Persian / فارسی (fa-IR)
+## 2. Persian — `fa-IR`
 
-* **Play Store locale:** `Persian – fa-IR`
-* The main audience. The copy avoids words that read differently in Dari and Farsi, and uses the app's own names for its screens (کارت‌ها، نشان‌شده، واژه روز).
+The main audience. The copy avoids words that read differently in Dari and Farsi, and uses the app's own names for its screens (کارت‌ها، نشان‌شده، واژه روز).
 
-### App Title (21 / 30 chars)
+### App name (21 / 30)
 ```text
 دیکشنری انگلیسی-فارسی
 ```
 
-### Short Description (65 / 80 chars)
+### Short description (65 / 80)
 ```text
 دیکشنری دوطرفهٔ انگلیسی و فارسی، بدون اینترنت، با تلفظ و فلش‌کارت
 ```
 
-### Full Description (2,629 / 4,000 chars)
+### Full description (2,629 / 4,000)
 ```text
 دیکشنری انگلیسی-فارسی، دیکشنری‌ای سریع و دوطرفه است که کاملاً بدون اینترنت کار می‌کند. معنی فارسی واژه‌های انگلیسی و معنی انگلیسی واژه‌های فارسی را پیدا کنید، تلفظشان را بشنوید و با فلش‌کارت و تمرین کوتاه روزانه، واژه‌های تازه را به خاطر بسپارید. برای فارسی‌زبانان و دری‌زبانان، دانش‌آموزان و دانشجویان، و هر کسی که انگلیسی یاد می‌گیرد.
 
@@ -175,7 +179,7 @@ Download English-Persian Dictionary and keep every word you need in your pocket,
 دیکشنری انگلیسی-فارسی را نصب کنید و هر واژه‌ای را که لازم دارید، با اینترنت یا بی‌اینترنت، همیشه همراه داشته باشید.
 ```
 
-### Release Notes / What's New (430 / 500 chars)
+### Release notes — 2.0 (430 / 500)
 ```text
 📖 نسخهٔ ۲.۰، دیکشنری‌ای سراپا تازه
 • طراحی تازه، با پوستهٔ روشن و تیره، به فارسی یا انگلیسی
@@ -186,4 +190,19 @@ Download English-Persian Dictionary and keep every word you need in your pocket,
 • یادآور روزانه و میان‌برهای آیکون برنامه
 • با دیدن یک ویدیو، ۲۴ ساعت بدون تبلیغ
 • رفع اشکال‌ها و بهبودهای فراوان
+```
+
+### Screenshot captions
+1. هر روز یک واژهٔ تازه
+2. انگلیسی ⇄ فارسی، کاملاً آفلاین
+3. همهٔ معنی‌ها، با تلفظ
+4. به فارسی هم جستجو کنید
+5. فلش‌کارت‌هایی که به خاطر می‌سپارند
+6. جستجوی واژه در هر برنامه
+7. واژه‌هایی را که می‌خواهید نگه دارید
+8. راحت در پوستهٔ روشن و تیره
+
+### Feature graphic text
+```text
+انگلیسی ⇄ فارسی، کاملاً آفلاین
 ```

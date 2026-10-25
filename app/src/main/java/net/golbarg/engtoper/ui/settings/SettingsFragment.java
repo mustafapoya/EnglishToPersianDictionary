@@ -167,6 +167,9 @@ public class SettingsFragment extends Fragment {
         binding.rowShare.value.setText(R.string.setting_share_sub);
         bindRow(binding.rowFeedback, R.drawable.ic_email, primaryBg, primaryFg, R.string.setting_feedback, v -> AppLinks.sendFeedback(requireContext()));
         binding.rowFeedback.value.setText(R.string.contact_email);
+        bindRow(binding.rowPrivacyPolicy, R.drawable.ic_shield, primaryBg, primaryFg, R.string.setting_privacy_policy,
+                v -> AppLinks.openPrivacyPolicy(requireContext()));
+        binding.rowPrivacyPolicy.value.setText(R.string.setting_privacy_policy_sub);
         bindRow(binding.rowAbout, R.drawable.ic_info_outline, primaryBg, primaryFg, R.string.setting_about, v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_settings_to_about));
         binding.rowAbout.value.setText(R.string.setting_about_sub);

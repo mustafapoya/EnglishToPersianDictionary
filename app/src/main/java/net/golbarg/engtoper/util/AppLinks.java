@@ -13,6 +13,9 @@ import net.golbarg.engtoper.R;
 /** Store, share, email and website links used by Settings and About. */
 public final class AppLinks {
 
+    /** The published privacy policy (source: docs/003-privacy-policy.md). */
+    private static final String PRIVACY_POLICY_URL = "https://golbarg.net/eng_to_per_dictionary/privacy_policy/";
+
     private AppLinks() {
     }
 
@@ -47,6 +50,10 @@ public final class AppLinks {
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.feedback_subject,
                         context.getString(R.string.app_name), versionName(context)));
         start(context, email);
+    }
+
+    public static void openPrivacyPolicy(Context context) {
+        openUrl(context, PRIVACY_POLICY_URL);
     }
 
     public static void openUrl(Context context, String url) {
