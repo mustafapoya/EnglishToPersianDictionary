@@ -54,6 +54,12 @@ public class PhraseItemBinder {
         binding.meanings.setVisibility(parsed.isEmpty() ? View.GONE : View.VISIBLE);
         binding.txtNoMeaning.setVisibility(parsed.isEmpty() ? View.VISIBLE : View.GONE);
 
+        bindFavorite(binding, favorite);
+    }
+
+    /** Just the star, for when only the bookmark changed. */
+    public void bindFavorite(ItemPhraseBinding binding, boolean favorite) {
+        Context context = binding.getRoot().getContext();
         binding.btnBookmark.setIconResource(favorite ? R.drawable.ic_star_filled : R.drawable.ic_star_outline);
         binding.btnBookmark.setIconTint(favorite
                 ? ContextCompat.getColorStateList(context, R.color.bookmark_gold)

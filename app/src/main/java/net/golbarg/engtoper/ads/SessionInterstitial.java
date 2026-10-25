@@ -61,17 +61,18 @@ public final class SessionInterstitial {
                 });
     }
 
-    /** Shows the ad at the end of a session of {@code answers} cards, if the rules allow it. */
-    public static void showAtSessionEnd(Activity activity, int answers) {
-        if (answers < MIN_ANSWERS || ready == null || !canShow(activity)) return;
+    /** Shows the ad at the end of a session of {@code answers} cards, if the rules allow it; true if shown. */
+    public static boolean showAtSessionEnd(Activity activity, int answers) {
+        if (answers < MIN_ANSWERS || ready == null || !canShow(activity)) return false;
         if (SystemClock.elapsedRealtime() - readyAt >= MAX_AGE_MS) {
             ready = null;
-            return;
+            return false;
         }
         InterstitialAd ad = ready;
         ready = null;
         AppPreferences.setLastInterstitialAt(activity, System.currentTimeMillis());
         ad.show(activity);
+        return true;
     }
 
     private static boolean canShow(Context context) {

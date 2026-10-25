@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setupWindowInsets();
         setupBottomNavigation();
         AppPreferences.markFirstOpen(this);
+        AppPreferences.recordActiveDay(this);
         // Asks for ad consent where the law requires it, then lets ads start
         AdConsent.gather(this);
         if (savedInstanceState == null) handleDeepLink(getIntent());

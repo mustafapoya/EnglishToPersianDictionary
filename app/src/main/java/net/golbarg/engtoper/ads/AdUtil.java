@@ -49,17 +49,17 @@ import java.util.concurrent.Executors;
 public final class AdUtil {
 
     // false = no ad is loaded or shown anywhere (no AdMob requests at all)
-    public static final boolean ADS_ENABLED = true;
+    public static final boolean ADS_ENABLED = false;
     // true = Google's test ad units (use while developing), false = the real units of the AdMob account
     public static final boolean USE_TEST_ADS = true;
 
     // real ad units (AdMob console); an empty one turns that placement off while USE_TEST_ADS is false
-    private static final String REAL_BANNER_DICTIONARY = "ca-app-pub-8976959600358837/1610809888";
-    private static final String REAL_BANNER_SAVED = "ca-app-pub-8976959600358837/1610809888";
-    private static final String REAL_NATIVE_HOME = "";            // "Native advanced" unit
-    private static final String REAL_NATIVE_FLASHCARDS = "";      // "Native advanced" unit
-    private static final String REAL_INTERSTITIAL_SESSION = "";   // "Interstitial" unit
-    private static final String REAL_REWARDED_AD_FREE = "";       // "Rewarded" unit
+    private static final String REAL_BANNER_DICTIONARY = "ca-app-pub-8976959600358837/6320606502";
+    private static final String REAL_BANNER_SAVED = "ca-app-pub-8976959600358837/8005096953";
+    private static final String REAL_NATIVE_HOME = "ca-app-pub-8976959600358837/2081978595";
+    private static final String REAL_NATIVE_FLASHCARDS = "ca-app-pub-8976959600358837/1259851510";
+    private static final String REAL_INTERSTITIAL_SESSION = "ca-app-pub-8976959600358837/7405709033";
+    private static final String REAL_REWARDED_AD_FREE = "ca-app-pub-8976959600358837/8946769846";
 
     // Google's test ad units: https://developers.google.com/admob/android/test-ads
     private static final String TEST_BANNER = "ca-app-pub-3940256099942544/9214589741"; // adaptive banner

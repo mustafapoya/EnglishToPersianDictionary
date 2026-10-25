@@ -128,11 +128,18 @@ public class DictionaryFragment extends Fragment {
         englishAdapter = new PhraseEnglishAdapter(
                 this::openWordDetails,
                 phrase -> TTSManager.getInstance(requireContext()).speak(phrase.getFromLanguage(), requireContext()),
-                (phrase, position) -> viewModel.toggleFavoriteEnglish(phrase, () -> englishAdapter.notifyItemChanged(position))
+                (phrase, position) -> {
+                    // Flip the star the user sees at once; it is saved in the background
+                    viewModel.setFavoriteEnglish(phrase, phrase.getFavorite() == 1 ? 0 : 1, null);
+                    englishAdapter.notifyItemChanged(position, PhraseEnglishAdapter.PAYLOAD_FAVORITE);
+                }
         );
         persianAdapter = new PhrasePersianAdapter(
                 this::openWordDetails,
-                (phrase, position) -> viewModel.toggleFavoritePersian(phrase, () -> persianAdapter.notifyItemChanged(position))
+                (phrase, position) -> {
+                    viewModel.setFavoritePersian(phrase, phrase.getFavorite() == 1 ? 0 : 1, null);
+                    persianAdapter.notifyItemChanged(position, PhrasePersianAdapter.PAYLOAD_FAVORITE);
+                }
         );
         binding.recyclerPhrase.setLayoutManager(new LinearLayoutManager(requireContext()));
     }

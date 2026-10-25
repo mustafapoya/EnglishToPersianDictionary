@@ -44,6 +44,7 @@ import net.golbarg.engtoper.models.PhrasePersian;
 import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
 import net.golbarg.engtoper.ui.common.MeaningList;
+import net.golbarg.engtoper.util.InAppReview;
 import net.golbarg.engtoper.util.Leitner;
 import net.golbarg.engtoper.util.LocaleUtil;
 import net.golbarg.engtoper.util.TTSManager;
@@ -380,14 +381,17 @@ public class FlashcardFragment extends Fragment {
 
     /**
      * After an answer: shows an ad card if one is due and the session goes on, or, when the
-     * session has just ended, possibly a full-screen ad before its results (a natural break).
+     * session has just ended, possibly a full-screen ad before its results (a natural break),
+     * or otherwise Play's rating sheet after a good session.
      */
     private void maybeShowAd() {
         FlashcardAdSlot slot = viewModel.getAdSlot();
         slot.onCardAnswered();
         FlashcardViewModel.State state = viewModel.getState().getValue();
         if (state != null && state.type == FlashcardViewModel.Type.FINISHED) {
-            SessionInterstitial.showAtSessionEnd(requireActivity(), state.total);
+            boolean adShown = SessionInterstitial.showAtSessionEnd(requireActivity(), state.total);
+            // A good session is the moment to ask for a rating, but never on top of an ad
+            if (!adShown) InAppReview.onSessionFinished(requireActivity(), state.knownFirstTry, state.total);
             return;
         }
         if (state == null || state.type != FlashcardViewModel.Type.SHOWING) return;

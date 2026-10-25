@@ -59,6 +59,9 @@ public class DictionaryViewModel extends AndroidViewModel {
 
     private String lastEnglishQuery = "";
     private String lastPersianQuery = "";
+    /** Numbers each search, so a slower older one can't overwrite a newer one's results. */
+    private int englishSearchCount = 0;
+    private int persianSearchCount = 0;
 
     public DictionaryViewModel(@NonNull Application application) {
         super(application);
@@ -146,35 +149,44 @@ public class DictionaryViewModel extends AndroidViewModel {
     }
 
     public void searchEnglish(String query) {
+        searchEnglish(query, true);
+    }
+
+    private void searchEnglish(String query, boolean showLoading) {
         lastEnglishQuery = query != null ? query.trim() : "";
+        int search = ++englishSearchCount;
         if (lastEnglishQuery.isEmpty()) {
             englishSearchResults.setValue(new ArrayList<>());
             isLoading.setValue(false);
             return;
         }
 
-        String requested = lastEnglishQuery;
-        isLoading.setValue(true);
-        repository.searchEnglish(requested, currentFilter(), results -> {
-            // Ignore results of a query the user has already typed past
-            if (!requested.equals(lastEnglishQuery)) return;
+        if (showLoading) isLoading.setValue(true);
+        repository.searchEnglish(lastEnglishQuery, currentFilter(), results -> {
+            // Only the newest search counts: an older one may have read the words before the
+            // user typed on, or before a star was saved, and would show stale results
+            if (search != englishSearchCount) return;
             englishSearchResults.setValue(results);
             isLoading.setValue(false);
         });
     }
 
     public void searchPersian(String query) {
+        searchPersian(query, true);
+    }
+
+    private void searchPersian(String query, boolean showLoading) {
         lastPersianQuery = query != null ? query.trim() : "";
+        int search = ++persianSearchCount;
         if (lastPersianQuery.isEmpty()) {
             persianSearchResults.setValue(new ArrayList<>());
             isLoading.setValue(false);
             return;
         }
 
-        String requested = lastPersianQuery;
-        isLoading.setValue(true);
-        repository.searchPersian(requested, currentFilter(), results -> {
-            if (!requested.equals(lastPersianQuery)) return;
+        if (showLoading) isLoading.setValue(true);
+        repository.searchPersian(lastPersianQuery, currentFilter(), results -> {
+            if (search != persianSearchCount) return;
             persianSearchResults.setValue(results);
             isLoading.setValue(false);
         });
@@ -266,12 +278,16 @@ public class DictionaryViewModel extends AndroidViewModel {
     private void onEnglishBookmarkChanged(@Nullable Runnable onDone) {
         loadEnglishBookmarks();
         bumpBookmarksVersion();
+        // Re-read the results now the star is saved, so they match the database even if a
+        // search ran while it was being saved
+        if (!lastEnglishQuery.isEmpty()) searchEnglish(lastEnglishQuery, false);
         if (onDone != null) onDone.run();
     }
 
     private void onPersianBookmarkChanged(@Nullable Runnable onDone) {
         loadPersianBookmarks();
         bumpBookmarksVersion();
+        if (!lastPersianQuery.isEmpty()) searchPersian(lastPersianQuery, false);
         if (onDone != null) onDone.run();
     }
 

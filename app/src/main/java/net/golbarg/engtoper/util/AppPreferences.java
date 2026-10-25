@@ -33,6 +33,10 @@ public class AppPreferences {
     private static final String KEY_FIRST_OPEN_AT = "first_open_at";
     private static final String KEY_AD_FREE_UNTIL = "ad_free_until";
     private static final String KEY_LAST_INTERSTITIAL_AT = "last_interstitial_at";
+    private static final String KEY_ACTIVE_DAYS = "active_days";
+    private static final String KEY_LAST_ACTIVE_DAY = "last_active_day";
+    private static final String KEY_SESSIONS_COMPLETED = "sessions_completed";
+    private static final String KEY_REVIEW_ASKED_AT = "review_asked_at";
     /** 7 pm by default: after school or work. */
     public static final int DEFAULT_REMINDER_MINUTES = 19 * 60;
 
@@ -166,6 +170,38 @@ public class AppPreferences {
 
     public static void setLastInterstitialAt(Context context, long epochMillis) {
         prefs(context).edit().putLong(KEY_LAST_INTERSTITIAL_AT, epochMillis).apply();
+    }
+
+    // ── In-app review ─────────────────────────────────────────────────────────
+
+    /** Counts the distinct days the app has been opened on. */
+    public static void recordActiveDay(Context context) {
+        SharedPreferences prefs = prefs(context);
+        String today = LocalDate.now().toString();
+        if (today.equals(prefs.getString(KEY_LAST_ACTIVE_DAY, null))) return;
+        prefs.edit()
+                .putString(KEY_LAST_ACTIVE_DAY, today)
+                .putInt(KEY_ACTIVE_DAYS, prefs.getInt(KEY_ACTIVE_DAYS, 0) + 1)
+                .apply();
+    }
+
+    public static int getActiveDays(Context context) {
+        return prefs(context).getInt(KEY_ACTIVE_DAYS, 0);
+    }
+
+    /** Counts a finished flashcard session and returns the new total. */
+    public static int incrementSessionsCompleted(Context context) {
+        int count = prefs(context).getInt(KEY_SESSIONS_COMPLETED, 0) + 1;
+        prefs(context).edit().putInt(KEY_SESSIONS_COMPLETED, count).apply();
+        return count;
+    }
+
+    public static long getReviewAskedAt(Context context) {
+        return prefs(context).getLong(KEY_REVIEW_ASKED_AT, 0L);
+    }
+
+    public static void setReviewAskedAt(Context context, long epochMillis) {
+        prefs(context).edit().putLong(KEY_REVIEW_ASKED_AT, epochMillis).apply();
     }
 
     /** Forgets the streak and study days (used when flashcard progress is reset). */

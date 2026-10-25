@@ -30,6 +30,9 @@ public class PhraseEnglishAdapter extends RecyclerView.Adapter<PhraseEnglishAdap
         void onBookmarkClick(PhraseEnglish phrase, int position);
     }
 
+    /** Payload for {@code notifyItemChanged} when only the star changed. */
+    public static final Object PAYLOAD_FAVORITE = new Object();
+
     private final List<PhraseEnglish> items = new ArrayList<>();
     private final PhraseItemBinder binder = new PhraseItemBinder();
     private final OnItemClickListener itemClickListener;
@@ -94,6 +97,16 @@ public class PhraseEnglishAdapter extends RecyclerView.Adapter<PhraseEnglishAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(items.get(position));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
+        if (payloads.contains(PAYLOAD_FAVORITE)) {
+            // Only the star changed: update it in place instead of cross-fading the whole card
+            binder.bindFavorite(holder.binding, items.get(position).getFavorite() == 1);
+        } else {
+            super.onBindViewHolder(holder, position, payloads);
+        }
     }
 
     @Override
