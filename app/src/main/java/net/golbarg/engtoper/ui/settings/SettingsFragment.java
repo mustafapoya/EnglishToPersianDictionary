@@ -35,7 +35,7 @@ import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.ads.AdConsent;
 import net.golbarg.engtoper.ads.AdFreeOffer;
 import net.golbarg.engtoper.ads.AdFreePass;
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdManager;
 import net.golbarg.engtoper.databinding.FragmentSettingsBinding;
 import net.golbarg.engtoper.databinding.ViewSettingRowBinding;
 import net.golbarg.engtoper.db.DictionaryRepository;
@@ -98,7 +98,7 @@ public class SettingsFragment extends Fragment {
                 getString(R.string.app_name), AppLinks.versionName(requireContext())));
 
         // Earning an ad-free day or changing consent updates the Ads rows
-        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> renderAds());
+        AdManager.allowedState().observe(getViewLifecycleOwner(), allowed -> renderAds());
 
         Fragment restoredPicker = getChildFragmentManager().findFragmentByTag(TAG_REMINDER_TIME);
         if (restoredPicker instanceof MaterialTimePicker) listenToTimePicker((MaterialTimePicker) restoredPicker);

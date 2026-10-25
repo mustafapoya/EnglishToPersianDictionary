@@ -10,8 +10,8 @@ lifecycleLivedataKtx = "2.9.3"
 lifecycleViewmodelKtx = "2.9.3"
 navigationFragment = "2.8.8"
 navigationUi = "2.8.8"
-playServicesAds = "24.6.0"
-userMessagingPlatform = "3.2.0"
+playServicesAds = "25.5.0"
+userMessagingPlatform = "4.0.0"
 playReview = "2.0.2"
 
 [libraries]

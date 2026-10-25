@@ -415,7 +415,7 @@
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Filled by AdUtil; stays hidden when ads are off or none loads -->
+    <!-- Filled by BannerAds; stays hidden when ads are off or none loads -->
     <FrameLayout
         android:id="@+id/ad_container"
         android:layout_width="match_parent"

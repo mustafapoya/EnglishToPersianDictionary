@@ -31,9 +31,10 @@ import com.google.android.material.snackbar.Snackbar;
 import net.golbarg.engtoper.MainActivity;
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.ads.AdFreeOffer;
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdConfig;
+import net.golbarg.engtoper.ads.AdManager;
+import net.golbarg.engtoper.ads.InterstitialAds;
 import net.golbarg.engtoper.ads.NativeAdBinder;
-import net.golbarg.engtoper.ads.SessionInterstitial;
 import net.golbarg.engtoper.databinding.FragmentFlashcardBinding;
 import net.golbarg.engtoper.databinding.ViewStatBinding;
 import net.golbarg.engtoper.db.StudyRepository;
@@ -44,6 +45,7 @@ import net.golbarg.engtoper.models.PhrasePersian;
 import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
 import net.golbarg.engtoper.ui.common.MeaningList;
+import net.golbarg.engtoper.util.AppPreferences;
 import net.golbarg.engtoper.util.InAppReview;
 import net.golbarg.engtoper.util.Leitner;
 import net.golbarg.engtoper.util.LocaleUtil;
@@ -61,6 +63,10 @@ public class FlashcardFragment extends Fragment {
     private static final float ENTER_SCALE = 0.92f;
     private static final float MIN_DRAG_ALPHA = 0.4f;
     private static final float SWIPE_THRESHOLD = 0.28f;
+    /** Short sessions (e.g. three due cards) never end with a full-screen ad. */
+    private static final int SESSION_AD_MIN_ANSWERS = 8;
+    /** No full-screen ads in a new user's first day. */
+    private static final long SESSION_AD_NEW_USER_GRACE_MS = 24 * 60 * 60 * 1000L;
     private static final float MAX_TINT_ALPHA = 0.28f;
     private static final int BACK_MAX_MEANINGS = 6;
 
@@ -169,7 +175,7 @@ public class FlashcardFragment extends Fragment {
         });
         viewModel.getState().observe(getViewLifecycleOwner(), this::render);
         // Ads turned off (e.g. the user earned an ad-free day): take the ad card away at once
-        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> {
+        AdManager.allowedState().observe(getViewLifecycleOwner(), allowed -> {
             if (Boolean.TRUE.equals(allowed)) return;
             boolean wasShowing = isShowingAd();
             viewModel.getAdSlot().dropAds();
@@ -274,7 +280,9 @@ public class FlashcardFragment extends Fragment {
         // Cards still waiting after this one peek out from behind it
         int remaining = state.total - state.position - 1;
         // A long enough session may end with a full-screen ad: get it ready near the end
-        if (remaining < 3 && state.total >= SessionInterstitial.MIN_ANSWERS) SessionInterstitial.preload(requireContext());
+        if (remaining < 3 && sessionAdAllowed(state.total)) {
+            InterstitialAds.preload(requireContext(), AdConfig.Placement.SESSION_END_INTERSTITIAL);
+        }
         binding.cardGhostNear.setVisibility(remaining >= 1 ? View.VISIBLE : View.INVISIBLE);
         binding.cardGhostFar.setVisibility(remaining >= 2 ? View.VISIBLE : View.INVISIBLE);
 
@@ -389,7 +397,8 @@ public class FlashcardFragment extends Fragment {
         slot.onCardAnswered();
         FlashcardViewModel.State state = viewModel.getState().getValue();
         if (state != null && state.type == FlashcardViewModel.Type.FINISHED) {
-            boolean adShown = SessionInterstitial.showAtSessionEnd(requireActivity(), state.total);
+            boolean adShown = sessionAdAllowed(state.total)
+                    && InterstitialAds.show(requireActivity(), AdConfig.Placement.SESSION_END_INTERSTITIAL, null);
             // A good session is the moment to ask for a rating, but never on top of an ad
             if (!adShown) InAppReview.onSessionFinished(requireActivity(), state.knownFirstTry, state.total);
             return;
@@ -400,6 +409,12 @@ public class FlashcardFragment extends Fragment {
         bindAd(ad);
         renderAd();
         animateIn(binding.adCard.getRoot());
+    }
+
+    /** A session may end with a full-screen ad: a real session, and not in a new user's first day. */
+    private boolean sessionAdAllowed(int answers) {
+        return answers >= SESSION_AD_MIN_ANSWERS
+                && System.currentTimeMillis() - AppPreferences.getFirstOpenAt(requireContext()) >= SESSION_AD_NEW_USER_GRACE_MS;
     }
 
     private void bindAd(NativeAd ad) {

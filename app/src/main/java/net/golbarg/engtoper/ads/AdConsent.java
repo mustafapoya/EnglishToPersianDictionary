@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
@@ -15,34 +17,33 @@ import com.google.android.ump.UserMessagingPlatform;
  */
 public final class AdConsent {
 
-    private static final String TAG = "AdConsent";
     private static boolean requested = false;
 
     private AdConsent() {
     }
 
-    /** Checks for a consent update once per launch, asks if needed, then lets ads start. */
+    /** Call from MainActivity.onCreate. Checks for a consent update once per launch, asks if needed, then lets ads start. */
     public static void gather(Activity activity) {
         // A choice made on an earlier launch already counts: start ads straight away if allowed
-        AdUtil.refresh(activity);
-        if (requested || !AdUtil.isEnabled()) return;
+        AdManager.refresh(activity);
+        if (requested || !AdManager.isEnabled()) return;
         requested = true;
 
         ConsentInformation info = UserMessagingPlatform.getConsentInformation(activity);
         info.requestConsentInfoUpdate(activity, new ConsentRequestParameters.Builder().build(),
                 () -> {
                     if (activity.isFinishing() || activity.isDestroyed()) {
-                        AdUtil.refresh(activity);
+                        AdManager.refresh(activity);
                         return;
                     }
                     UserMessagingPlatform.loadAndShowConsentFormIfRequired(activity, formError -> {
-                        if (formError != null) Log.w(TAG, "Consent form: " + formError.getMessage());
-                        AdUtil.refresh(activity);
+                        if (formError != null) Log.w(AdManager.TAG, "Consent form: " + formError.getMessage());
+                        AdManager.refresh(activity);
                     });
                 },
                 error -> {
-                    Log.w(TAG, "Consent info update failed: " + error.getMessage());
-                    AdUtil.refresh(activity);
+                    Log.w(AdManager.TAG, "Consent info update failed: " + error.getMessage());
+                    AdManager.refresh(activity);
                 });
     }
 
@@ -52,15 +53,15 @@ public final class AdConsent {
 
     /** True where users must be able to change their ad privacy choice (shown as a Settings row). */
     public static boolean isPrivacyOptionsRequired(Context context) {
-        return AdUtil.isEnabled() && UserMessagingPlatform.getConsentInformation(context).getPrivacyOptionsRequirementStatus()
+        return AdManager.isEnabled() && UserMessagingPlatform.getConsentInformation(context).getPrivacyOptionsRequirementStatus()
                 == ConsentInformation.PrivacyOptionsRequirementStatus.REQUIRED;
     }
 
-    public static void showPrivacyOptions(Activity activity, Runnable onDone) {
+    public static void showPrivacyOptions(Activity activity, @Nullable Runnable onDone) {
         UserMessagingPlatform.showPrivacyOptionsForm(activity, formError -> {
-            if (formError != null) Log.w(TAG, "Privacy options form: " + formError.getMessage());
-            AdUtil.refresh(activity);
-            onDone.run();
+            if (formError != null) Log.w(AdManager.TAG, "Privacy options form: " + formError.getMessage());
+            AdManager.refresh(activity);
+            if (onDone != null) onDone.run();
         });
     }
 }

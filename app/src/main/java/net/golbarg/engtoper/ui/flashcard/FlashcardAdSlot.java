@@ -7,7 +7,9 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.ads.nativead.NativeAd;
 
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdConfig;
+import net.golbarg.engtoper.ads.AdManager;
+import net.golbarg.engtoper.ads.NativeAds;
 
 /**
  * Paces native ads between flashcards: one after every {@link #CARDS_BETWEEN_ADS} answers, loaded
@@ -81,14 +83,14 @@ final class FlashcardAdSlot {
     }
 
     private void preload() {
-        if (ready != null || loading || cleared || !AdUtil.isEnabled(appContext, AdUtil.Placement.FLASHCARD_NATIVE)) return;
+        if (ready != null || loading || cleared || !AdManager.isAllowed(appContext, AdConfig.Placement.FLASHCARD_NATIVE)) return;
         loading = true;
-        AdUtil.loadNative(appContext, AdUtil.Placement.FLASHCARD_NATIVE, ad -> {
+        NativeAds.load(appContext, AdConfig.Placement.FLASHCARD_NATIVE, ad -> {
             loading = false;
             if (ad == null) {
                 // No fill: skip this slot rather than asking again on every card
                 answersSinceAd = 0;
-            } else if (cleared || !AdUtil.isEnabled(appContext, AdUtil.Placement.FLASHCARD_NATIVE)) {
+            } else if (cleared || !AdManager.isAllowed(appContext, AdConfig.Placement.FLASHCARD_NATIVE)) {
                 ad.destroy();
             } else {
                 ready = ad;

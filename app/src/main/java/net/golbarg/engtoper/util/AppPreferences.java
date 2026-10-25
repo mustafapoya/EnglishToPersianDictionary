@@ -31,8 +31,6 @@ public class AppPreferences {
     private static final String KEY_REMINDER_ENABLED = "reminder_enabled";
     private static final String KEY_REMINDER_MINUTES = "reminder_minutes";
     private static final String KEY_FIRST_OPEN_AT = "first_open_at";
-    private static final String KEY_AD_FREE_UNTIL = "ad_free_until";
-    private static final String KEY_LAST_INTERSTITIAL_AT = "last_interstitial_at";
     private static final String KEY_ACTIVE_DAYS = "active_days";
     private static final String KEY_LAST_ACTIVE_DAY = "last_active_day";
     private static final String KEY_SESSIONS_COMPLETED = "sessions_completed";
@@ -143,7 +141,7 @@ public class AppPreferences {
         prefs(context).edit().putInt(KEY_REMINDER_MINUTES, minutes).apply();
     }
 
-    // ── Ads ───────────────────────────────────────────────────────────────────
+    // ── First open ────────────────────────────────────────────────────────────
 
     /** Remembers when the app was first opened (kept from then on). */
     public static void markFirstOpen(Context context) {
@@ -153,23 +151,6 @@ public class AppPreferences {
 
     public static long getFirstOpenAt(Context context) {
         return prefs(context).getLong(KEY_FIRST_OPEN_AT, System.currentTimeMillis());
-    }
-
-    /** End of the ad-free time earned with a rewarded video (epoch millis; 0 = none). */
-    public static long getAdFreeUntil(Context context) {
-        return prefs(context).getLong(KEY_AD_FREE_UNTIL, 0L);
-    }
-
-    public static void setAdFreeUntil(Context context, long epochMillis) {
-        prefs(context).edit().putLong(KEY_AD_FREE_UNTIL, epochMillis).apply();
-    }
-
-    public static long getLastInterstitialAt(Context context) {
-        return prefs(context).getLong(KEY_LAST_INTERSTITIAL_AT, 0L);
-    }
-
-    public static void setLastInterstitialAt(Context context, long epochMillis) {
-        prefs(context).edit().putLong(KEY_LAST_INTERSTITIAL_AT, epochMillis).apply();
     }
 
     // ── In-app review ─────────────────────────────────────────────────────────

@@ -6,34 +6,38 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
 import net.golbarg.engtoper.R;
+import net.golbarg.engtoper.ads.AdConfig.Placement;
 
 /**
  * "No ads for 24 hours": the user chooses to watch one rewarded video, and once it has been watched
  * every ad in the app goes away for a day ({@link AdFreePass}). Always opt-in, never shown unasked.
+ * Uses the {@code ad_free_*} strings from the app's resources.
  */
 public final class AdFreeOffer {
+
+    private static final Placement PLACEMENT = Placement.AD_FREE_REWARDED;
+    // APP-SPECIFIC: the offer dialog's icon, and the view messages sit above (the bottom navigation; 0 = none)
+    @DrawableRes
+    private static final int ICON = R.drawable.ic_sparkle;
+    @IdRes
+    private static final int MESSAGE_ANCHOR = R.id.nav_container;
 
     private AdFreeOffer() {
     }
 
     /** Whether the offer can be made right now (ads are showing and a rewarded unit is set up). */
     public static boolean isAvailable(Activity activity) {
-        return AdUtil.isEnabled(activity, AdUtil.Placement.AD_FREE_REWARDED);
+        return AdManager.isAllowed(activity, PLACEMENT);
     }
 
     /** Explains the offer and, if the user agrees, plays the video. */
@@ -51,7 +55,7 @@ public final class AdFreeOffer {
             return;
         }
         new MaterialAlertDialogBuilder(activity)
-                .setIcon(R.drawable.ic_sparkle)
+                .setIcon(ICON)
                 .setTitle(R.string.ad_free_offer_title)
                 .setMessage(R.string.ad_free_offer_message)
                 .setPositiveButton(R.string.ad_free_offer_watch, (dialog, which) -> loadAndPlay(activity))
@@ -67,45 +71,31 @@ public final class AdFreeOffer {
                 .setOnCancelListener(dialog -> cancelled[0] = true)
                 .show();
 
-        RewardedAd.load(activity, AdUtil.unitId(AdUtil.Placement.AD_FREE_REWARDED), new AdRequest.Builder().build(),
-                new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        if (cancelled[0] || activity.isFinishing() || activity.isDestroyed()) return;
-                        loading.dismiss();
-                        play(activity, ad);
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError error) {
-                        if (cancelled[0] || activity.isFinishing() || activity.isDestroyed()) return;
-                        loading.dismiss();
-                        message(activity, R.string.ad_free_unavailable);
-                    }
-                });
-    }
-
-    private static void play(Activity activity, RewardedAd ad) {
-        boolean[] earned = {false};
-        ad.setFullScreenContentCallback(new FullScreenContentCallback() {
-            @Override
-            public void onAdDismissedFullScreenContent() {
-                if (earned[0]) {
-                    message(activity, activity.getString(R.string.ad_free_granted, AdFreePass.formatEnd(activity)));
-                } else {
-                    message(activity, R.string.ad_free_not_earned);
-                }
-            }
-
-            @Override
-            public void onAdFailedToShowFullScreenContent(@NonNull AdError error) {
+        RewardedAds.load(activity, PLACEMENT, available -> {
+            if (cancelled[0] || activity.isFinishing() || activity.isDestroyed()) return;
+            loading.dismiss();
+            if (available) {
+                play(activity);
+            } else {
                 message(activity, R.string.ad_free_unavailable);
             }
         });
-        ad.show(activity, reward -> {
-            earned[0] = true;
-            AdFreePass.grant(activity);
-        });
+    }
+
+    private static void play(Activity activity) {
+        boolean[] earned = {false};
+        RewardedAds.show(activity, PLACEMENT,
+                () -> {
+                    earned[0] = true;
+                    AdFreePass.grant(activity);
+                },
+                () -> {
+                    if (earned[0]) {
+                        message(activity, activity.getString(R.string.ad_free_granted, AdFreePass.formatEnd(activity)));
+                    } else {
+                        message(activity, R.string.ad_free_not_earned);
+                    }
+                });
     }
 
     private static View loadingView(Activity activity) {
@@ -137,8 +127,8 @@ public final class AdFreeOffer {
     private static void message(Activity activity, String text) {
         if (activity.isFinishing() || activity.isDestroyed()) return;
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG);
-        View navBar = activity.findViewById(R.id.nav_container);
-        if (navBar != null && navBar.getVisibility() == View.VISIBLE) snackbar.setAnchorView(navBar);
+        View anchor = MESSAGE_ANCHOR != 0 ? activity.findViewById(MESSAGE_ANCHOR) : null;
+        if (anchor != null && anchor.getVisibility() == View.VISIBLE) snackbar.setAnchorView(anchor);
         snackbar.show();
     }
 }

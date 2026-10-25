@@ -28,7 +28,7 @@ import com.google.android.material.color.MaterialColors;
 import net.golbarg.engtoper.MainActivity;
 import net.golbarg.engtoper.R;
 import net.golbarg.engtoper.ads.AdFreeOffer;
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdManager;
 import net.golbarg.engtoper.ads.CachedNativeAd;
 import net.golbarg.engtoper.ads.NativeAdBinder;
 import net.golbarg.engtoper.databinding.FragmentHomeBinding;
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
     /** A native ad at the end of the page, shown only while ads are allowed. */
     private void setupSponsored() {
         binding.homeAd.btnRemoveAds.setOnClickListener(v -> AdFreeOffer.show(requireActivity()));
-        AdUtil.allowedState().observe(getViewLifecycleOwner(), allowed -> {
+        AdManager.allowedState().observe(getViewLifecycleOwner(), allowed -> {
             CachedNativeAd sponsored = homeViewModel.getSponsored();
             if (Boolean.TRUE.equals(allowed)) {
                 renderSponsored();

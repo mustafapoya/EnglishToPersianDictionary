@@ -34,7 +34,8 @@ import net.golbarg.engtoper.models.SearchFilter;
 import net.golbarg.engtoper.models.SearchHistoryItem;
 import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdConfig;
+import net.golbarg.engtoper.ads.BannerAds;
 import net.golbarg.engtoper.util.PersianText;
 import net.golbarg.engtoper.util.TTSManager;
 
@@ -107,7 +108,7 @@ public class DictionaryFragment extends Fragment {
         binding.btnClearHistory.setOnClickListener(v -> viewModel.clearSearchHistory(lang));
         observeViewModel();
 
-        AdUtil.attachBanner(binding.adContainer, getViewLifecycleOwner(), AdUtil.Placement.DICTIONARY_BANNER);
+        BannerAds.attach(binding.adContainer, getViewLifecycleOwner(), AdConfig.Placement.DICTIONARY_BANNER);
     }
 
     @Override

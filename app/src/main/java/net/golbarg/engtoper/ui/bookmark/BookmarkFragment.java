@@ -26,7 +26,8 @@ import net.golbarg.engtoper.ui.DictionaryViewModel;
 import net.golbarg.engtoper.ui.WordDetailBottomSheet;
 import net.golbarg.engtoper.ui.dictionary.PhraseEnglishAdapter;
 import net.golbarg.engtoper.ui.dictionary.PhrasePersianAdapter;
-import net.golbarg.engtoper.ads.AdUtil;
+import net.golbarg.engtoper.ads.AdConfig;
+import net.golbarg.engtoper.ads.BannerAds;
 import net.golbarg.engtoper.util.LocaleUtil;
 import net.golbarg.engtoper.util.TTSManager;
 import net.golbarg.engtoper.util.UtilController;
@@ -89,7 +90,7 @@ public class BookmarkFragment extends Fragment {
             render();
         });
 
-        AdUtil.attachBanner(binding.adContainer, getViewLifecycleOwner(), AdUtil.Placement.SAVED_BANNER);
+        BannerAds.attach(binding.adContainer, getViewLifecycleOwner(), AdConfig.Placement.SAVED_BANNER);
     }
 
     @Override
